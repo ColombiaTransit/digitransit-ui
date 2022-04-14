@@ -510,7 +510,7 @@ export default {
         enabled: true,
         season: {
           // 1.4. - 31.10.
-          start: new Date(new Date().getFullYear(), 3, 1),
+          start: new Date(new Date().getFullYear(), 5, 1), // temp postpone
           end: new Date(new Date().getFullYear(), 10, 1),
         },
         capacity: BIKEAVL_WITHMAX,
@@ -621,7 +621,7 @@ export default {
       },
     },
     {
-      showForRoute: route => route.type === 702,
+      showForRoute: route => route.type === 999702,
       id: 'trunkRouteNotification',
       header: {
         fi: 'Runkolinja',
