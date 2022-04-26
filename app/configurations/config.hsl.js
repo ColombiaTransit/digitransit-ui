@@ -27,6 +27,7 @@ export default {
     ROOTLINK: rootLink,
     BANNERS: BANNER_URL,
     HSL_FI_SUGGESTIONS: 'https://content.hsl.fi/api/v1/search/suggestions',
+    EMBEDDED_SEARCH_GENERATION: '/reittiopas-elementti',
   },
 
   indexPath: 'etusivu',
@@ -87,6 +88,8 @@ export default {
     hover: '#0062a1',
     iconColors: {
       'mode-bus': '#007ac9',
+      'mode-bus-express': '#CA4000',
+      'mode-bus-local': '#007ac9',
       'mode-rail': '#8c4799',
       'mode-tram': '#008151',
       'mode-ferry': '#007A97',
@@ -621,7 +624,7 @@ export default {
       },
     },
     {
-      showForRoute: route => route.type === 999702,
+      showForRoute: route => route.type === 702,
       id: 'trunkRouteNotification',
       header: {
         fi: 'Runkolinja',
@@ -655,18 +658,33 @@ export default {
     },
   ],
 
-  embeddedCookieLink: {
-    fi: {
-      text: 'Lisätietoa evästeistä',
-      url: 'https://www.hsl.fi/hsl/tietosuoja',
+  embeddedSearch: {
+    title: {
+      fi: 'Reittiopas-elementti',
+      en: 'Journey Planner component',
+      sv: 'Reseplanerare-element',
     },
-    en: {
-      text: 'More information about cookies',
-      url: 'https://www.hsl.fi/en/hsl/privacy-policy',
+    infoText: {
+      fi:
+        'Luo Reittiopas-elementti ja lisää se omaan palveluusi. Hakukomponentin Hae reitti -painikkeesta siirrytään Reittioppaaseen.',
+      en:
+        'Create your own Journey Planner component and add it to your own service. The search button of the component will redirect to the Journey Planner',
+      sv:
+        'Skapa din egen Reseplanerare-element och lägg den till din webbtjänst. Sökknappen i element omdirigerar till Reseplaneraren.',
     },
-    sv: {
-      text: 'Mer information om cookies',
-      url: 'https://www.hsl.fi/sv/hrt/Dataskydd',
+    cookieLink: {
+      fi: {
+        text: 'Lisätietoa evästeistä',
+        url: 'https://www.hsl.fi/hsl/tietosuoja',
+      },
+      en: {
+        text: 'More information about cookies',
+        url: 'https://www.hsl.fi/en/hsl/privacy-policy',
+      },
+      sv: {
+        text: 'Mer information om cookies',
+        url: 'https://www.hsl.fi/sv/hrt/Dataskydd',
+      },
     },
   },
 };
