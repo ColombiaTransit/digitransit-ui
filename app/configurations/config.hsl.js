@@ -11,7 +11,7 @@ const APP_DESCRIPTION = 'Helsingin seudun liikenteen Reittiopas.';
 const HSLTimetables = require('./timetableConfigUtils').default.HSL;
 const HSLParkAndRideUtils = require('../util/ParkAndRideUtils').default.HSL;
 
-const rootLink = process.env.ROOTLINK || 'https://dev.hslfi.hsldev.com';
+const rootLink = process.env.ROOTLINK || 'https://test.hslfi.hsldev.com';
 const BANNER_URL = 'https://content.hsl.fi/api/v1/banners?site=JourneyPlanner';
 // 'https://test-api.hslfi.hsldev.com/api/v1/banners?site=JourneyPlanner';
 
@@ -82,6 +82,7 @@ export default {
 
   stopsMinZoom: 14,
   mergeStopsByCode: true,
+  useExtendedRouteTypes: true,
   colors: {
     primary: '#007ac9',
     accessiblePrimary: '#0074be',
@@ -487,14 +488,6 @@ export default {
           en: 'Helsinki and Espoo',
         },
         type: 'citybike',
-        url: {
-          fi:
-            'https://www.hsl.fi/kaupunkipyorat?utm_campaign=kaupunkipyorat-omat&utm_source=reittiopas&utm_medium=referral#block-28474',
-          sv:
-            'https://www.hsl.fi/sv/stadscyklar?utm_campaign=kaupunkipyorat-omat&utm_source=reittiopas&utm_medium=referral#block-28474',
-          en:
-            'https://www.hsl.fi/en/citybikes?utm_campaign=kaupunkipyorat-omat&utm_source=reittiopas&utm_medium=referral#block-28474',
-        },
         returnInstructions: {
           fi: 'https://www.hsl.fi/kaupunkipyorat/helsinki/kayttoohje#palauta',
           sv:
@@ -513,7 +506,7 @@ export default {
         enabled: true,
         season: {
           // 1.4. - 31.10.
-          start: new Date(new Date().getFullYear(), 5, 1), // temp postpone
+          start: new Date(new Date().getFullYear(), 3, 1),
           end: new Date(new Date().getFullYear(), 10, 1),
         },
         capacity: BIKEAVL_WITHMAX,
@@ -524,14 +517,6 @@ export default {
           en: 'Vantaa',
         },
         type: 'citybike',
-        url: {
-          fi:
-            'https://www.hsl.fi/kaupunkipyorat?utm_campaign=kaupunkipyorat-omat&utm_source=reittiopas&utm_medium=referral#block-28474',
-          sv:
-            'https://www.hsl.fi/sv/stadscyklar?utm_campaign=kaupunkipyorat-omat&utm_source=reittiopas&utm_medium=referral#block-28474',
-          en:
-            'https://www.hsl.fi/en/citybikes?utm_campaign=kaupunkipyorat-omat&utm_source=reittiopas&utm_medium=referral#block-28474',
-        },
         returnInstructions: {
           fi: 'https://www.hsl.fi/kaupunkipyorat/vantaa/kayttoohje#palauta',
           sv: 'https://www.hsl.fi/sv/stadscyklar/vanda/anvisningar#aterlamna',
@@ -562,6 +547,8 @@ export default {
 
   includeCarSuggestions: false,
   includeParkAndRideSuggestions: true,
+
+  parkingAreaSources: ['liipi'],
 
   showNearYouButtons: true,
   nearYouModes: [
@@ -654,6 +641,39 @@ export default {
         fi: 'hsl.fi/hsl/runkoverkko',
         en: 'hsl.fi/hsl/runkoverkko',
         sv: 'hsl.fi/hsl/runkoverkko',
+      },
+    },
+    {
+      showForRoute: route => route.type === 704,
+      id: 'localRouteNotification',
+      header: {
+        fi: 'Lähibussi',
+        en: 'Neighborhood route',
+        sv: 'Närbuss',
+      },
+      content: {
+        fi: [
+          'Lähibussit on suunniteltu erityisesti ikäihmisille ja liikuntarajoitteisille. ',
+          'Kyytiin voi nousta ja kyydistä poistua pysäkkien lisäksi myös muulla, liikennesääntöjen puitteissa. ',
+        ],
+        en: [
+          'The routes and timetables have been planned to serve, in particular, the needs of senior citizens. ',
+          'In addition to regular bus stops, the buses can stop at other locations, as long as it is safe to do so. ',
+        ],
+        sv: [
+          'Närbusslinjerna är planerade i synnerhet med tanke på seniorer och rörelsehindrade. ',
+          'Närbussarna kan inom ramen för trafikreglerna också stanna annanstans än vid markerade hållplatser. ',
+        ],
+      },
+      closeButtonLabel: {
+        fi: 'Mitä lähibussi tarkoittaa?',
+        en: 'What does a neigbourhood route mean?',
+        sv: 'Vad betyder en närbuss?',
+      },
+      link: {
+        fi: 'hsl.fi/matkustaminen/lahibussit',
+        en: 'hsl.fi/matkustaminen/lahibussit',
+        sv: 'hsl.fi/matkustaminen/lahibussit',
       },
     },
   ],

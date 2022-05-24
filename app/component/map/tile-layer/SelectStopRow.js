@@ -3,14 +3,25 @@ import React from 'react';
 import Link from 'found/Link';
 import Icon from '../../Icon';
 import { PREFIX_TERMINALS, PREFIX_STOPS } from '../../../util/path';
+import { ExtendedRouteTypes } from '../../../constants';
 
 function isNull(val) {
   return val === 'null' || val === undefined || val === null;
 }
 
-function SelectStopRow({ gtfsId, type, name, code, terminal, desc, colors }) {
+function SelectStopRow(
+  { code, type, desc, gtfsId, name, patterns, terminal, colors },
+  { config },
+) {
+  let mode = type;
+  if (patterns && type === 'BUS' && config.useExtendedRouteTypes) {
+    const patternArray = JSON.parse(patterns);
+    if (patternArray.some(p => p.gtfsType === ExtendedRouteTypes.BusExpress)) {
+      mode = 'bus-express';
+    }
+  }
   const iconOptions = {};
-  switch (type) {
+  switch (mode) {
     case 'TRAM,BUS':
       iconOptions.iconId = 'icon-icon_bustram-stop-lollipop';
       iconOptions.className = 'tram-stop';
@@ -31,6 +42,12 @@ function SelectStopRow({ gtfsId, type, name, code, terminal, desc, colors }) {
       iconOptions.iconId = terminal
         ? 'icon-icon_bus'
         : 'icon-icon_bus-stop-lollipop';
+      iconOptions.className = 'bus-stop';
+      break;
+    case 'bus-express':
+      iconOptions.iconId = terminal
+        ? 'icon-icon_bus'
+        : 'icon-icon_bus-stop-express-lollipop';
       iconOptions.className = 'bus-stop';
       break;
     case 'SUBWAY':
@@ -92,6 +109,7 @@ SelectStopRow.propTypes = {
   gtfsId: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
+  patterns: PropTypes.string,
   code: PropTypes.string,
   desc: PropTypes.string,
   terminal: PropTypes.bool,
@@ -100,8 +118,12 @@ SelectStopRow.propTypes = {
 
 SelectStopRow.defaultProps = {
   terminal: false,
-  code: null,
-  desc: null,
+};
+
+SelectStopRow.contextTypes = {
+  config: PropTypes.shape({
+    useExtendedRouteTypes: PropTypes.bool.isRequired,
+  }).isRequired,
 };
 
 export default SelectStopRow;

@@ -1,13 +1,13 @@
 import { VectorTile } from '@mapbox/vector-tile';
 import Protobuf from 'pbf';
 import pick from 'lodash/pick';
-
 import {
   drawTerminalIcon,
   drawStopIcon,
   drawHybridStopIcon,
   drawHybridStationIcon,
 } from '../../../util/mapIconUtils';
+import { ExtendedRouteTypes } from '../../../constants';
 import { isFeatureLayerEnabled } from '../../../util/mapLayerUtils';
 import { PREFIX_ITINERARY_SUMMARY, PREFIX_ROUTES } from '../../../util/path';
 
@@ -31,12 +31,20 @@ class Stops {
     const isHilighted =
       this.tile.hilightedStops &&
       this.tile.hilightedStops.includes(feature.properties.gtfsId);
-
+    let hasTrunkRoute = false;
+    if (
+      feature.properties.type === 'BUS' &&
+      this.config.useExtendedRouteTypes
+    ) {
+      const patterns = JSON.parse(feature.properties.patterns);
+      if (patterns.some(p => p.gtfsType === ExtendedRouteTypes.BusExpress)) {
+        hasTrunkRoute = true;
+      }
+    }
     const ignoreMinZoomLevel =
       feature.properties.type === 'FERRY' ||
       feature.properties.type === 'RAIL' ||
       feature.properties.type === 'SUBWAY';
-
     if (ignoreMinZoomLevel || zoom >= minZoom) {
       if (isHybrid) {
         drawHybridStopIcon(
@@ -44,6 +52,7 @@ class Stops {
           feature.geom,
           isHilighted,
           this.config.colors.iconColors,
+          hasTrunkRoute,
         );
         return;
       }
@@ -51,7 +60,7 @@ class Stops {
       drawStopIcon(
         this.tile,
         feature.geom,
-        feature.properties.type,
+        hasTrunkRoute ? 'bus-express' : feature.properties.type,
         !isNull(feature.properties.platform)
           ? feature.properties.platform
           : false,
@@ -103,7 +112,6 @@ class Stops {
       return res.arrayBuffer().then(
         buf => {
           const vt = new VectorTile(new Protobuf(buf));
-
           this.features = [];
 
           // draw highlighted stops on lower zoom levels
@@ -164,16 +172,23 @@ class Stops {
                     f.geom.x === prevFeature.geom.x &&
                     f.geom.y === prevFeature.geom.y
                   ) {
-                    // save only one gtfsId per hybrid stop
-                    hybridGtfsIdByCode[f.properties.code] = f.properties.gtfsId;
-                    // Also change hilighted stopId in hybrid stop cases
+                    // save only one gtfsId per hybrid stop, always save the gtfsId for the bus stop to fetch extended route types
+                    const featWithBus =
+                      prevFeature.properties.type === 'BUS' ? prevFeature : f;
+                    const featWithoutBus =
+                      prevFeature.properties.type === 'BUS' ? f : prevFeature;
+                    hybridGtfsIdByCode[featWithBus.properties.code] =
+                      featWithBus.properties.gtfsId;
+                    // Also change hilighted stopId to the stop with type = BUS in hybrid stop cases
                     if (
                       this.tile.hilightedStops &&
                       this.tile.hilightedStops.includes(
-                        prevFeature.properties.gtfsId,
+                        featWithoutBus.properties.gtfsId,
                       )
                     ) {
-                      this.tile.hilightedStops = [f.properties.gtfsId];
+                      this.tile.hilightedStops = [
+                        featWithBus.properties.gtfsId,
+                      ];
                     }
                   }
                 }

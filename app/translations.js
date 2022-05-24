@@ -934,7 +934,8 @@ const translations = {
     'biking-amount': 'Amount of biking',
     'biking-speed': 'Biking speed',
     bus: 'Bus',
-    'bus-trunk': 'Trunk bus',
+    'bus-express': 'Trunk bus',
+    'bus-local': 'Neighbourhood bus',
     'bus-with-route-number': 'Bus {routeNumber} {headSign}',
     buy: 'Buy',
     'buy-ticket': 'How to buy a ticket',
@@ -960,7 +961,6 @@ const translations = {
     'choose-stop-or-vehicle': 'Select vehicle or stop',
     'choose-vehicle': 'Select vehicle',
     citybike: 'City bike',
-    'citybike-buy-season': 'Buy a daily, weekly or season pass',
     'citybike-distance-duration': 'Bike {duration} ({distance})',
     'citybike-duration-general-header':
       'Extra charge applies to several sections of route to be completed by a city bike.',
@@ -2020,7 +2020,8 @@ const translations = {
     'biking-amount': 'Pyöräilyn määrä',
     'biking-speed': 'Pyöräilynopeus',
     bus: 'Bussi',
-    'bus-trunk': 'Runkolinjabussi',
+    'bus-express': 'Runkolinjabussi',
+    'bus-local': 'Lähibussi',
     'bus-with-route-number': 'Bussi {routeNumber} {headSign}',
     buy: 'Osta',
     'buy-ticket': 'Näin ostat lipun',
@@ -2046,8 +2047,6 @@ const translations = {
     'choose-stop-or-vehicle': 'Valitse linja tai pysäkki',
     'choose-vehicle': 'Valitse linja',
     citybike: 'Kaupunkipyörä',
-    'citybike-buy-season':
-      'Osta käyttöoikeutta päiväksi, viikoksi tai koko kaudeksi',
     'citybike-distance-duration': 'Pyöräile {duration} ({distance})',
     'citybike-duration-general-header':
       'Useampi reitin kaupunkipyöräosuuksista sisältää lisämaksuja.',
@@ -3886,7 +3885,8 @@ const translations = {
     'biking-amount': 'Antal cyklar',
     'biking-speed': 'Cykling hastighet',
     bus: 'Buss',
-    'bus-trunk': 'Stombuss',
+    'bus-express': 'Stombuss',
+    'bus-local': 'närbuss',
     'bus-with-route-number': 'Buss {routeNumber} {headSign}',
     buy: 'Köp',
     'buy-ticket': 'Så här köper du biljetten',
@@ -3912,8 +3912,6 @@ const translations = {
     'choose-stop-or-vehicle': 'Select vehicle or stop',
     'choose-vehicle': 'Select vehicle',
     citybike: 'Stadscykel',
-    'citybike-buy-season':
-      'Köp ett abonnemang för en dag, en vecka eller för en hel säsong',
     'citybike-distance-duration': 'Cykla {duration} ({distance})',
     'citybike-duration-general-header':
       'Rutten har flera sträckor med stadscykel som inkluderar tilläggsavgifter.',

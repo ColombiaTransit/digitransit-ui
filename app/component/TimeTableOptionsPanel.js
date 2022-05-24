@@ -3,6 +3,7 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import uniqBy from 'lodash/uniqBy';
 import Icon from './Icon';
+import { ExtendedRouteTypes } from '../constants';
 import { addAnalyticsEvent } from '../util/analyticsUtils';
 
 class TimeTableOptionsPanel extends React.Component {
@@ -40,7 +41,15 @@ class TimeTableOptionsPanel extends React.Component {
           i === routeNames.length - 1 ? '' : ', '
         }`,
     );
-    const stopVehicle = this.props.stop.stoptimesForServiceDate[0].pattern.route.mode.toLowerCase();
+    let stopVehicle = this.props.stop.stoptimesForServiceDate[0].pattern.route.mode.toLowerCase();
+    if (stopVehicle === 'bus') {
+      stopVehicle = this.props.stop.stoptimesForServiceDate.some(
+        stopTime =>
+          stopTime.pattern.route.type === ExtendedRouteTypes.BusExpress,
+      )
+        ? 'bus-express'
+        : stopVehicle;
+    }
     return (
       <label
         className="timetable-showroutes combobox-container"

@@ -29,6 +29,8 @@ const LayerType = {
   Street: 'street',
   Venue: 'venue',
   BikeRentalStation: 'bikeRentalStation',
+  CarPark: 'carpark',
+  BikePark: 'bikepark',
 };
 export const isStop = ({ layer, type }) =>
   layer === 'stop' ||
@@ -128,11 +130,15 @@ export const getLayerRank = (layer, source) => {
     case LayerType.FavouriteBikeRentalStation:
     default:
       // venue, address, street, route-xxx
-      return 0.4;
-    case LayerType.Stop:
-      return 0.35;
+      return 0.41;
+    case LayerType.CarPark:
+      return 0.38;
+    case LayerType.BikePark:
+      return 0.38;
     case LayerType.BikeRentalStation:
-      return 0.1;
+      return 0.38;
+    case LayerType.Stop:
+      return 0.36;
   }
 };
 
@@ -196,13 +202,17 @@ export const sortSearchResults = (lineRegexp, results, term = '') => {
         // geocoded items with confidence, just adjust a little
         switch (layer) {
           case LayerType.Station: {
-            const boost = source.indexOf('gtfs') === 0 ? 0.05 : 0.01;
+            const boost = source.indexOf('gtfs') === 0 ? 0.02 : 0.01;
             return confidence + boost;
           }
           default:
             return confidence;
           case LayerType.Stop:
-            return confidence - 0.1;
+            return confidence - 0.05;
+          case LayerType.CarPark:
+            return confidence - 0.05;
+          case LayerType.BikePark:
+            return confidence - 0.05;
         }
       },
     ],
