@@ -31,10 +31,8 @@ export default configMerger(walttiConfig, {
 
   title: APP_TITLE,
 
-  textLogo: false,
-
-  logo: 'colombiatransit/logo.svg',
-
+  textLogo: true,
+ 
   feedIds: ['Colombiatransit'],
 
   searchParams: {
