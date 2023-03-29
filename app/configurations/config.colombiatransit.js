@@ -170,7 +170,7 @@ export default configMerger(walttiConfig, {
   },
 
   walkBoardCostHigh: 1600,
-
+  showWeatherInformation: false,
   suggestWalkMaxDistance: 10000,
   suggestBikeMaxDistance: 30000,
   // if you enable car suggestions but the linear distance between all points is less than this, then a car route will
