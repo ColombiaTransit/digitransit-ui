@@ -58,6 +58,7 @@ export default configMerger(walttiConfig, {
   colors: {
     primary: '#dc0451',
     iconColors: {
+      'mode-airplane': '#0046ad',
       'mode-bus': '#007ac9',
       'mode-bus-express': '#CA4000',
       'mode-bus-local': '#007ac9',
@@ -71,8 +72,8 @@ export default configMerger(walttiConfig, {
     },
   },
 
-  availableLanguages: ['fi', 'sv', 'en'],
-  defaultLanguage: 'fi',
+  availableLanguages: ['en'],
+  defaultLanguage: 'en',
 
   transportModes: {
     bus: {
@@ -248,7 +249,7 @@ export default configMerger(walttiConfig, {
 
     useModeIconsInNonTileLayer: false,
     // areBounds is for keeping map and user inside given area
-    // Finland + Stockholm
+    // Colombia
     areaBounds: {
       corner1: [16.0571269, -66.8511907], //north east
       corner2: [-4.2316872, -82.1243666], //south west
