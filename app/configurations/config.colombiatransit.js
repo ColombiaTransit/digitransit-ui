@@ -72,7 +72,7 @@ export default configMerger(walttiConfig, {
     },
   },
 
-  availableLanguages: ['en'],
+  availableLanguages: ['en', 'es'],
   defaultLanguage: 'en',
 
   transportModes: {
@@ -241,6 +241,7 @@ export default configMerger(walttiConfig, {
     },
 
     showZoomControl: true, // DT-3470
+    showWeatherInformation: false,
     showLayerSelector: true, // DT-3470
     showStopMarkerPopupOnMobile: true, // DT-3470
     showScaleBar: true, // DT-3470
