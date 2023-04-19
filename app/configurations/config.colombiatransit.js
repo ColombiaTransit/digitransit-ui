@@ -54,7 +54,7 @@ export default configMerger(walttiConfig, {
   },
 
   appBarLink: { name: 'Colombiatransit', href: 'http://colombiatransit.co/' },
-
+  useExtendedRouteTypes: true,
   colors: {
     primary: '#dc0451',
     iconColors: {
