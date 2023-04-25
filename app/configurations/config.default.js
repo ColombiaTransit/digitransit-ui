@@ -778,6 +778,7 @@ export default {
     lahti: 'lahti',
     kuopio: 'kuopio',
     varely: '(seutuplus|varely)',
+    matkalaskuri: 'kela',
   },
 
   minutesToDepartureLimit: 9,
