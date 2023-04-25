@@ -169,7 +169,25 @@ export default configMerger(walttiConfig, {
     lat: 4.701944,
     lon: -74.147222,
   },
+  nearbyRoutes: {
+    radius: 10000,
+    bucketSize: 1000,
+  },
 
+  omitNonPickups: true,
+  maxNearbyStopAmount: 5,
+  maxNearbyStopRefetches: 5,
+  maxNearbyStopDistance: {
+    favorite: 100000,
+    bus: 100000,
+    tram: 100000,
+    subway: 100000,
+    rail: 100000,
+    ferry: 100000,
+    citybike: 100000,
+    airplane: 200000,
+  },
+  
   walkBoardCostHigh: 1600,
 
   suggestWalkMaxDistance: 10000,
