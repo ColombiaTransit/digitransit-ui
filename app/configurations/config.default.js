@@ -779,6 +779,7 @@ export default {
     kuopio: 'kuopio',
     varely: '(seutuplus|varely)',
     matkalaskuri: 'kela',
+    pori: 'pori',
   },
 
   minutesToDepartureLimit: 9,
