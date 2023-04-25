@@ -92,6 +92,10 @@ export const getMapLayerOptions = (options = {}) => {
         isLocked: false,
         isSelected: false,
       },
+      airplane: {
+        isLocked: false,
+        isSelected: false,
+      },
     },
     vehicles: {
       isLocked: false,
@@ -102,7 +106,7 @@ export const getMapLayerOptions = (options = {}) => {
       isSelected: false,
     },
   };
-  const allModes = ['bus', 'tram', 'rail', 'subway', 'ferry', 'funicular'];
+  const allModes = ['bus', 'tram', 'rail', 'subway', 'ferry', 'funicular','airplane'];
   const { lockedMapLayers, selectedMapLayers } = {
     lockedMapLayers: [],
     selectedMapLayers: [],
