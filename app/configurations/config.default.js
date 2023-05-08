@@ -758,14 +758,15 @@ export default {
   ],
 
   /* Do not change order of theme map lines */
+  /* key: name of theme, value: regex matching part of host name */
   themeMap: {
-    hsl: 'reittiopas',
+    hsl: '(reittiopas|next-dev.digitransit)',
     turku: '(turku|foli)',
     lappeenranta: 'lappeenranta',
     joensuu: 'joensuu',
     oulu: 'oulu',
     hameenlinna: 'hameenlinna',
-    matka: 'matka',
+    matka: '(matka|^dev.digitransit)',
     colombiatransit: 'colombiatransit',
     vaasa: 'vaasa',
     walttiOpas: 'waltti',
@@ -778,7 +779,7 @@ export default {
     lahti: 'lahti',
     kuopio: 'kuopio',
     varely: '(seutuplus|varely)',
-    matkalaskuri: 'kela',
+    kela: 'kelareitit',
     pori: 'pori',
   },
 
