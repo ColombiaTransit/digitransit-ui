@@ -92,6 +92,10 @@ export const getMapLayerOptions = (options = {}) => {
         isLocked: false,
         isSelected: false,
       },
+      airplane: {
+        isLocked: false,
+        isSelected: false,
+      },
     },
     vehicles: {
       isLocked: false,

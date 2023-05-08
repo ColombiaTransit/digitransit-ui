@@ -7,7 +7,7 @@ const APP_DESCRIPTION = 'Uusi Reittiopas - colombiatransit';
 
 const walttiConfig = require('./config.waltti').default;
 
-const API_URL = process.env.API_URL || 'https://api.colombiatransit.co';
+const API_URL = process.env.API_URL || 'https://apiv2.colombiatransit.co';
 const OTP_URL = process.env.OTP_URL || `${API_URL}/api/otp/v2/`;
 const MAP_URL = process.env.MAP_URL || 'https://tileserver.colombiatransit.co';
 const GEOCODING_BASE_URL = process.env.GEOCODING_BASE_URL || `${API_URL}/api/pelias/v1`;
@@ -54,10 +54,11 @@ export default configMerger(walttiConfig, {
   },
 
   appBarLink: { name: 'Colombiatransit', href: 'http://colombiatransit.co/' },
-
+  useExtendedRouteTypes: true,
   colors: {
     primary: '#dc0451',
     iconColors: {
+      'mode-airplane': '#0046ad',
       'mode-bus': '#007ac9',
       'mode-bus-express': '#CA4000',
       'mode-bus-local': '#007ac9',
@@ -71,8 +72,8 @@ export default configMerger(walttiConfig, {
     },
   },
 
-  availableLanguages: ['fi', 'sv', 'en'],
-  defaultLanguage: 'fi',
+  availableLanguages: ['en', 'es'],
+  defaultLanguage: 'en',
 
   transportModes: {
     bus: {
@@ -84,16 +85,16 @@ export default configMerger(walttiConfig, {
     },
 
     rail: {
-      availableForSelection: false,
-      defaultValue: false,
+      availableForSelection: true,
+      defaultValue: true,
       nearYouLabel: {
         en: 'Trains and nearby stations on map',
       },
     },
 
     tram: {
-      availableForSelection: false,
-      defaultValue: false,
+      availableForSelection: true,
+      defaultValue: true,
       nearYouLabel: {
         en: 'Trams and nearby stops on map',
       },
@@ -168,7 +169,25 @@ export default configMerger(walttiConfig, {
     lat: 4.701944,
     lon: -74.147222,
   },
+  nearbyRoutes: {
+    radius: 10000,
+    bucketSize: 1000,
+  },
 
+  omitNonPickups: true,
+  maxNearbyStopAmount: 5,
+  maxNearbyStopRefetches: 5,
+  maxNearbyStopDistance: {
+    favorite: 100000,
+    bus: 100000,
+    tram: 100000,
+    subway: 100000,
+    rail: 100000,
+    ferry: 100000,
+    citybike: 100000,
+    airplane: 200000,
+  },
+  
   walkBoardCostHigh: 1600,
   showWeatherInformation: false,
   suggestWalkMaxDistance: 10000,
@@ -204,7 +223,7 @@ export default configMerger(walttiConfig, {
     tileSize: 256,
     zoomOffset: 0,
     minZoom: 1,
-    maxZoom: 14,
+    maxZoom: 20,
     controls: {
       zoom: {
         // available controls positions: 'topleft', 'topright', 'bottomleft, 'bottomright'
@@ -240,6 +259,7 @@ export default configMerger(walttiConfig, {
     },
 
     showZoomControl: true, // DT-3470
+    showWeatherInformation: false,
     showLayerSelector: true, // DT-3470
     showStopMarkerPopupOnMobile: true, // DT-3470
     showScaleBar: true, // DT-3470
@@ -248,7 +268,7 @@ export default configMerger(walttiConfig, {
 
     useModeIconsInNonTileLayer: false,
     // areBounds is for keeping map and user inside given area
-    // Finland + Stockholm
+    // Colombia
     areaBounds: {
       corner1: [16.0571269, -66.8511907], //north east
       corner2: [-4.2316872, -82.1243666], //south west
