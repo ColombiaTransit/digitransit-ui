@@ -4,7 +4,7 @@ const matkaConfig = require('./config.matka').default;
 
 const CONFIG = 'kela';
 const APP_TITLE = 'Reittiopas';
-const APP_DESCRIPTION = 'Kelan matkalaskuri';
+const APP_DESCRIPTION = 'Digitransit-reittiopas';
 const API_URL = process.env.API_URL || 'https://dev-api.digitransit.fi';
 const OTP_URL = process.env.OTP_URL || `${API_URL}/routing/v2/routers/kela/`;
 const MAP_URL =
@@ -25,21 +25,24 @@ export default configMerger(matkaConfig, {
     },
   },
 
+  favicon: './app/configurations/images/default/favicon.png',
   feedIds: ['kela'],
-
-  favicon: './app/configurations/images/kela/favicon.png',
   textLogo: true,
-  logo: 'kela/favicon.png',
-  appBarLink: {
-    name: 'Kela',
-    href: 'https://www.kela.fi/',
-  },
+  logo: '', // override default logo from matka config
+  appBarLink: false, // override default config - would show Traficom otherwise
 
   meta: {
     description: APP_DESCRIPTION,
   },
 
+  socialMedia: {
+    title: APP_TITLE,
+    description: APP_DESCRIPTION,
+    locale: 'fi_FI',
+  },
+
   menu: {
+    copyright: null,
     content: [
       {
         name: 'accessibility-statement',
@@ -98,8 +101,12 @@ export default configMerger(matkaConfig, {
   hideFavourites: true,
   hideStopRouteSearch: true,
 
+  hideMapLayersByDefault: true,
+  hideCarSuggestionDuration: true,
+
   hideWalkLegDurationSummary: true,
   emphasizeDistance: true,
+  emphasizeOneWayJourney: true,
 
   terminalStopsMinZoom: 14,
 
