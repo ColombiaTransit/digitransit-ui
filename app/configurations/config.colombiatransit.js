@@ -26,7 +26,9 @@ export default configMerger(walttiConfig, {
   URL: {
     OTP: OTP_URL,
     MAP: {
-      default: `${MAP_URL}/styles/osm-bright/`,      
+      default: `${MAP_URL}/styles/osm-bright/`,     
+      es: `${MAP_URL}/styles/osm-bright/`,
+      en: `${MAP_URL}/styles/osm-bright/`,
     },
     STOP_MAP: {
       default: `${POI_MAP_PREFIX}/stops,stations/`,      
