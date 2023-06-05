@@ -3,7 +3,7 @@ import configMerger from '../util/configMerger';
 
 const CONFIG = 'colombiatransit';
 const APP_TITLE = 'ColombiaTransit';
-const APP_DESCRIPTION = 'Uusi Reittiopas - colombiatransit';
+const APP_DESCRIPTION = 'Colombiatransit';
 
 const walttiConfig = require('./config.waltti').default;
 
@@ -145,7 +145,8 @@ export default configMerger(walttiConfig, {
 
   title: APP_TITLE,
 
-  textLogo: true,
+  textLogo: false,
+  logo: 'colombiatransit/logo.png',
   useCookiesPrompt: true,
 
   feedIds: [],
