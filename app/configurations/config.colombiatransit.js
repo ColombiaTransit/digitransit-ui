@@ -299,6 +299,7 @@ export default configMerger(walttiConfig, {
     'https://digitransit.colombiatransit.co',    
     // PROD hostnames
     'https://colombiatransit.co',
+    'https://www.colombiatransit.co',
   ],
 },
 );
