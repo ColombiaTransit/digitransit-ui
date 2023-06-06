@@ -298,6 +298,20 @@ export default configMerger(walttiConfig, {
       },
     ],
   },
+  
+  includeCarSuggestions: false,
+  includeParkAndRideSuggestions: false,
+  // Include both bike and park and bike and public
+  includePublicWithBikePlan: false,
+  // Park and ride and car suggestions separated into two switches
+  separatedParkAndRideSwitch: true,
+  showBikeAndParkItineraries: false,
+  
+  parkAndRide: {
+    showParkAndRide: false,
+    parkAndRideMinZoom: 13,   
+  },
+  
   hostnames: [
     // DEV hostnames    
     'https://digitransit.colombiatransit.co',    
