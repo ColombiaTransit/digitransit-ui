@@ -13,7 +13,7 @@ const MAP_URL = process.env.MAP_URL || 'https://tileserver.colombiatransit.co';
 const GEOCODING_BASE_URL = process.env.GEOCODING_BASE_URL || `${API_URL}/api/pelias/v1`;
 const POI_MAP_PREFIX = `${OTP_URL}vectorTiles`;
 
-const rootLink = process.env.ROOTLINK || 'https://digitransit.colombiatransit.co';
+const rootLink = process.env.ROOTLINK || 'https://colombiatransit.co';
 
 const minLat = -4.2316872;
 const maxLat = 16.0571269;
@@ -148,7 +148,8 @@ export default configMerger(walttiConfig, {
   title: APP_TITLE,
 
   textLogo: false,
-  logo: 'colombiatransit/logo.png',
+  logo: 'colombiatransit/logo2.png',
+  favicon: './app/configurations/images/colombiatransit/LogoCT.png',
   useCookiesPrompt: true,
 
   feedIds: [],
