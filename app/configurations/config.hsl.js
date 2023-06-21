@@ -60,6 +60,9 @@ export default {
   title: 'Reittiopas',
 
   availableLanguages: ['fi', 'sv', 'en'],
+  availableTickets: {
+    Sipoo: true,
+  },
   defaultLanguage: 'fi',
   passLanguageToRootLink: true,
 
@@ -68,12 +71,12 @@ export default {
   // Navbar logo
   logo: 'hsl/reittiopas-logo.svg',
 
-  useCookiesPrompt: false,
+  useCookiesPrompt: true,
   copyrightText: '© Copyright HSL',
 
   useRoutingFeedbackPrompt: true,
 
-  feedIds: ['HSL', 'HSLlautta'],
+  feedIds: ['HSL', 'HSLlautta', 'Sipoo'],
 
   showHSLTracking: false,
   allowLogin: true,
@@ -407,9 +410,9 @@ export default {
   },
 
   useTicketIcons: true,
-  /* ticketPurchaseLink: function purchaseTicketLink(ticket) {
-    return `https://open.app.hsl.fi/zoneTicketWizard/TICKET_TYPE_SINGLE_TICKET/${ticket}/adult/`;
-  }, */
+  ticketPurchaseLink: function purchaseTicketLink(ticket) {
+    return `https://open.app.hsl.fi/zoneTicketWizard/TICKET_TYPE_SINGLE_TICKET/${ticket}/adult/?utm_campaign=reittiopas&utm_medium=reittiopasohjaus`;
+  },
 
   trafficNowLink: {
     fi: 'matkustaminen/liikenne',

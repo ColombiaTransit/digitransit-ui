@@ -77,7 +77,7 @@ export default configMerger(matkaConfig, {
       default: false,
     },
   },
-
+  suggestCarMinDistance: 0,
   hideWeatherLabel: true,
   showDistanceBeforeDuration: true,
   hideItinerarySettings: true,
@@ -109,6 +109,8 @@ export default configMerger(matkaConfig, {
   emphasizeOneWayJourney: true,
 
   terminalStopsMinZoom: 14,
+
+  onlyCarPlan: true,
 
   aboutThisService: {
     fi: [
