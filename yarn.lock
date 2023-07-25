@@ -10248,7 +10248,7 @@ __metadata:
     express-session: 1.17.1
     express-static-gzip: 2.0.8
     farce: 0.4.5
-    fast-xml-parser: 3.17.4
+    fast-xml-parser: 4.2.4
     favicons-webpack-plugin: 0.0.9
     fetch-mock: 9.10.7
     file-loader: 5.0.2
@@ -12219,12 +12219,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fast-xml-parser@npm:3.17.4":
-  version: 3.17.4
-  resolution: "fast-xml-parser@npm:3.17.4"
+"fast-xml-parser@npm:4.2.4":
+  version: 4.2.4
+  resolution: "fast-xml-parser@npm:4.2.4"
+  dependencies:
+    strnum: ^1.0.5
   bin:
-    xml2js: ./cli.js
-  checksum: 382a4b84044f1f17c8dc94fdbceae38debc88b4700a2f782f44b779651fbaccdabf12edf981bb8381737a72d0796b5678616ce9fa190441535ef8ade106d415c
+    fxparser: src/cli/cli.js
+  checksum: 2229fb6f0f09124031282f2a88dc36829e76313f5a6403f35e4ffe3f4b4856a77fbbf6a6275acd77378521de0d3110e5f4589ebcb24cd8a6cb4808640025c54d
   languageName: node
   linkType: hard
 
@@ -25918,6 +25920,13 @@ resolve@1.1.7:
   version: 3.1.1
   resolution: "strip-json-comments@npm:3.1.1"
   checksum: f16719ce25abc58a55ef82b1c27f541dcfa5d544f17158f62d10be21ff9bd22fde45a53c592b29d80ad3c97ccb67b7451c4833913fdaeadb508a40f5e0a9c206
+  languageName: node
+  linkType: hard
+
+"strnum@npm:^1.0.5":
+  version: 1.0.5
+  resolution: "strnum@npm:1.0.5"
+  checksum: 8b73ef3de223bd07c662d1983fbadbfc8faedbbd75322e4d03a334e48ca5ca405d960a106bf7163f9f528e831b8cb173b9c9896bc37d6f97f8c78f8dd93ad7a2
   languageName: node
   linkType: hard
 
