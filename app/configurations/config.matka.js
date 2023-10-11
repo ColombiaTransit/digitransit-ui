@@ -91,7 +91,7 @@ export default {
     'Kajaani',
     'Salo',
     'Pori',
-    'Raasepori',
+    'VARELY',
   ],
 
   additionalFeedIds: {
@@ -505,10 +505,10 @@ export default {
       sv: 'Björneborg',
       en: 'Pori',
     },
-    Raasepori: {
-      fi: 'Raasepori',
-      sv: 'Raseborg',
-      en: 'Raasepori',
+    VARELY: {
+      fi: 'Varsinais-Suomi',
+      sv: 'Egentliga Finland',
+      en: 'Varsinais-Suomi',
     },
   },
   stopCard: {
