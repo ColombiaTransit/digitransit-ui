@@ -348,8 +348,6 @@ export default {
 
   useRealtimeTravellerCapacities: true,
 
-  parseVehicleNumbers: true,
-
   aboutThisService: {
     fi: [
       {
@@ -527,5 +525,5 @@ export default {
     },
   },
   // Notice! Turning on this setting forces the search for car routes (for the CO2 comparison only).
-  showCO2InItinerarySummary: true,
+  showCO2InItinerarySummary: false,
 };
