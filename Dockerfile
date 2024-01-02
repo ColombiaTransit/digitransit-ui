@@ -98,11 +98,13 @@ ENV \
   #
   # the --title option just sets the harmless property process.title
   # https://nodejs.org/api/cli.html#cli_title_title
-  NODE_OPTS='--title=digitransit-ui' \
+  NODE_OPTS='--title=digitransit-ui --max_old_space_size=4096' \
   RELAY_FETCH_TIMEOUT='' \
   WEBPACK_DEVTOOL=$WEBPACK_DEVTOOL \
   ASSET_URL='' \
   STATIC_MESSAGE_URL=''
+
+ENV NODE_OPTIONS=--max_old_space_size=4096
 
 RUN apk add --no-cache curl
 HEALTHCHECK \
