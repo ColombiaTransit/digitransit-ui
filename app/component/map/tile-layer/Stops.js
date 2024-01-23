@@ -73,7 +73,8 @@ class Stops {
     const ignoreMinZoomLevel =
       feature.properties.type === 'FERRY' ||
       feature.properties.type === 'RAIL' ||
-      feature.properties.type === 'SUBWAY';
+      feature.properties.type === 'SUBWAY' ||
+      feature.properties.type === 'AIRPLANE';
     if (ignoreMinZoomLevel || zoom >= minZoom) {
       if (isHybrid) {
         drawHybridStopIcon(
