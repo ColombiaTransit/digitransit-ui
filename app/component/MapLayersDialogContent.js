@@ -39,6 +39,7 @@ const mapLayersConfigShape = PropTypes.shape({
     showParkAndRide: PropTypes.bool,
   }),
   transportModes: PropTypes.shape({
+    airplane: transportModeConfigShape,
     bus: transportModeConfigShape,
     citybike: transportModeConfigShape,
     ferry: transportModeConfigShape,
@@ -183,6 +184,32 @@ class MapLayersDialogContent extends React.Component {
               onChange={e => {
                 this.updateStopSetting({ tram: e.target.checked });
                 sendLayerChangeAnalytic('TramStop', e.target.checked);
+              }}
+            />
+          )}
+          {isTransportModeEnabled(transportModes.subway) && (
+            <Checkbox
+              large
+              checked={stop.subway}
+              disabled={!!this.props.mapLayerOptions?.stop?.subway?.isLocked}
+              defaultMessage="Subway stop"
+              labelId="map-layer-stop-subway"
+              onChange={e => {
+                this.updateStopSetting({ subway: e.target.checked });
+                sendLayerChangeAnalytic('SubwayStop', e.target.checked);
+              }}
+            />
+          )}
+          {isTransportModeEnabled(transportModes.airplane) && (
+            <Checkbox
+              large
+              checked={stop.airplane}
+              disabled={!!this.props.mapLayerOptions?.stop?.airplane?.isLocked}
+              defaultMessage="Airport"
+              labelId="map-layer-stop-airplane"
+              onChange={e => {
+                this.updateStopSetting({ airplane: e.target.checked });
+                sendLayerChangeAnalytic('SubwayStop', e.target.checked);
               }}
             />
           )}
