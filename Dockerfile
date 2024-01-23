@@ -7,7 +7,7 @@ ENV \
   # We mimick common CI/CD systems so that tools don't assume a "normal" dev env.
   CI=true \
   # Picked up by various Node.js tools.
-  NODE_ENV=production
+  NODE_ENV=development
 
 # install dependencies for npm packages
 RUN \
