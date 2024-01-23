@@ -96,6 +96,7 @@ export const ExtendedRouteTypes = Object.freeze({
   BusExpress: 702,
   BusLocal: 704,
   SpeedTram: 900,
+  Airplane: 1100,
 });
 
 export const ParkTypes = {
