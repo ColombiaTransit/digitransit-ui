@@ -52,7 +52,7 @@ export default configMerger(walttiConfig, {
     }/reverse`,
     PELIAS_PLACE: `${
       process.env.GEOCODING_BASE_URL || GEOCODING_BASE_URL
-    }/place`,  
+    }/place`
   },
 
   appBarLink: { name: 'Colombiatransit', href: 'http://colombiatransit.co/' },
@@ -212,7 +212,7 @@ export default configMerger(walttiConfig, {
     content: [
       {
         name: 'about-this-service',
-        route: '/tietoja-palvelusta',
+        route: '/about-this-service',
       },
       {
         name: 'accessibility-statement',
@@ -293,7 +293,7 @@ export default configMerger(walttiConfig, {
       {
         header: 'About this service',
         paragraphs: [
-          'This service is provided by Colombiatransit for route planning in Colombiatransit region. The service covers public transport, walking, cycling, and some private car use. Service is built on Digitransit platform.',
+          'This service is provided by Colombiatransit for route planning in Colombia region. The service covers public transport, walking, cycling, and some private car use. Service is built on Digitransit platform.',
         ],
       },
     ],
