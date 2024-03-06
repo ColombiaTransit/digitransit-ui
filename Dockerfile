@@ -36,7 +36,7 @@ RUN \
 # Setting $CONFIG causes digitransit-ui to only build assets for *one* instance (see app/configurations).
 # This speeds up the build (because favicons-webpack-plugin is increasingly *very* slow with the nr of
 # configs processed), but the resulting image won't be able to serve other instances.
-ARG CONFIG=''
+ARG CONFIG='colombiatransit'
 ENV CONFIG=${CONFIG}
 
 COPY config ./config
@@ -66,7 +66,7 @@ LABEL org.opencontainers.image.licenses="(AGPL-3.0 OR EUPL-1.2)"
 
 WORKDIR /opt/digitransit-ui
 
-ARG CONFIG=''
+ARG CONFIG='colombiatransit'
 ENV CONFIG=${CONFIG}
 
 EXPOSE 8080
