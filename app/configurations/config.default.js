@@ -730,6 +730,7 @@ export default {
     oulu: '(oulu|osl)',
     hameenlinna: 'hameenlinna',
     matka: '(matka|^dev.digitransit)',
+    colombiatransit: 'colombiatransit',
     vaasa: 'vaasa',
     walttiOpas: 'waltti',
     rovaniemi: 'rovaniemi',
@@ -743,7 +744,7 @@ export default {
     varely: '(seutuplus|varely)',
     kela: 'kelareitit',
     pori: 'pori',
-    raasepori: '(raasepori|bosse)',
+    raasepori: '(raasepori|bosse)',    
   },
 
   minutesToDepartureLimit: 9,
