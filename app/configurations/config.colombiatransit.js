@@ -55,12 +55,13 @@ export default configMerger(walttiConfig, {
     }/place`
   },
 
-  appBarLink: { name: 'Colombiatransit', href: 'http://colombiatransit.co/' },
+  appBarLink: { name: 'Colombiatransit', href: 'https://colombiatransit.co/' },
   useExtendedRouteTypes: true,
   colors: {
-    primary: '#dc0451',
+    primary: '#007ac9',
+    accessiblePrimary: '#0074be',
+    hover: '#0062a1',
     iconColors: {
-      'mode-airplane': '#0046ad',
       'mode-bus': '#007ac9',
       'mode-bus-express': '#CA4000',
       'mode-bus-local': '#007ac9',
@@ -71,6 +72,7 @@ export default configMerger(walttiConfig, {
       'mode-metro': '#CA4000',
       'mode-citybike': '#f2b62d',
       'mode-citybike-secondary': '#333333',
+      'mode-speedtram': '#007E79',
     },
   },
 
@@ -305,8 +307,17 @@ export default configMerger(walttiConfig, {
   separatedParkAndRideSwitch: true,
   showBikeAndParkItineraries: false,
   showNearYouButtons: true,
+  nearYouModes: [
+    'favorite',
+    'bus',
+    'tram',
+    'subway',
+    'rail',
+    'ferry',
+    'citybike',
+  ],
   narrowNearYouButtons: true,
-  nearYouModes: [ 'bus', 'tram', 'subway', 'rail', 'ferry', 'airplane' ],
+  
   parkAndRide: {
     showParkAndRide: false,
     parkAndRideMinZoom: 13,   
