@@ -4,8 +4,10 @@ import React, { useState, useEffect, useRef, lazy, Suspense } from 'react';
 import { intlShape } from 'react-intl';
 import { matchShape } from 'found';
 import { Helmet } from 'react-helmet';
+import { favouriteShape, configShape } from '../util/shapes';
 import { clearOldSearches, clearFutureRoutes } from '../util/storeUtils';
 import { getJson } from '../util/xhrPromise';
+import { addAnalyticsEvent } from '../util/analyticsUtils';
 
 const SiteHeader = lazy(() => import('@hsl-fi/site-header'));
 const SharedLocalStorageObserver = lazy(
@@ -106,6 +108,15 @@ const AppBarHsl = ({ lang, user, favourites }, context) => {
   const notificationTime = useRef(0);
 
   useEffect(() => {
+    if (user) {
+      addAnalyticsEvent({
+        event: 'user-hsl-id',
+        hslId: user.sub,
+      });
+    }
+  }, [user]);
+
+  useEffect(() => {
     const now = Date.now();
     // refresh only once per 5 seconds
     if (now - notificationTime.current > 5000) {
@@ -153,7 +164,7 @@ const AppBarHsl = ({ lang, user, favourites }, context) => {
 
 AppBarHsl.contextTypes = {
   match: matchShape.isRequired,
-  config: PropTypes.object.isRequired,
+  config: configShape.isRequired,
   getStore: PropTypes.func.isRequired,
   intl: intlShape.isRequired,
 };
@@ -166,12 +177,13 @@ AppBarHsl.propTypes = {
     sub: PropTypes.string,
     notLogged: PropTypes.bool,
   }),
-  favourites: PropTypes.arrayOf(PropTypes.object),
+  favourites: PropTypes.arrayOf(favouriteShape),
 };
 
 AppBarHsl.defaultProps = {
   lang: 'fi',
   user: {},
+  favourites: [],
 };
 
 export { AppBarHsl as default, AppBarHsl as Component };
