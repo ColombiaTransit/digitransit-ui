@@ -84,6 +84,8 @@ export default {
   showHSLTracking: false,
   allowLogin: true,
   allowFavouritesFromLocalstorage: !process.env.OIDC_CLIENT_ID,
+  loginAnalyticsEventName: 'user-hsl-id',
+  loginAnalyticsKey: 'hsl-id',
 
   nearbyRoutes: {
     radius: 500,
@@ -200,7 +202,7 @@ export default {
   },
 
   // modes that should not coexist with BICYCLE mode
-  modesWithNoBike: ['BICYCLE_RENT', 'WALK', 'BUS', 'TRAM', 'FERRY'],
+  modesWithNoBike: ['BICYCLE_RENT', 'WALK', 'BUS', 'TRAM'],
 
   useSearchPolygon: true,
 
@@ -455,7 +457,7 @@ export default {
           sv: 'https://www.hsl.fi/sv/stadscyklar/helsingfors/anvisningar#cykla',
           en: 'https://www.hsl.fi/en/citybikes/helsinki/instructions#ride',
         },
-        timeBeforeSurcharge: 30 * 60,
+        timeBeforeSurcharge: 60 * 60,
       },
       vantaa: {
         enabled: true,
@@ -484,7 +486,7 @@ export default {
           sv: 'https://www.hsl.fi/sv/stadscyklar/vanda/anvisningar#cykla',
           en: 'https://www.hsl.fi/en/citybikes/vantaa/instructions#ride',
         },
-        timeBeforeSurcharge: 60 * 60,
+        timeBeforeSurcharge: 120 * 60,
       },
     },
     buyUrl: {
@@ -543,6 +545,7 @@ export default {
       virtualMonitorBaseUrl: 'https://omatnaytot.hsl.fi/',
     },
   },
+  bikeBoardingModes: ['RAIL', 'FERRY'],
 
   routeNotifications: [
     {
