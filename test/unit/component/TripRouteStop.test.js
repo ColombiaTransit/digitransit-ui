@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { mountWithIntl } from '../helpers/mock-intl-enzyme';
-import TripRouteStop from '../../../app/component/TripRouteStop';
+import TripRouteStop from '../../../app/component/routepage/TripRouteStop';
 import ServiceAlertIcon from '../../../app/component/ServiceAlertIcon';
 import { AlertSeverityLevelType } from '../../../app/constants';
 
@@ -31,7 +31,7 @@ describe('<TripRouteStop />', () => {
       setHumanScrolling: () => {},
     };
     const wrapper = mountWithIntl(<TripRouteStop {...props} />, {
-      context: { config: { zones: { stops: true } } },
+      context: { config: { CONFIG: 'default', zones: { stops: true } } },
       childContextTypes: { config: PropTypes.object },
     });
     expect(wrapper.find(ServiceAlertIcon).isEmptyRender()).to.equal(true);

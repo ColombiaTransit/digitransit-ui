@@ -19,6 +19,8 @@ export const PREFIX_TIMETABLE = 'aikataulu';
 export const stopUrl = id => id;
 export const LOCAL_STORAGE_EMITTER_PATH = '/local-storage-emitter';
 export const EMBEDDED_SEARCH_PATH = '/haku';
+export const PREFIX_RENTALVEHICLES = 'skuutit';
+export const PREFIX_RENTALVEHICLES_CLUSTER = 'skuuttiryhmat';
 
 /**
  * Join argument with slash separator.
@@ -152,17 +154,11 @@ export const getStopRoutePath = searchObj => {
       break;
     case 'carpark':
       path = `/${PREFIX_CARPARK}/`;
-      id =
-        searchObj.properties.id.indexOf(':') === -1
-          ? searchObj.properties.id
-          : searchObj.properties.id.split(':')[1];
+      id = searchObj.properties.id;
       break;
     case 'bikepark':
       path = `/${PREFIX_BIKEPARK}/`;
-      id =
-        searchObj.properties.id.indexOf(':') === -1
-          ? searchObj.properties.id
-          : searchObj.properties.id.split(':')[1];
+      id = searchObj.properties.id;
       break;
     default:
       path = `/${PREFIX_STOPS}/`;

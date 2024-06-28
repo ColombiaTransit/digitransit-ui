@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
+import { configShape } from '../util/shapes';
 import StopCode from './StopCode';
 import BackButton from './BackButton';
 import LazilyLoad, { importLazy } from './LazilyLoad';
@@ -8,14 +9,21 @@ import { getJson } from '../util/xhrPromise';
 import getZoneId from '../util/zoneIconUtils';
 import ZoneIcon from './ZoneIcon';
 import withBreakpoint from '../util/withBreakpoint';
-import { hasStationCode } from '../util/vehicleRentalUtils';
+import {
+  hasVehicleRentalCode,
+  getRentalNetworkConfig,
+} from '../util/vehicleRentalUtils';
 import { getIdWithoutFeed } from '../util/feedScopedIdUtils';
+import { TransportMode } from '../constants';
 
 const modules = {
   FavouriteVehicleRentalStationContainer: () =>
     importLazy(import('./FavouriteVehicleRentalStationContainer')),
 };
-const ParkOrBikeStationHeader = ({ parkOrStation, breakpoint }, { config }) => {
+const ParkOrBikeStationHeader = (
+  { parkOrStation, breakpoint, parkType },
+  { config },
+) => {
   const [zoneId, setZoneId] = useState(undefined);
   useEffect(() => {
     const searchParams = {
@@ -42,8 +50,13 @@ const ParkOrBikeStationHeader = ({ parkOrStation, breakpoint }, { config }) => {
     });
   }, []);
 
-  const { name, bikeParkId, stationId } = parkOrStation;
-  const parkHeaderId = bikeParkId ? 'bike-park' : 'car_park';
+  const { name, stationId, network } = parkOrStation;
+  const networkConfig = getRentalNetworkConfig(network, config);
+  const parkHeaderId = parkType === 'bike' ? 'bike-park' : 'car-park';
+  const noIdHeaderName =
+    networkConfig.type === TransportMode.Citybike.toLowerCase()
+      ? 'citybike-station-no-id'
+      : 'e-scooter-station';
   return (
     <div className="bike-station-header">
       {breakpoint === 'large' && (
@@ -55,10 +68,8 @@ const ParkOrBikeStationHeader = ({ parkOrStation, breakpoint }, { config }) => {
       <div className="header">
         <h1>{name}</h1>
         <div className="bike-station-sub-header">
-          <FormattedMessage
-            id={stationId ? 'citybike-station-no-id' : parkHeaderId}
-          />
-          {stationId && hasStationCode(parkOrStation) && (
+          <FormattedMessage id={stationId ? noIdHeaderName : parkHeaderId} />
+          {stationId && hasVehicleRentalCode(parkOrStation.stationId) && (
             <StopCode code={getIdWithoutFeed(stationId)} />
           )}
           {zoneId && (
@@ -85,16 +96,18 @@ ParkOrBikeStationHeader.propTypes = {
   breakpoint: PropTypes.string.isRequired,
   parkOrStation: PropTypes.shape({
     name: PropTypes.string.isRequired,
-    bikeParkId: PropTypes.string,
-    carParkId: PropTypes.string,
     stationId: PropTypes.string,
     lat: PropTypes.number.isRequired,
     lon: PropTypes.number.isRequired,
-  }),
+    network: PropTypes.string.isRequired,
+  }).isRequired,
+  parkType: PropTypes.string,
 };
 
+ParkOrBikeStationHeader.defaultProps = { parkType: undefined };
+
 ParkOrBikeStationHeader.contextTypes = {
-  config: PropTypes.object.isRequired,
+  config: configShape.isRequired,
 };
 
 const ParkOrBikeStationHeaderWithBreakpoint = withBreakpoint(

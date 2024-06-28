@@ -2,22 +2,23 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import { shallowWithIntl } from '../helpers/mock-intl-enzyme';
-import BicycleLeg from '../../../app/component/BicycleLeg';
-import { CityBikeNetworkType } from '../../../app/util/vehicleRentalUtils';
+import BicycleLeg from '../../../app/component/itinerary/BicycleLeg';
+import { RentalNetworkType } from '../../../app/util/vehicleRentalUtils';
 
 describe('<BicycleLeg />', () => {
   it('should guide the user to rent a citybike', () => {
     const props = {
       focusAction: () => {},
       focusToLeg: () => {},
+      openSettings: () => {},
       index: 1,
       leg: {
         distance: 0,
         duration: 0,
         mode: 'BICYCLE',
         rentedBike: true,
-        startTime: 0,
-        endTime: 0,
+        start: { scheduledTime: new Date().toISOString() },
+        end: { scheduledTime: new Date().toISOString() },
         from: {
           name: 'Hertanmäenkatu',
           vehicleRentalStation: {
@@ -34,8 +35,10 @@ describe('<BicycleLeg />', () => {
       context: {
         config: {
           cityBike: {
-            networks: { foobar: { type: CityBikeNetworkType.CityBike } },
+            networks: { foobar: { type: RentalNetworkType.CityBike } },
           },
+          defaultSettings: { walkSpeed: 1, bikeSpeed: 1 },
+          defaultOptions: { walkSpeed: 1, bikeSpeed: 1 },
         },
       },
     });
@@ -48,14 +51,15 @@ describe('<BicycleLeg />', () => {
     const props = {
       focusAction: () => {},
       focusToLeg: () => {},
+      openSettings: () => {},
       index: 1,
       leg: {
         distance: 0,
         duration: 0,
         mode: 'BICYCLE',
         rentedBike: true,
-        startTime: 0,
-        endTime: 0,
+        start: { scheduledTime: new Date().toISOString() },
+        end: { scheduledTime: new Date().toISOString() },
         from: {
           name: 'Hertanmäenkatu',
           vehicleRentalStation: {
@@ -72,8 +76,10 @@ describe('<BicycleLeg />', () => {
       context: {
         config: {
           cityBike: {
-            networks: { foobar: { type: CityBikeNetworkType.Scooter } },
+            networks: { foobar: { type: RentalNetworkType.Scooter } },
           },
+          defaultSettings: { walkSpeed: 1, bikeSpeed: 1 },
+          defaultOptions: { walkSpeed: 1, bikeSpeed: 1 },
         },
       },
     });
@@ -86,14 +92,15 @@ describe('<BicycleLeg />', () => {
     const props = {
       focusAction: () => {},
       focusToLeg: () => {},
+      openSettings: () => {},
       index: 1,
       leg: {
         distance: 0,
         duration: 0,
         mode: 'BICYCLE',
         rentedBike: true,
-        startTime: 0,
-        endTime: 0,
+        start: { scheduledTime: new Date().toISOString() },
+        end: { scheduledTime: new Date().toISOString() },
         from: {
           name: 'Hertanmäenkatu',
           vehicleRentalStation: {
@@ -110,8 +117,10 @@ describe('<BicycleLeg />', () => {
       context: {
         config: {
           cityBike: {
-            networks: { foobar: { type: CityBikeNetworkType.CityBike } },
+            networks: { foobar: { type: RentalNetworkType.CityBike } },
           },
+          defaultSettings: { walkSpeed: 1, bikeSpeed: 1 },
+          defaultOptions: { walkSpeed: 1, bikeSpeed: 1 },
         },
       },
     });
@@ -127,14 +136,15 @@ describe('<BicycleLeg />', () => {
     const props = {
       focusAction: () => {},
       focusToLeg: () => {},
+      openSettings: () => {},
       index: 1,
       leg: {
         distance: 0,
         duration: 0,
         mode: 'BICYCLE',
         rentedBike: true,
-        startTime: 0,
-        endTime: 0,
+        start: { scheduledTime: new Date().toISOString() },
+        end: { scheduledTime: new Date().toISOString() },
         from: {
           name: 'Hertanmäenkatu',
           vehicleRentalStation: {
@@ -151,8 +161,10 @@ describe('<BicycleLeg />', () => {
       context: {
         config: {
           cityBike: {
-            networks: { foobar: { type: CityBikeNetworkType.Scooter } },
+            networks: { foobar: { type: RentalNetworkType.Scooter } },
           },
+          defaultSettings: { walkSpeed: 1, bikeSpeed: 1 },
+          defaultOptions: { walkSpeed: 1, bikeSpeed: 1 },
         },
       },
     });
@@ -168,14 +180,15 @@ describe('<BicycleLeg />', () => {
     const props = {
       focusAction: () => {},
       focusToLeg: () => {},
+      openSettings: () => {},
       index: 1,
       leg: {
         distance: 0,
         duration: 0,
         mode: 'WALK',
         rentedBike: true,
-        startTime: 0,
-        endTime: 0,
+        start: { scheduledTime: new Date().toISOString() },
+        end: { scheduledTime: new Date().toISOString() },
         from: {
           name: 'Hertanmäenkatu',
           vehicleRentalStation: {
@@ -192,8 +205,10 @@ describe('<BicycleLeg />', () => {
       context: {
         config: {
           cityBike: {
-            networks: { foobar: { type: CityBikeNetworkType.CityBike } },
+            networks: { foobar: { type: RentalNetworkType.CityBike } },
           },
+          defaultSettings: { walkSpeed: 1, bikeSpeed: 1 },
+          defaultOptions: { walkSpeed: 1, bikeSpeed: 1 },
         },
       },
     });
@@ -206,14 +221,15 @@ describe('<BicycleLeg />', () => {
     const props = {
       focusAction: () => {},
       focusToLeg: () => {},
+      openSettings: () => {},
       index: 1,
       leg: {
         distance: 0,
         duration: 0,
         mode: 'WALK',
         rentedBike: true,
-        startTime: 0,
-        endTime: 0,
+        start: { scheduledTime: new Date().toISOString() },
+        end: { scheduledTime: new Date().toISOString() },
         from: {
           name: 'Hertanmäenkatu',
           vehicleRentalStation: {
@@ -230,8 +246,10 @@ describe('<BicycleLeg />', () => {
       context: {
         config: {
           cityBike: {
-            networks: { foobar: { type: CityBikeNetworkType.Scooter } },
+            networks: { foobar: { type: RentalNetworkType.Scooter } },
           },
+          defaultSettings: { walkSpeed: 1, bikeSpeed: 1 },
+          defaultOptions: { walkSpeed: 1, bikeSpeed: 1 },
         },
       },
     });

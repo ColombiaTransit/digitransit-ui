@@ -2,8 +2,7 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import { shallowWithIntl } from './helpers/mock-intl-enzyme';
-import WalkLeg from '../../app/component/WalkLeg';
-import { CityBikeNetworkType } from '../../app/util/vehicleRentalUtils';
+import WalkLeg from '../../app/component/itinerary/WalkLeg';
 import ServiceAlertIcon from '../../app/component/ServiceAlertIcon';
 import { AlertSeverityLevelType } from '../../app/constants';
 
@@ -26,8 +25,8 @@ describe('<WalkLeg />', () => {
         },
         mode: 'WALK',
         rentedBike: false,
-        startTime: 1529589709000,
-        endTime: 1529589701000,
+        start: { scheduledTime: new Date(1529589709000).toISOString() },
+        end: { scheduledTime: new Date(1529589701000).toISOString() },
       },
     };
 
@@ -58,8 +57,8 @@ describe('<WalkLeg />', () => {
         },
         mode: 'WALK',
         rentedBike: false,
-        startTime: 1529589709000,
-        endTime: 1529589701000,
+        start: { scheduledTime: new Date(1529589709000).toISOString() },
+        end: { scheduledTime: new Date(1529589701000).toISOString() },
       },
       previousLeg: {
         distance: 3297.017000000001,
@@ -70,8 +69,8 @@ describe('<WalkLeg />', () => {
         },
         mode: 'BICYCLE',
         rentedBike: true,
-        startTime: 1529588805000,
-        endTime: 1529589701000,
+        start: { scheduledTime: new Date(1529588805000).toISOString() },
+        end: { scheduledTime: new Date(1529589701000).toISOString() },
         to: {
           name: 'Mannerheimin tie 1',
           stop: null,
@@ -87,63 +86,6 @@ describe('<WalkLeg />', () => {
 
     expect(wrapper.find(FormattedMessage).at(0).prop('id')).to.equal(
       'return-cycle-to',
-    );
-  });
-
-  it('should tell the user to return a rented kick scooter to the starting point station', () => {
-    const props = {
-      focusAction: () => {},
-      focusToLeg: () => {},
-      index: 2,
-      leg: {
-        distance: 284.787,
-        duration: 289,
-        from: {
-          name: 'Veturitori',
-          stop: null,
-        },
-        to: {
-          name: 'Testipaikka',
-          stop: null,
-        },
-        mode: 'WALK',
-        rentedBike: false,
-        startTime: 1529589709000,
-        endTime: 1529589701000,
-      },
-      previousLeg: {
-        distance: 3297.017000000001,
-        duration: 904,
-        from: {
-          vehicleRentalStation: {
-            network: 'foobar',
-          },
-          name: 'Kaisaniemenpuisto',
-          stop: null,
-        },
-        to: {
-          name: 'Testipaikka',
-          stop: null,
-        },
-        mode: 'BICYCLE',
-        rentedBike: true,
-        startTime: 1529588805000,
-        endTime: 1529589701000,
-      },
-    };
-
-    const wrapper = shallowWithIntl(<WalkLeg {...props} />, {
-      context: {
-        config: {
-          cityBike: {
-            networks: { foobar: { type: CityBikeNetworkType.Scooter } },
-          },
-        },
-      },
-    });
-
-    expect(wrapper.find(FormattedMessage).at(0).prop('id')).to.equal(
-      'return-scooter-to',
     );
   });
 
@@ -175,8 +117,8 @@ describe('<WalkLeg />', () => {
         },
         mode: 'WALK',
         rentedBike: false,
-        startTime,
-        endTime: 1529589701000,
+        start: { scheduledTime: new Date(startTime).toISOString() },
+        end: { scheduledTime: new Date(1529589701000).toISOString() },
       },
     };
 
@@ -213,8 +155,8 @@ describe('<WalkLeg />', () => {
         },
         mode: 'WALK',
         rentedBike: false,
-        startTime: 1668600030868,
-        endTime: 1668600108525,
+        start: { scheduledTime: new Date(1668600030868).toISOString() },
+        end: { scheduledTime: new Date(1668600108525).toISOString() },
       },
     };
 

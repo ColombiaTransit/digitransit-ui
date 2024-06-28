@@ -1,10 +1,10 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import { configShape, vehicleRentalStationShape } from '../util/shapes';
 import VehicleRentalAvailability from './VehicleRentalAvailability';
 import Icon from './Icon';
 import {
-  getVehicleRentalStationNetworkIcon,
-  getVehicleRentalStationNetworkConfig,
+  getRentalNetworkIcon,
+  getRentalNetworkConfig,
   getVehicleCapacity,
   BIKEAVL_UNKNOWN,
   BIKEAVL_WITHMAX,
@@ -25,42 +25,37 @@ const VehicleRentalStation = ({ vehicleRentalStation }, { config }) => {
   if (vehicleCapacity === BIKEAVL_WITHMAX) {
     totalSpaces =
       vehicleRentalStation.capacity ||
-      vehicleRentalStation.vehiclesAvailable +
-        vehicleRentalStation.spacesAvailable;
+      vehicleRentalStation.availableVehicles.total +
+        vehicleRentalStation.availableSpaces.total;
     fewAvailableCount = Math.floor(totalSpaces / 3);
     fewerAvailableCount = Math.floor(totalSpaces / 6);
   }
   const disabled = !vehicleRentalStation.operative;
-
-  const vehicleIcon = getVehicleRentalStationNetworkIcon(
-    getVehicleRentalStationNetworkConfig(vehicleRentalStation.network, config),
-    disabled,
+  const networkConfig = getRentalNetworkConfig(
+    vehicleRentalStation.network,
+    config,
   );
+  const vehicleIcon = getRentalNetworkIcon(networkConfig, disabled);
   return (
     <div className="citybike-content-container">
       <Icon img={vehicleIcon} />
       <VehicleRentalAvailability
         disabled={disabled}
-        vehiclesAvailable={vehicleRentalStation.vehiclesAvailable}
+        vehiclesAvailable={vehicleRentalStation.availableVehicles.total}
         totalSpaces={totalSpaces}
         fewAvailableCount={fewAvailableCount}
         fewerAvailableCount={fewerAvailableCount}
         useSpacesAvailable={vehicleCapacity === BIKEAVL_WITHMAX}
+        type={networkConfig.type}
       />
     </div>
   );
 };
 
 VehicleRentalStation.contextTypes = {
-  config: PropTypes.object.isRequired,
+  config: configShape.isRequired,
 };
 VehicleRentalStation.propTypes = {
-  vehicleRentalStation: PropTypes.shape({
-    vehiclesAvailable: PropTypes.number.isRequired,
-    spacesAvailable: PropTypes.number.isRequired,
-    capacity: PropTypes.number.isRequired,
-    network: PropTypes.string,
-    operative: PropTypes.bool.isRequired,
-  }).isRequired,
+  vehicleRentalStation: vehicleRentalStationShape.isRequired,
 };
 export default VehicleRentalStation;

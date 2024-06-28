@@ -4,6 +4,7 @@ import { FormattedMessage, intlShape } from 'react-intl';
 import { Link } from 'found';
 import connectToStores from 'fluxible-addons-react/connectToStores';
 import Modal from '@hsl-fi/modal';
+import { stopShape, configShape, relayShape } from '../util/shapes';
 import { hasEntitiesOfType } from '../util/alertUtils';
 import { PREFIX_STOPS, PREFIX_TERMINALS } from '../util/path';
 import { AlertEntityType } from '../constants';
@@ -123,22 +124,28 @@ const connectedComponent = connectToStores(
   (context, props) => {
     return {
       ...props,
-      currentTime: context.getStore('TimeStore').getCurrentTime().unix(),
+      currentTime: context.getStore('TimeStore').getCurrentTime(),
     };
   },
 );
 
 StopNearYou.propTypes = {
-  stop: PropTypes.object.isRequired,
+  stop: stopShape.isRequired,
   stopId: PropTypes.string,
   currentTime: PropTypes.number.isRequired,
   currentMode: PropTypes.string.isRequired,
   desc: PropTypes.string,
-  relay: PropTypes.any,
+  relay: relayShape,
+};
+
+StopNearYou.defaultProps = {
+  stopId: undefined,
+  desc: undefined,
+  relay: undefined,
 };
 
 StopNearYou.contextTypes = {
-  config: PropTypes.object.isRequired,
+  config: configShape.isRequired,
   intl: intlShape.isRequired,
 };
 

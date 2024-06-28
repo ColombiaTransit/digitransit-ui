@@ -380,26 +380,20 @@ async function fetchCitybikeSeasons() {
   };
 
   const { resources } = await container.items.query(query).fetchAll();
+  console.log('citybike season configurations fetched from the database');
   return resources;
 }
 
-const parseDate = (year, month, day) =>
-  // eslint-disable-next-line radix
-  new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
-
 function buildCitybikeConfig(seasonDef, configName) {
   const inSeason = seasonDef.inSeason.split('-');
-  const [startDay, startMonth, startYear] = inSeason[0].split('.');
-  const [endDay, endMonth, endYear] = inSeason[1].split('.');
-  const [preDay, preMonth, preYear] = seasonDef.preSeason.split('.');
   return {
     configName: seasonDef.configName,
     networkName: seasonDef.networkName,
     enabled: seasonDef.enabled,
     season: {
-      preSeasonStart: parseDate(preYear, preMonth, preDay),
-      start: parseDate(startYear, startMonth, startDay),
-      end: parseDate(endYear, endMonth, endDay),
+      preSeasonStart: seasonDef.preSeason,
+      start: inSeason[0],
+      end: inSeason[1],
     },
   };
 }
@@ -422,40 +416,46 @@ function fetchCitybikeConfigurations() {
   return new Promise(mainResolve => {
     const promises = [];
 
-    fetchCitybikeSeasons().then(r => {
-      const schedules = [];
-      r.forEach(seasonDef => schedules.push(...seasonDef.schedules));
-      configFiles.forEach(file => {
-        // eslint-disable-next-line import/no-dynamic-require
-        const conf = require(`${configsDir}/${file}`);
-        const configName = conf.default.CONFIG;
-        const { cityBike } = conf.default;
-        if (cityBike && Object.keys(cityBike).length > 0) {
-          promises.push(
-            new Promise(resolve => {
-              resolve(
-                handleCitybikeSeasonConfigurations(schedules, configName),
-              );
-            }),
+    fetchCitybikeSeasons()
+      .then(r => {
+        const schedules = [];
+        r.forEach(seasonDef => schedules.push(...seasonDef.schedules));
+        configFiles.forEach(file => {
+          // eslint-disable-next-line import/no-dynamic-require
+          const conf = require(`${configsDir}/${file}`);
+          const configName = conf.default.CONFIG;
+          const { cityBike } = conf.default;
+          if (cityBike && Object.keys(cityBike).length > 0) {
+            promises.push(
+              new Promise(resolve => {
+                resolve(
+                  handleCitybikeSeasonConfigurations(schedules, configName),
+                );
+              }),
+            );
+          }
+        });
+        Promise.all(promises).then(definitions => {
+          // filter empty objects and duplicates
+          const seasonDefinitions = definitions
+            .filter(seasonDef => Object.keys(seasonDef).length > 0)
+            .flat()
+            .filter(
+              (v, i, a) =>
+                a.findIndex(v2 => v2.networkName === v.networkName) === i,
+            );
+          console.log(
+            `fetched: ${seasonDefinitions.length} citybike season configuration`,
           );
-        }
-      });
-      Promise.all(promises).then(definitions => {
-        // filter empty objects and duplicates
-        const seasonDefinitions = definitions
-          .filter(seasonDef => Object.keys(seasonDef).length > 0)
-          .flat()
-          .filter(
-            (v, i, a) =>
-              a.findIndex(v2 => v2.networkName === v.networkName) === i,
-          );
-        console.log(
-          `fetched: ${seasonDefinitions.length} citybike season configuration`,
-        );
-        configTools.setAvailableCitybikeConfigurations(seasonDefinitions);
+          console.log(seasonDefinitions);
+          configTools.setAvailableCitybikeConfigurations(seasonDefinitions);
+          mainResolve();
+        });
+      })
+      .catch(err => {
+        console.log('error fetching citybike season configurations', err);
         mainResolve();
       });
-    });
   });
 }
 /* ********* Init ********* */

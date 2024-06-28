@@ -1,9 +1,6 @@
-import PropTypes from 'prop-types';
 import React from 'react';
-import moment from 'moment';
 import { intlShape } from 'react-intl';
 import { uniq } from 'lodash';
-
 import AlertList from './AlertList';
 import {
   getCancelationsForStop,
@@ -11,7 +8,8 @@ import {
   getServiceAlertsForStation,
 } from '../util/alertUtils';
 import { getRouteMode } from '../util/modeUtils';
-import { AlertShape } from '../util/shapes';
+import { epochToTime } from '../util/timeUtils';
+import { stopShape, configShape } from '../util/shapes';
 import { AlertSeverityLevelType, AlertEntityType } from '../constants';
 
 export const isRelevantEntity = (entity, stopIds, routeIds) =>
@@ -56,7 +54,7 @@ export const getUniqueAlerts = alerts => {
  * This returns the canceled stoptimes mapped as alerts for the stoptimes'
  * routes.
  */
-export const getCancelations = (stop, intl) => {
+export const getCancelations = (stop, intl, config) => {
   return getCancelationsForStop(stop).map(stoptime => {
     const { color, mode, shortName, gtfsId, type } = stoptime.trip.route;
     const entity = {
@@ -78,7 +76,7 @@ export const getCancelations = (stop, intl) => {
           mode: translatedMode,
           route: shortName,
           headsign: stoptime.headsign || stoptime.trip.tripHeadsign,
-          time: moment.unix(departureTime).format('HH:mm'),
+          time: epochToTime(departureTime * 1000, config),
         },
       ),
       entities: [entity],
@@ -101,8 +99,8 @@ export const getAlerts = stop => {
   );
 };
 
-const StopAlerts = ({ stop }, { intl }) => {
-  const cancelations = getCancelations(stop, intl);
+const StopAlerts = ({ stop }, { intl, config }) => {
+  const cancelations = getCancelations(stop, intl, config);
   const serviceAlerts = getAlerts(stop);
 
   return (
@@ -114,50 +112,7 @@ const StopAlerts = ({ stop }, { intl }) => {
   );
 };
 
-StopAlerts.propTypes = {
-  stop: PropTypes.shape({
-    gtfsId: PropTypes.string.isRequired,
-    locationType: PropTypes.string.isRequired,
-    routes: PropTypes.arrayOf(
-      PropTypes.shape({
-        gtfsId: PropTypes.string.isRequired,
-      }),
-    ),
-    alerts: PropTypes.arrayOf(AlertShape).isRequired,
-    stops: PropTypes.arrayOf(
-      PropTypes.shape({
-        gtfsId: PropTypes.string.isRequired,
-        routes: PropTypes.arrayOf(
-          PropTypes.shape({
-            gtfsId: PropTypes.string.isRequired,
-          }),
-        ).isRequired,
-        alerts: PropTypes.arrayOf(AlertShape).isRequired,
-      }),
-    ),
-    stoptimes: PropTypes.arrayOf(
-      PropTypes.shape({
-        headsign: PropTypes.string,
-        realtimeState: PropTypes.string,
-        scheduledDeparture: PropTypes.number,
-        serviceDay: PropTypes.number,
-        trip: PropTypes.shape({
-          tripHeadsign: PropTypes.string.isRequired,
-          route: PropTypes.shape({
-            gtfsId: PropTypes.string.isRequired,
-            color: PropTypes.string,
-            mode: PropTypes.string.isRequired,
-            shortName: PropTypes.string.isRequired,
-            type: PropTypes.number,
-          }).isRequired,
-        }).isRequired,
-      }),
-    ).isRequired,
-  }).isRequired,
-};
-
-StopAlerts.contextTypes = {
-  intl: intlShape,
-};
+StopAlerts.propTypes = { stop: stopShape.isRequired };
+StopAlerts.contextTypes = { intl: intlShape, config: configShape };
 
 export default StopAlerts;

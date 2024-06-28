@@ -3,6 +3,7 @@ import React, { useState, useRef } from 'react';
 import { FormattedMessage, intlShape } from 'react-intl';
 import connectToStores from 'fluxible-addons-react/connectToStores';
 import DTAutosuggest from '@digitransit-component/digitransit-component-autosuggest';
+import { configShape } from '../util/shapes';
 import EmbeddedSearch from './EmbeddedSearch';
 import { EMBEDDED_SEARCH_PATH } from '../util/path';
 import withSearchContext from './WithSearchContext';
@@ -14,6 +15,13 @@ const LocationSearch = withSearchContext(DTAutosuggest, true);
 
 const locationSearchTargets = ['Locations', 'CurrentPosition', 'Stops'];
 const sources = ['Favourite', 'History', 'Datasource'];
+
+const languages = [
+  { id: 'fi', name: 'finnish', defaultMessage: 'Finnish' },
+  { id: 'sv', name: 'swedish', defaultMessage: 'Swedish' },
+  { id: 'en', name: 'english', defaultMessage: 'English' },
+  { id: 'pl', name: 'polish', defaultMessage: 'Polish' },
+];
 
 const EmbeddedSearchGenerator = (props, context) => {
   if (!isBrowser) {
@@ -190,41 +198,24 @@ const EmbeddedSearchGenerator = (props, context) => {
               </h3>
             </legend>
 
-            <label htmlFor="lang-fi">
-              <input
-                type="radio"
-                value="fi"
-                name="lang"
-                id="lang-fi"
-                onChange={event => handleLangChange(event)}
-                checked={searchLang === 'fi'}
-              />
-              <FormattedMessage id="finnish" defaultMessage="Finnish" />
-            </label>
-
-            <label htmlFor="lang-sv">
-              <input
-                type="radio"
-                value="sv"
-                name="lang"
-                id="lang-sv"
-                onChange={event => handleLangChange(event)}
-                checked={searchLang === 'sv'}
-              />
-              <FormattedMessage id="swedish" defaultMessage="Swedish" />
-            </label>
-
-            <label htmlFor="lang-en">
-              <input
-                type="radio"
-                value="en"
-                name="lang"
-                id="lang-en"
-                onChange={event => handleLangChange(event)}
-                checked={searchLang === 'en'}
-              />
-              <FormattedMessage id="english" defaultMessage="English" />
-            </label>
+            {languages
+              .filter(({ id }) => config.availableLanguages.includes(id))
+              .map(language => (
+                <label key={language.id} htmlFor={`lang-${language.id}`}>
+                  <input
+                    type="radio"
+                    value={language.id}
+                    name="lang"
+                    id={`lang-${language.id}`}
+                    onChange={event => handleLangChange(event)}
+                    checked={searchLang === language.id}
+                  />
+                  <FormattedMessage
+                    id={language.name}
+                    defaultMessage={language.defaultMessage}
+                  />
+                </label>
+              ))}
           </fieldset>
 
           <fieldset id="width">
@@ -480,8 +471,10 @@ EmbeddedSearchGenerator.propTypes = {
   lang: PropTypes.string.isRequired,
 };
 
+EmbeddedSearchGenerator.defaultProps = { breakpoint: undefined };
+
 EmbeddedSearchGenerator.contextTypes = {
-  config: PropTypes.object.isRequired,
+  config: configShape.isRequired,
   intl: intlShape.isRequired,
 };
 

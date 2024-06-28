@@ -31,6 +31,12 @@ export default {
       sv: `${POI_MAP_PREFIX}/sv/vehicleParkingGroups/`,
       fi: `${POI_MAP_PREFIX}/fi/vehicleParkingGroups/`,
     },
+    RENTAL_VEHICLE_MAP: {
+      default: `${POI_MAP_PREFIX}/fi/rentalVehicles/`,
+    },
+    REALTIME_RENTAL_VEHICLE_MAP: {
+      default: `${POI_MAP_PREFIX}/fi/realtimeRentalVehicles/`,
+    },
   },
 
   stopsMinZoom: 14,
@@ -51,6 +57,8 @@ export default {
 
   availableLanguages: ['fi', 'sv', 'en'],
   defaultLanguage: 'fi',
+
+  showCO2InItinerarySummary: true,
 
   transportModes: {
     bus: {
@@ -166,8 +174,6 @@ export default {
 
   includeCarSuggestions: true,
   includeParkAndRideSuggestions: true,
-  // Include both bike and park and bike and public
-  includePublicWithBikePlan: false,
   // Park and ride and car suggestions separated into two switches
   separatedParkAndRideSwitch: true,
   showBikeAndParkItineraries: true,
@@ -183,20 +189,26 @@ export default {
 
   hostnames: [
     // DEV hostnames
-    'https://next-dev-hameenlinna.digitransit.fi',
-    'https://next-dev-joensuu.digitransit.fi',
-    'https://next-dev-jyvaskyla.digitransit.fi',
-    'https://next-dev-kotka.digitransit.fi',
-    'https://next-dev-kouvola.digitransit.fi',
-    'https://next-dev-kuopio.digitransit.fi',
-    'https://next-dev-lahti.digitransit.fi',
-    'https://next-dev-lappeenranta.digitransit.fi',
-    'https://next-dev-mikkeli.digitransit.fi',
-    'https://next-dev-oulu.digitransit.fi',
-    'https://next-dev-rovaniemi.digitransit.fi',
-    'https://next-dev-tampere.digitransit.fi',
-    'https://next-dev-opas.waltti.fi',
+    'https://dev-hameenlinna.digitransit.fi',
+    'https://dev-joensuu.digitransit.fi',
+    'https://dev-jyvaskyla.digitransit.fi',
+    'https://dev-kotka.digitransit.fi',
+    'https://dev-kouvola.digitransit.fi',
+    'https://dev-kuopio.digitransit.fi',
+    'https://dev-lahti.digitransit.fi',
+    'https://dev-lappeenranta.digitransit.fi',
+    'https://dev-mikkeli.digitransit.fi',
+    'https://dev-oulu.digitransit.fi',
+    'https://dev-pori.digitransit.fi',
+    'https://dev-raasepori.digitransit.fi',
+    'https://dev-rovaniemi.digitransit.fi',
+    'https://dev-tampere.digitransit.fi',
+    'https://dev-turku.digitransit.fi',
+    'https://dev-vaasa.digitransit.fi',
+    'https://dev-varely.digitransit.fi',
+    'https://dev-waltti.digitransit.fi',
     // PROD hostnames
+    'https://bosse.digitransit.fi',
     'https://reittiopas.hameenlinna.fi',
     'https://hameenlinna.digitransit.fi',
     'https://joensuu.digitransit.fi',
@@ -208,11 +220,25 @@ export default {
     'https://lappeenranta.digitransit.fi',
     'https://mikkeli.digitransit.fi',
     'https://reittiopas.osl.fi',
+    'https://pori.digitransit.fi',
     'https://rovaniemi.digitransit.fi',
     'https://reittiopas.tampere.fi',
+    'https://repa.tampere.fi',
+    'https://reittiopas.tampere.fi',
     'https://tampere.digitransit.fi',
+    'https://turku.digitransit.fi',
+    'https://reittiopas.foli.fi',
+    'https://vaasa.digitransit.fi',
+    'https://varely.digitransit.fi',
+    'https://reittiopas.seutuplus.fi',
     'https://opas.waltti.fi',
   ],
-
   showDisclaimer: true,
+
+  // mapping fareId from OTP fare identifiers to human readable form
+  fareMapping: function mapFareId(fareId) {
+    return fareId && fareId.substring
+      ? fareId.substring(fareId.indexOf(':') + 1)
+      : '';
+  },
 };

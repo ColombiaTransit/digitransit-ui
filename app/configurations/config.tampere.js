@@ -5,7 +5,6 @@ import { BIKEAVL_WITHMAX } from '../util/vehicleRentalUtils';
 const CONFIG = 'tampere';
 const APP_TITLE = 'Nyssen reittiopas';
 const APP_DESCRIPTION = 'Nyssen reittiopas';
-
 const walttiConfig = require('./config.waltti').default;
 const tampereTimetables = require('./timetableConfigUtils').default.tampere;
 
@@ -60,14 +59,12 @@ export default configMerger(walttiConfig, {
     stops: true,
     itinerary: true,
   },
-  showTicketInformation: true,
 
   useTicketIcons: true,
-
+  showTicketInformation: true,
   ticketInformation: {
     primaryAgencyName: 'Tampereen seudun joukkoliikenne',
   },
-
   ticketLink: 'https://www.nysse.fi/liput-ja-hinnat.html',
 
   callAgencyInfo: {
@@ -106,13 +103,6 @@ export default configMerger(walttiConfig, {
         text: 'Trains in the Nysse area - Nysse, Tampere regional transport',
       },
     },
-  },
-
-  // mapping fareId from OTP fare identifiers to human readable form
-  fareMapping: function mapFareId(fareId) {
-    return fareId && fareId.substring
-      ? fareId.substring(fareId.indexOf(':') + 1)
-      : '';
   },
 
   useSearchPolygon: true,
@@ -244,13 +234,12 @@ export default configMerger(walttiConfig, {
 
   cityBike: {
     networks: {
-      seatcode_tampere: {
+      inurba_tampere: {
         capacity: BIKEAVL_WITHMAX,
         enabled: true,
         season: {
-          // 15.4. - 31.10.
-          start: new Date(new Date().getFullYear(), 3, 15),
-          end: new Date(new Date().getFullYear(), 10, 1),
+          start: '15.4',
+          end: '31.10',
         },
         icon: 'citybike',
         name: {
@@ -295,9 +284,10 @@ export default configMerger(walttiConfig, {
     },
   },
 
-  // modes that should not coexist with BICYCLE mode
-  // boarding a long distance train with bicycle costs extra
-  modesWithNoBike: ['BICYCLE_RENT', 'WALK', 'RAIL'],
+  bikeBoardingModes: {
+    RAIL: { showNotification: true },
+    TRAM: { showNotification: true },
+  },
 
   showTenWeeksOnRouteSchedule: true,
 });

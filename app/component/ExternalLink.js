@@ -1,25 +1,36 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-const ExternalLink = ({ name, children, href, className, onClick }) =>
-  (name || children !== undefined) && (
-    <span className={className}>
-      <span className="external-link-container">
-        <a
-          onClick={e => {
-            e.stopPropagation();
-            if (onClick) {
-              onClick(e);
-            }
-          }}
-          className="external-link"
-          href={href}
-        >
-          {name || children}
-        </a>
+export default function ExternalLink({
+  name,
+  children,
+  href,
+  className,
+  onClick,
+}) {
+  return (
+    (name || children !== undefined) && (
+      <span className={className}>
+        <span className="external-link-container">
+          <a
+            onClick={e => {
+              e.stopPropagation();
+              if (onClick) {
+                onClick(e);
+              }
+            }}
+            className="external-link"
+            href={href}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {name || children}
+          </a>
+        </span>
       </span>
-    </span>
+    )
   );
+}
 
 ExternalLink.propTypes = {
   name: PropTypes.string,
@@ -30,9 +41,11 @@ ExternalLink.propTypes = {
 };
 
 ExternalLink.defaultProps = {
+  name: undefined,
+  children: undefined,
+  href: undefined,
+  onClick: undefined,
   className: '',
 };
 
 ExternalLink.displayName = 'ExternalLink';
-
-export default ExternalLink;

@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import Modal from 'react-modal';
 
-function MenuDrawer({
+export default function MenuDrawer({
   open,
   children,
   onRequestChange,
@@ -32,6 +32,7 @@ function MenuDrawer({
     </Modal>
   );
 }
+
 MenuDrawer.propTypes = {
   open: PropTypes.bool.isRequired,
   children: PropTypes.node,
@@ -40,4 +41,8 @@ MenuDrawer.propTypes = {
   className: PropTypes.string,
 };
 
-export default MenuDrawer;
+MenuDrawer.defaultProps = {
+  children: undefined,
+  onRequestChange: undefined,
+  className: '',
+};

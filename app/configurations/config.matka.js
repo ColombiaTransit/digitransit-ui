@@ -62,6 +62,7 @@ export default {
       'mode-ferry-pier': '#666666',
       'mode-citybike': '#FCBC19',
       'mode-citybike-secondary': '#333333',
+      'mode-scooter': '#BABABA',
     },
   },
   feedIds: [
@@ -89,6 +90,7 @@ export default {
     'Raasepori',
     'VARELY',
     'Harma',
+    'PohjolanMatka',
   ],
 
   additionalFeedIds: {
@@ -166,16 +168,14 @@ export default {
   cityBike: {
     useAllSeasons: true,
     networks: {
-      smoove: HSLConfig.cityBike.networks.smoove,
-      vantaa: HSLConfig.cityBike.networks.vantaa,
-      seatcode_tampere: TampereConfig.cityBike.networks.seatcode_tampere,
-      turku: TurkuConfig.cityBike.networks.donkey_turku,
-      freebike_kuopio: KuopioConfig.cityBike.networks.freebike_kuopio,
-      freebike_lahti: LahtiConfig.cityBike.networks.freebike_lahti,
-      donkey_lappeenranta:
-        LappeenrantaConfig.cityBike.networks.donkey_lappeenranta,
-      donkey_kotka: KotkaConfig.cityBike.networks.donkey_kotka,
-      donkey_kouvola: KouvolaConfig.cityBike.networks.donkey_kouvola,
+      ...HSLConfig.cityBike.networks,
+      ...TampereConfig.cityBike.networks,
+      ...TurkuConfig.cityBike.networks,
+      ...KuopioConfig.cityBike.networks,
+      ...LahtiConfig.cityBike.networks,
+      ...LappeenrantaConfig.cityBike.networks,
+      ...KotkaConfig.cityBike.networks,
+      ...KouvolaConfig.cityBike.networks,
     },
   },
 
@@ -194,6 +194,10 @@ export default {
   transportModes: {
     citybike: {
       availableForSelection: true,
+    },
+    scooter: {
+      availableForSelection: true,
+      defaultValue: false,
     },
   },
 
@@ -247,8 +251,6 @@ export default {
 
   includeCarSuggestions: true,
   includeParkAndRideSuggestions: true,
-  // Include both bike and park and bike and public
-  includePublicWithBikePlan: false,
   // Park and ride and car suggestions separated into two switches
   separatedParkAndRideSwitch: true,
   showBikeAndParkItineraries: true,
@@ -378,4 +380,13 @@ export default {
   // Notice! Turning on this setting forces the search for car routes (for the CO2 comparison only).
   showCO2InItinerarySummary: true,
   useAssembledGeoJsonZones: 'isOffByDefault',
+
+  bikeBoardingModes: {
+    RAIL: { showNotification: true },
+    TRAM: { showNotification: true },
+    FERRY: { showNotification: true },
+    BUS: { showNotification: true },
+  },
+  // Include both bike and park and bike and public, if bike is enabled
+  includePublicWithBikePlan: true,
 };

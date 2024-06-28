@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { intlShape } from 'react-intl';
 import { matchShape } from 'found';
-
+import { userShape, configShape } from '../util/shapes';
 import Icon from './Icon';
 import { addAnalyticsEvent } from '../util/analyticsUtils';
 import DisruptionInfo from './DisruptionInfo';
@@ -13,10 +13,10 @@ import CanceledLegsBar from './CanceledLegsBar';
 import LoginButton from './LoginButton';
 import UserMenu from './UserMenu';
 
-const AppBar = (
+export default function AppBar(
   { showLogo, title, homeUrl, logo, user, breakpoint, titleClicked },
   { config, intl, match, getStore },
-) => {
+) {
   const { location } = match;
   const [disruptionInfoOpen, setDisruptionInfoOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(
@@ -36,9 +36,14 @@ const AppBar = (
     setMenuOpen(newState);
   };
 
+  const toggleDisruptionInfo = newState => {
+    setDisruptionInfoOpen(newState);
+    setMenuOpen(false);
+  };
+
   return (
     <>
-      {disruptionInfoOpen && <DisruptionInfo setOpen={setDisruptionInfoOpen} />}
+      {disruptionInfoOpen && <DisruptionInfo setOpen={toggleDisruptionInfo} />}
       {config.NODE_ENV !== 'test' && <MessageBar breakpoint={breakpoint} />}
       <CanceledLegsBar />
       <nav className={`top-bar ${breakpoint !== 'large' ? 'mobile' : ''}`}>
@@ -111,7 +116,7 @@ const AppBar = (
       </nav>
     </>
   );
-};
+}
 
 AppBar.displayName = 'AppBar';
 
@@ -120,16 +125,23 @@ AppBar.propTypes = {
   title: PropTypes.node,
   homeUrl: PropTypes.string,
   logo: PropTypes.string,
-  user: PropTypes.object,
+  user: userShape,
   breakpoint: PropTypes.string,
-  titleClicked: PropTypes.func,
+  titleClicked: PropTypes.func.isRequired,
+};
+
+AppBar.defaultProps = {
+  showLogo: false,
+  title: undefined,
+  homeUrl: undefined,
+  logo: undefined,
+  user: undefined,
+  breakpoint: undefined,
 };
 
 AppBar.contextTypes = {
   getStore: PropTypes.func.isRequired,
-  config: PropTypes.object.isRequired,
+  config: configShape.isRequired,
   intl: intlShape.isRequired,
   match: matchShape.isRequired,
 };
-
-export default AppBar;

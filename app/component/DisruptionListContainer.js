@@ -15,7 +15,7 @@ import {
 } from '../util/alertUtils';
 import { isKeyboardSelectionEvent } from '../util/browser';
 import withBreakpoint from '../util/withBreakpoint';
-import { AlertShape } from '../util/shapes';
+import { alertShape } from '../util/shapes';
 
 const isDisruption = alert =>
   alert && alert.alertSeverityLevel !== AlertSeverityLevelType.Info;
@@ -38,7 +38,7 @@ const splitAlertByRouteModeAndColor = alert => {
 };
 
 function DisruptionListContainer(
-  { breakpoint, currentTime, viewer },
+  { breakpoint, currentTime, viewer, onClickLink },
   { intl },
 ) {
   const validAlerts = viewer?.alerts
@@ -152,6 +152,7 @@ function DisruptionListContainer(
               disableScrolling
               showLinks
               serviceAlerts={routeAlertsToShow}
+              onClickLink={onClickLink}
             />
           </React.Fragment>
         )}
@@ -164,6 +165,7 @@ function DisruptionListContainer(
               disableScrolling
               showLinks
               serviceAlerts={stopAlertsToShow}
+              onClickLink={onClickLink}
             />
           </React.Fragment>
         )}
@@ -180,12 +182,14 @@ DisruptionListContainer.propTypes = {
   breakpoint: PropTypes.string,
   currentTime: PropTypes.number.isRequired,
   viewer: PropTypes.shape({
-    alerts: PropTypes.arrayOf(AlertShape),
+    alerts: PropTypes.arrayOf(alertShape),
   }).isRequired,
+  onClickLink: PropTypes.func,
 };
 
 DisruptionListContainer.defaultProps = {
   breakpoint: 'small',
+  onClickLink: undefined,
 };
 
 const containerComponent = createFragmentContainer(
@@ -193,7 +197,7 @@ const containerComponent = createFragmentContainer(
     withBreakpoint(DisruptionListContainer),
     ['TimeStore'],
     context => ({
-      currentTime: context.getStore('TimeStore').getCurrentTime().unix(),
+      currentTime: context.getStore('TimeStore').getCurrentTime(),
     }),
   ),
   {

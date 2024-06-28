@@ -60,6 +60,12 @@ export default {
     REALTIME_RENTAL_STATION_MAP: {
       default: `${POI_MAP_PREFIX}/fi/realtimeRentalStations/`,
     },
+    RENTAL_VEHICLE_MAP: {
+      default: `${POI_MAP_PREFIX}/fi/rentalVehicles/`,
+    },
+    REALTIME_RENTAL_VEHICLE_MAP: {
+      default: `${POI_MAP_PREFIX}/fi/realtimeRentalVehicles/`,
+    },
     PARK_AND_RIDE_MAP: {
       default: `${POI_MAP_PREFIX}/en/vehicleParking/`,
       sv: `${POI_MAP_PREFIX}/sv/vehicleParking/`,
@@ -179,12 +185,14 @@ export default {
 
   defaultSettings: {
     accessibilityOption: 0,
+    optimize: 'GREENWAYS',
     bikeSpeed: 5.55,
     ticketTypes: 'none',
     walkBoardCost: 120,
     walkReluctance: 1.8,
     walkSpeed: 1.2,
     transferPenalty: 0,
+    minTransferTime: 90,
     includeBikeSuggestions: true,
     includeParkAndRideSuggestions: false,
     includeCarSuggestions: false,
@@ -214,15 +222,23 @@ export default {
   // if you enable car suggestions but the linear distance between all points is less than this, then a car route will
   // not be computed
   suggestCarMinDistance: 2000,
-  minTransferTime: 90,
-  optimize: 'GREENWAYS',
-  transferPenalty: 0,
-  availableLanguages: ['fi', 'sv', 'en', 'fr', 'nb', 'de', 'da', 'es', 'ro'],
+  availableLanguages: [
+    'fi',
+    'sv',
+    'en',
+    'fr',
+    'nb',
+    'de',
+    'da',
+    'es',
+    'ro',
+    'pl',
+  ],
   defaultLanguage: 'en',
   // This timezone data will expire in 2037
   timezoneData:
     'Europe/Helsinki|EET EEST|-20 -30|0101010101010101010101010101010101010|22k10 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00 11A0 1qM0 WM0 1qM0 WM0 1qM0 WM0 1qM0 11A0 1o00 11A0 1o00|12e5',
-
+  timeZone: 'Europe/Helsinki',
   allowLogin: false,
   allowFavouritesFromLocalstorage: true,
   useExtendedRouteTypes: false,
@@ -240,8 +256,6 @@ export default {
   },
 
   itinerary: {
-    // How long vehicle should be late in order to mark it delayed. Measured in seconds.
-    delayThreshold: 180,
     // Wait time to show "wait leg"? e.g. 180 means over 3 minutes are shown as wait time.
     // Measured in seconds.
     waitThreshold: 180,
@@ -364,6 +378,7 @@ export default {
       'mode-rail': '#af8dbc',
       'mode-ferry': '#247C7B',
       'mode-citybike': '#f2b62d',
+      'mode-scooter': '#BABABA',
     },
   },
   iconModeSet: 'digitransit',
@@ -416,19 +431,6 @@ export default {
   },
 
   useTicketIcons: false,
-  showRouteInformation: false,
-
-  modeToOTP: {
-    bus: 'BUS',
-    tram: 'TRAM',
-    rail: 'RAIL',
-    subway: 'SUBWAY',
-    citybike: 'BICYCLE_RENT',
-    airplane: 'AIRPLANE',
-    ferry: 'FERRY',
-    funicular: 'FUNICULAR',
-    walk: 'WALK',
-  },
 
   // Control what transport modes that should be possible to select in the UI
   // and whether the transport mode is used in trip planning by default.
@@ -472,10 +474,12 @@ export default {
       availableForSelection: false,
       defaultValue: false, // always false
     },
-  },
 
-  // modes that should not coexist with BICYCLE mode
-  modesWithNoBike: ['BICYCLE_RENT', 'WALK'],
+    scooter: {
+      availableForSelection: false,
+      defaultValue: false, // always false
+    },
+  },
 
   moment: {
     relativeTimeThreshold: {
@@ -724,6 +728,7 @@ export default {
   /* key: name of theme, value: regex matching part of host name */
   themeMap: {
     hsl: '(reittiopas|next-dev.digitransit)',
+    apphsl: '(test.digitransit)',
     turku: '(turku|foli)',
     lappeenranta: 'lappeenranta',
     joensuu: 'joensuu',
@@ -766,14 +771,11 @@ export default {
   showVehiclesOnItineraryPage: false,
 
   showWeatherInformation: true,
-  showBikeAndPublicItineraries: false,
   showBikeAndParkItineraries: false,
 
   includeBikeSuggestions: true,
   includeCarSuggestions: false,
   includeParkAndRideSuggestions: false,
-  // Include both bike and park and bike and public
-  includePublicWithBikePlan: false,
   // Park and ride and car suggestions separated
   separatedParkAndRideSwitch: false,
 
@@ -800,7 +802,6 @@ export default {
   showSimilarRoutesOnRouteDropDown: false,
 
   prioritizedStopsNearYou: {},
-  routeNotifications: [],
 
   constantOperationStops: {},
   constantOperationRoutes: {},
@@ -819,9 +820,29 @@ export default {
   },
 
   showAlternativeLegs: true,
-
   // Notice! Turning on this setting forces the search for car routes (for the CO2 comparison only).
   showCO2InItinerarySummary: false,
-
   geoJsonSvgSize: 20,
+  routeNotifications: [
+    {
+      showForBikeWithPublic: true,
+
+      id: 'externalCostWithBike',
+
+      content: {
+        fi: [
+          'Kulkuneuvossa mahdollisuus kuljettaa pyörää. ',
+          'Tarkasta pyörän kuljettamisen mahdollinen maksullisuus operaattorilta.',
+        ],
+        en: [
+          'There is a possibility to transport a bicycle in the vehicle. ',
+          'Check the possible cost of transporting a bicycle from the operator.',
+        ],
+        sv: [
+          'Möjlighet att transportera cykel i fordonet. ',
+          'Kontrollera eventuell avgift för att transportera cykel från operatören.',
+        ],
+      },
+    },
+  ],
 };

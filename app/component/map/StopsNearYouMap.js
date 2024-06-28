@@ -24,7 +24,14 @@ import {
   sortNearbyStops,
 } from '../../util/sortUtils';
 import ItineraryLine from './ItineraryLine';
-import { dtLocationShape, mapLayerOptionsShape } from '../../util/shapes';
+import {
+  locationShape,
+  mapLayerOptionsShape,
+  relayShape,
+  configShape,
+  stopShape,
+} from '../../util/shapes';
+import { mapLayerShape } from '../../store/MapLayerStore';
 import Loading from '../Loading';
 import LazilyLoad, { importLazy } from '../LazilyLoad';
 import { getDefaultNetworks } from '../../util/vehicleRentalUtils';
@@ -159,7 +166,7 @@ function StopsNearYouMap(
 ) {
   const [sortedStopEdges, setSortedStopEdges] = useState([]);
   const [uniqueRealtimeTopics, setUniqueRealtimeTopics] = useState([]);
-  const [routes, setRouteLines] = useState([]);
+  const [routeLines, setRouteLines] = useState([]);
   const [bounds, setBounds] = useState([]);
   const [clientOn, setClientOn] = useState(false);
   const [firstPlan, setFirstPlan] = useState({
@@ -275,8 +282,8 @@ function StopsNearYouMap(
     }
   }, [position, sortedStopEdges]);
 
-  const setRoutes = sortedRoutes => {
-    const routeLines = [];
+  const updateRoutes = sortedRoutes => {
+    let patterns = [];
     const realtimeTopics = [];
     sortedRoutes.forEach(item => {
       const { place } = item.node;
@@ -290,7 +297,7 @@ function StopsNearYouMap(
             shortName: pattern.route.shortName,
             type: pattern.route.type,
           });
-          routeLines.push(pattern);
+          patterns.push(pattern);
         });
       // eslint-disable-next-line no-unused-expressions
       place.stops &&
@@ -303,12 +310,22 @@ function StopsNearYouMap(
               shortName: pattern.route.shortName,
               type: pattern.route.type,
             });
-            routeLines.push(pattern);
+            patterns.push(pattern);
           });
         });
     });
-
-    setRouteLines(routeLines);
+    patterns = uniqBy(patterns, p => p.patternGeometry?.points || '');
+    const lines = patterns
+      .filter(p => p.patternGeometry)
+      .map(p => (
+        <Line
+          key={`${p.code}`}
+          opaque
+          geometry={polyline.decode(p.patternGeometry.points)}
+          mode={getRouteMode(p.route)}
+        />
+      ));
+    setRouteLines(lines);
     setUniqueRealtimeTopics(uniqBy(realtimeTopics, route => route.route));
   };
 
@@ -329,7 +346,7 @@ function StopsNearYouMap(
   }, [uniqueRealtimeTopics]);
 
   useEffect(() => {
-    if (stopsNearYou && stopsNearYou.nearest && stopsNearYou.nearest.edges) {
+    if (stopsNearYou?.nearest?.edges) {
       const active = stopsNearYou.nearest.edges
         .slice()
         .filter(
@@ -375,12 +392,12 @@ function StopsNearYouMap(
       const stopsAndStations = handleStopsAndStations(sortedEdges);
       handleWalkRoutes(stopsAndStations);
       setSortedStopEdges(sortedEdges);
-      setRoutes(sortedEdges);
+      updateRoutes(sortedEdges);
     }
     if (mode === 'FAVORITE') {
       handleWalkRoutes(handleStopsAndStations(stopsNearYou));
       setSortedStopEdges(stopsNearYou);
-      setRoutes(stopsNearYou);
+      updateRoutes(stopsNearYou);
     }
   }, [stopsNearYou, favouriteIds]);
 
@@ -388,25 +405,8 @@ function StopsNearYouMap(
     return <Loading />;
   }
 
-  let leafletObjs = [];
-  // create route lines
-  if (isTransitMode && Array.isArray(routes)) {
-    const getPattern = pattern =>
-      pattern.patternGeometry ? pattern.patternGeometry.points : '';
-    leafletObjs = uniqBy(routes, getPattern).map(pattern => {
-      if (pattern.patternGeometry) {
-        return (
-          <Line
-            key={`${pattern.code}`}
-            opaque
-            geometry={polyline.decode(pattern.patternGeometry.points)}
-            mode={getRouteMode(pattern.route)}
-          />
-        );
-      }
-      return null;
-    });
-  }
+  const leafletObjs =
+    isTransitMode && Array.isArray(routeLines) ? [...routeLines] : [];
   if (uniqueRealtimeTopics.length > 0) {
     leafletObjs.push(
       <VehicleMarkerContainer
@@ -492,23 +492,20 @@ StopsNearYouMap.propTypes = {
   currentTime: PropTypes.number.isRequired,
   stopsNearYou: PropTypes.shape({
     nearest: PropTypes.shape({
+      // eslint-disable-next-line
       edges: PropTypes.arrayOf(PropTypes.object).isRequired,
     }).isRequired,
   }),
-  prioritizedStopsNearYou: PropTypes.arrayOf(PropTypes.object),
+  prioritizedStopsNearYou: PropTypes.arrayOf(stopShape),
+  // eslint-disable-next-line
   favouriteIds: PropTypes.object,
-  mapLayers: PropTypes.object.isRequired,
+  mapLayers: mapLayerShape.isRequired,
   mapLayerOptions: mapLayerOptionsShape,
-  position: dtLocationShape.isRequired,
+  position: locationShape.isRequired,
   match: matchShape.isRequired,
   breakpoint: PropTypes.string.isRequired,
   language: PropTypes.string.isRequired,
-  relay: PropTypes.shape({
-    refetchConnection: PropTypes.func,
-    hasMore: PropTypes.func,
-    loadMore: PropTypes.func,
-    environment: PropTypes.object,
-  }).isRequired,
+  relay: relayShape.isRequired,
   onEndNavigation: PropTypes.func,
   onMapTracking: PropTypes.func,
   loading: PropTypes.bool,
@@ -527,7 +524,7 @@ StopsNearYouMap.defaultProps = {
 };
 
 StopsNearYouMap.contextTypes = {
-  config: PropTypes.object,
+  config: configShape,
   executeAction: PropTypes.func,
   getStore: PropTypes.func,
 };

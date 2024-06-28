@@ -1,14 +1,12 @@
 import React from 'react';
-import moment from 'moment';
-
 import { shallowWithIntl } from '../helpers/mock-intl-enzyme';
-import { Component as RouteStopListContainer } from '../../../app/component/RouteStopListContainer';
+import { Component as RouteStopListContainer } from '../../../app/component/routepage/RouteStopListContainer';
 import { mockMatch } from '../helpers/mock-router';
 
 describe('<RouteStopListContainer />', () => {
   it('should render route stop list', () => {
     const props = {
-      currentTime: moment(1573135114),
+      currentTime: 1573135114,
       pattern: {
         directionId: 0,
         code: 'feed:1',
@@ -102,11 +100,13 @@ describe('<RouteStopListContainer />', () => {
       breakpoint: 'large',
       relay: {
         refetch: () => {},
+        environment: {},
       },
     };
     const wrapper = shallowWithIntl(<RouteStopListContainer {...props} />, {
       context: {
         config: {
+          CONFIG: 'default',
           nearestStopDistance: {},
         },
         match: mockMatch,

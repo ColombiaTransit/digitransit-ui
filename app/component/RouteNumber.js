@@ -2,15 +2,18 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import cx from 'classnames';
 import { intlShape } from 'react-intl';
+import { configShape } from '../util/shapes';
 import IconWithBigCaution from './IconWithBigCaution';
 import IconWithIcon from './IconWithIcon';
 import Icon from './Icon';
+import { TransportMode } from '../constants';
 
 const LONG_ROUTE_NUMBER_LENGTH = 6;
 
 function RouteNumber(props, context) {
   const mode = props.mode.toLowerCase();
   const { alertSeverityLevel, color, withBicycle, text } = props;
+  const isScooter = mode === TransportMode.Scooter.toLowerCase();
   const textIsText = typeof text === 'string'; // can be also react node
   const longText =
     text && textIsText && text.length >= LONG_ROUTE_NUMBER_LENGTH;
@@ -149,13 +152,16 @@ function RouteNumber(props, context) {
             )}
           </div>
         )}
-        {!context.config?.hideWalkLegDurationSummary &&
+        {!context.config.hideWalkLegDurationSummary &&
           props.isTransitLeg === false &&
           props.duration > 0 && (
             <div className={`leg-duration-container ${mode} `}>
               <span className="leg-duration">{props.duration}</span>
             </div>
           )}
+        {isScooter && !props.vertical && (
+          <Icon img="icon-icon_smartphone" className="phone-icon" />
+        )}
       </span>
       {props.occupancyStatus && (
         <span className="occupancy-icon-container">
@@ -221,11 +227,14 @@ RouteNumber.defaultProps = {
   isTransitLeg: false,
   renderModeIcons: false,
   withBicycle: false,
+  color: undefined,
+  duration: undefined,
+  occupancyStatus: undefined,
 };
 
 RouteNumber.contextTypes = {
   intl: intlShape.isRequired,
-  config: PropTypes.object,
+  config: configShape.isRequired,
 };
 
 RouteNumber.displayName = 'RouteNumber';

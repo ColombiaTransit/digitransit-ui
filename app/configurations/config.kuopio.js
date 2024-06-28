@@ -5,7 +5,6 @@ import { BIKEAVL_BIKES } from '../util/vehicleRentalUtils';
 const CONFIG = 'kuopio';
 const APP_TITLE = 'Reittiopas Kuopio';
 const APP_DESCRIPTION = 'Reittiopas Kuopio';
-
 const walttiConfig = require('./config.waltti').default;
 
 export default configMerger(walttiConfig, {
@@ -36,23 +35,14 @@ export default configMerger(walttiConfig, {
 
   feedIds: ['Kuopio', 'digitraffic'],
 
-  showTicketInformation: true,
-
   useTicketIcons: true,
-
+  showTicketInformation: true,
+  showTicketPrice: true,
   ticketInformation: {
     primaryAgencyName: 'Kuopion seudun joukkoliikenne',
   },
-
   ticketLink: 'https://vilkku.kuopio.fi/lipputyypit-hinnat/lippujen-hinnat',
 
-  // mapping fareId from OTP fare identifiers to human readable form
-  fareMapping: function mapFareId(fareId) {
-    return fareId && fareId.substring
-      ? fareId.substring(fareId.indexOf(':') + 1)
-      : '';
-  },
-  showTicketPrice: true,
   searchParams: {
     'boundary.rect.min_lat': 62.454915,
     'boundary.rect.max_lat': 63.469325,
@@ -82,8 +72,8 @@ export default configMerger(walttiConfig, {
       freebike_kuopio: {
         enabled: true,
         season: {
-          start: new Date(new Date().getFullYear(), 3, 24),
-          end: new Date(new Date().getFullYear(), 10, 1),
+          start: '29.4',
+          end: '31.10',
         },
         capacity: BIKEAVL_BIKES,
         icon: 'citybike',
@@ -174,7 +164,7 @@ export default configMerger(walttiConfig, {
           sv: 'Zoner',
           en: 'Zones',
         },
-        url: '/assets/geojson/kuopio_zone_lines_20210222.geojson',
+        url: '/assets/geojson/kuopio_zone_lines_20240508.geojson',
       },
     ],
   },

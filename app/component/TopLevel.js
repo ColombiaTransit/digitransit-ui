@@ -4,45 +4,38 @@ import React, { Fragment } from 'react';
 import some from 'lodash/some';
 import connectToStores from 'fluxible-addons-react/connectToStores';
 import { matchShape, routerShape } from 'found';
+import { configShape, locationShape, userShape } from '../util/shapes';
 import {
   getHomeUrl,
   PREFIX_STOPS,
   PREFIX_ROUTES,
   PREFIX_TERMINALS,
-  LOCAL_STORAGE_EMITTER_PATH,
+  PREFIX_BIKESTATIONS,
 } from '../util/path';
-import { dtLocationShape } from '../util/shapes';
 import AppBarContainer from './AppBarContainer';
 import MobileView from './MobileView';
 import DesktopView from './DesktopView';
 import ErrorBoundary from './ErrorBoundary';
 import { DesktopOrMobile } from '../util/withBreakpoint';
-import { getUser } from '../util/apiUtils';
-import setUser from '../action/userActions';
-import {
-  fetchFavourites,
-  fetchFavouritesComplete,
-} from '../action/FavouriteActions';
-import { addAnalyticsEvent } from '../util/analyticsUtils';
+import { addAnalyticsEvent, handleUserAnalytics } from '../util/analyticsUtils';
 
 class TopLevel extends React.Component {
   static propTypes = {
     children: PropTypes.node,
     header: PropTypes.node,
-    map: PropTypes.any,
+    map: PropTypes.node,
     content: PropTypes.node,
     title: PropTypes.node,
     meta: PropTypes.node,
     match: matchShape.isRequired,
-    origin: dtLocationShape,
-    user: PropTypes.object,
+    origin: locationShape,
+    user: userShape,
     router: routerShape.isRequired,
     selectFromMapHeader: PropTypes.node,
   };
 
   static contextTypes = {
-    headers: PropTypes.object.isRequired,
-    config: PropTypes.object.isRequired,
+    config: configShape.isRequired,
     executeAction: PropTypes.func.isRequired,
   };
 
@@ -70,27 +63,6 @@ class TopLevel extends React.Component {
     };
   }
 
-  constructor(props, context) {
-    super(props, context);
-    if (
-      this.context.config.allowLogin &&
-      !this.props.user.name &&
-      this.props.match.location.pathname !== LOCAL_STORAGE_EMITTER_PATH
-    ) {
-      getUser()
-        .then(user => {
-          this.context.executeAction(setUser, {
-            ...user,
-          });
-          this.context.executeAction(fetchFavourites);
-        })
-        .catch(() => {
-          this.context.executeAction(setUser, { notLogged: true });
-          this.context.executeAction(fetchFavouritesComplete);
-        });
-    }
-  }
-
   componentDidMount() {
     if (this.context.config.logo) {
       // Logo is not mandatory
@@ -108,6 +80,7 @@ class TopLevel extends React.Component {
     const oldLocation = prevProps.match.location.pathname;
     const newLocation = this.props.match.location.pathname;
     if (oldLocation && newLocation && oldLocation !== newLocation) {
+      handleUserAnalytics(this.props.user, this.context.config);
       addAnalyticsEvent({
         event: 'Pageview',
         url: newLocation,
@@ -131,8 +104,10 @@ class TopLevel extends React.Component {
           });
         }
         break;
+
       case PREFIX_STOPS:
       case PREFIX_TERMINALS:
+      case PREFIX_BIKESTATIONS:
         if (
           oldLocation.indexOf(newContext) !== 1 ||
           (prevProps.match.params.stopId &&
@@ -141,14 +116,18 @@ class TopLevel extends React.Component {
           (prevProps.match.params.terminalId &&
             this.props.match.params.terminalId &&
             prevProps.match.params.terminalId !==
-              this.props.match.params.terminalId)
+              this.props.match.params.terminalId) ||
+          (prevProps.match.params.id &&
+            this.props.match.params.id &&
+            prevProps.match.params.id !== this.props.match.params.id)
         ) {
           addAnalyticsEvent({
             category: 'Stop',
             action: 'OpenStop',
             name:
               this.props.match.params.stopId ||
-              this.props.match.params.terminalId,
+              this.props.match.params.terminalId ||
+              this.props.match.params.id,
           });
         }
         break;

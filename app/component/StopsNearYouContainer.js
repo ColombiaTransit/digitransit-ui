@@ -4,6 +4,7 @@ import { createPaginationContainer, graphql } from 'react-relay';
 import { intlShape, FormattedMessage } from 'react-intl';
 import connectToStores from 'fluxible-addons-react/connectToStores';
 import { matchShape } from 'found';
+import { configShape, relayShape } from '../util/shapes';
 import StopNearYouContainer from './StopNearYouContainer';
 import withBreakpoint from '../util/withBreakpoint';
 import { sortNearbyRentalStations, sortNearbyStops } from '../util/sortUtils';
@@ -14,16 +15,13 @@ import { getDefaultNetworks } from '../util/vehicleRentalUtils';
 
 class StopsNearYouContainer extends React.Component {
   static propTypes = {
-    stopPatterns: PropTypes.any,
-    setLoadState: PropTypes.func,
+    // eslint-disable-next-line
+    stopPatterns: PropTypes.object,
+    setLoadState: PropTypes.func.isRequired,
     currentTime: PropTypes.number.isRequired,
-    relay: PropTypes.shape({
-      refetchConnection: PropTypes.func.isRequired,
-      hasMore: PropTypes.func.isRequired,
-      isLoading: PropTypes.func.isRequired,
-      loadMore: PropTypes.func.isRequired,
-    }).isRequired,
-    favouriteIds: PropTypes.object.isRequired,
+    relay: relayShape.isRequired,
+    // eslint-disable-next-line
+    favouriteIds: PropTypes.objectOf(PropTypes.string).isRequired,
     match: matchShape.isRequired,
     position: PropTypes.shape({
       address: PropTypes.string,
@@ -34,11 +32,16 @@ class StopsNearYouContainer extends React.Component {
     prioritizedStops: PropTypes.arrayOf(PropTypes.string),
   };
 
+  static defaultProps = {
+    stopPatterns: undefined,
+    withSeparator: false,
+    prioritizedStops: undefined,
+  };
+
   static contextTypes = {
-    config: PropTypes.object,
+    config: configShape,
     intl: intlShape.isRequired,
     executeAction: PropTypes.func.isRequired,
-    headers: PropTypes.object.isRequired,
     getStore: PropTypes.func,
   };
 
@@ -321,7 +324,7 @@ const connectedContainer = connectToStores(
               .map(stop => stop.gtfsId),
           );
     return {
-      currentTime: getStore('TimeStore').getCurrentTime().unix(),
+      currentTime: getStore('TimeStore').getCurrentTime(),
       favouriteIds,
     };
   },
@@ -343,6 +346,7 @@ const refetchContainer = createPaginationContainer(
         after: { type: "String" }
         maxResults: { type: "Int" }
         maxDistance: { type: "Int" }
+        filterByNetwork: { type: "[String]", defaultValue: null }
       ) {
         nearest(
           lat: $lat
@@ -353,6 +357,7 @@ const refetchContainer = createPaginationContainer(
           after: $after
           maxResults: $maxResults
           maxDistance: $maxDistance
+          filterByNetwork: $filterByNetwork
         ) @connection(key: "StopsNearYouContainer_nearest") {
           edges {
             node {
@@ -417,6 +422,7 @@ const refetchContainer = createPaginationContainer(
         $maxDistance: Int!
         $startTime: Long!
         $omitNonPickups: Boolean!
+        $filterByNetwork: [String!]
       ) {
         viewer {
           ...StopsNearYouContainer_stopPatterns
@@ -431,6 +437,7 @@ const refetchContainer = createPaginationContainer(
               after: $after
               maxResults: $maxResults
               maxDistance: $maxDistance
+              filterByNetwork: $filterByNetwork
             )
         }
       }

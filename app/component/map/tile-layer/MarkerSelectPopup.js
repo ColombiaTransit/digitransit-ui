@@ -1,35 +1,29 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { FormattedMessage } from 'react-intl';
-
+import { FormattedMessage, intlShape } from 'react-intl';
 import SelectStopRow from './SelectStopRow';
-import SelectVehicleRentalStationRow from './SelectVehicleRentalStationRow';
+import SelectVehicleRentalRow from './SelectVehicleRentalRow';
+import SelectVehicleRentalClusterRow from './SelectRentalVehicleClusterRow';
 import SelectParkAndRideRow from './SelectParkAndRideRow';
 import SelectVehicleContainer from './SelectVehicleContainer';
-import { getIdWithoutFeed } from '../../../util/feedScopedIdUtils';
+import { popupColorShape } from '../../../util/shapes';
+import { PREFIX_BIKESTATIONS, PREFIX_RENTALVEHICLES } from '../../../util/path';
 
-function MarkerSelectPopup(props) {
+function MarkerSelectPopup(props, { intl }) {
   const hasStop = () =>
     props.options.find(option => option.layer !== 'realTimeVehicle');
 
   const hasVehicle = () =>
     props.options.find(option => option.layer === 'realTimeVehicle');
 
-  // TODO use feedScopedIds
   const getRowForParking = (parking, layer) =>
     ((layer === 'parkAndRide' && parking.carPlaces) ||
       (layer === 'parkAndRideForBikes' && parking.bicyclePlaces)) && (
       <SelectParkAndRideRow
         key={parking.id}
         name={parking.name}
-        carParkId={
-          layer === 'parkAndRide' ? getIdWithoutFeed(parking.id) : undefined
-        }
-        bikeParkId={
-          layer === 'parkAndRideForBikes'
-            ? getIdWithoutFeed(parking.id)
-            : undefined
-        }
+        carParkId={layer === 'parkAndRide' ? parking.id : undefined}
+        bikeParkId={layer === 'parkAndRideForBikes' ? parking.id : undefined}
       />
     );
 
@@ -48,11 +42,44 @@ function MarkerSelectPopup(props) {
     }
     if (option.layer === 'citybike') {
       return (
-        <SelectVehicleRentalStationRow
+        <SelectVehicleRentalRow
           {...option.feature.properties}
           key={`citybike:${option.feature.properties.id}`}
+          prefix={PREFIX_BIKESTATIONS}
         />
       );
+    }
+    if (option.layer === 'scooter') {
+      if (option.feature.properties.cluster) {
+        return (
+          <SelectVehicleRentalClusterRow
+            {...option.feature.properties}
+            key={`scooter:${option.feature.properties.cluster_id}`}
+            prefix={PREFIX_RENTALVEHICLES}
+            id={option.feature.properties.scooterId}
+            desc={intl.formatMessage({
+              id: 'scooter',
+              defaultMessage: 'scooter',
+            })}
+            isScooter
+          />
+        );
+      }
+      // Too many scooter markers when zoomed in
+      if (props.zoom < 18) {
+        return (
+          <SelectVehicleRentalRow
+            {...option.feature.properties}
+            key={`scooter:${option.feature.properties.id}`}
+            prefix={PREFIX_RENTALVEHICLES}
+            desc={intl.formatMessage({
+              id: 'scooter',
+              defaultMessage: 'scooter',
+            })}
+            icon="icon-icon_scooter-lollipop"
+          />
+        );
+      }
     }
 
     if (
@@ -111,9 +138,22 @@ function MarkerSelectPopup(props) {
 MarkerSelectPopup.displayName = 'MarkerSelectPopup';
 
 MarkerSelectPopup.propTypes = {
-  options: PropTypes.arrayOf(PropTypes.object).isRequired,
-  selectRow: PropTypes.func.isRequired, // eslint-disable-line react/no-unused-prop-types
-  colors: PropTypes.object.isRequired,
+  options: PropTypes.arrayOf(
+    PropTypes.shape({
+      layer: PropTypes.string,
+    }),
+  ).isRequired,
+  selectRow: PropTypes.func.isRequired,
+  colors: popupColorShape.isRequired,
+  zoom: PropTypes.number,
+};
+
+MarkerSelectPopup.defaultProps = {
+  zoom: undefined,
+};
+
+MarkerSelectPopup.contextTypes = {
+  intl: intlShape.isRequired,
 };
 
 export default MarkerSelectPopup;

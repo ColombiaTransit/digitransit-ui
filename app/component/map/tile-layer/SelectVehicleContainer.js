@@ -3,7 +3,7 @@ import React, { useContext } from 'react';
 import { graphql, QueryRenderer, ReactRelayContext } from 'react-relay';
 import TripMarkerPopup from '../route/TripMarkerPopup';
 import SelectVehicleRow from './SelectVehicleRow';
-import Loading from '../../Loading';
+import { vehicleShape } from '../../../util/shapes';
 
 const rowQuery = graphql`
   query SelectVehicleContainerRowQuery($tripId: String!) {
@@ -70,7 +70,7 @@ function SelectVehicleContainer(props) {
       }}
       environment={environment}
       render={results => {
-        if (results.props) {
+        if (results.props?.trip) {
           const content = props.rowView ? (
             <SelectVehicleRow {...results.props} message={props.vehicle} />
           ) : (
@@ -78,12 +78,7 @@ function SelectVehicleContainer(props) {
           );
           return content;
         }
-
-        return (
-          <div className="card" style={{ height: '12rem' }}>
-            <Loading />
-          </div>
-        );
+        return null;
       }}
     />
   ) : (
@@ -99,7 +94,7 @@ function SelectVehicleContainer(props) {
       }}
       environment={environment}
       render={results => {
-        if (results.props) {
+        if (results.props?.trip) {
           const content = props.rowView ? (
             <SelectVehicleRow {...results.props} message={props.vehicle} />
           ) : (
@@ -107,12 +102,7 @@ function SelectVehicleContainer(props) {
           );
           return content;
         }
-
-        return (
-          <div className="card" style={{ height: '12rem' }}>
-            <Loading />
-          </div>
-        );
+        return null;
       }}
     />
   );
@@ -122,7 +112,7 @@ SelectVehicleContainer.displayName = 'SelectVehicleContainer';
 
 SelectVehicleContainer.propTypes = {
   rowView: PropTypes.bool,
-  vehicle: PropTypes.object.isRequired,
+  vehicle: vehicleShape.isRequired,
 };
 
 SelectVehicleContainer.defaultProps = {

@@ -7,8 +7,9 @@ import VehicleRentalStation from './VehicleRentalStation';
 import FavouriteVehicleRentalStationContainer from './FavouriteVehicleRentalStationContainer';
 import { PREFIX_BIKESTATIONS } from '../util/path';
 import { isKeyboardSelectionEvent } from '../util/browser';
-import { hasStationCode } from '../util/vehicleRentalUtils';
+import { hasVehicleRentalCode } from '../util/vehicleRentalUtils';
 import { getIdWithoutFeed } from '../util/feedScopedIdUtils';
+import { relayShape } from '../util/shapes';
 
 const VehicleRentalStationNearYou = ({
   stop,
@@ -51,7 +52,7 @@ const VehicleRentalStationNearYou = ({
               <FormattedMessage
                 id="citybike-station"
                 values={{
-                  stationId: hasStationCode(stop)
+                  stationId: hasVehicleRentalCode(stop.stationId)
                     ? getIdWithoutFeed(stop.stationId)
                     : '',
                 }}
@@ -77,14 +78,14 @@ VehicleRentalStationNearYou.propTypes = {
     name: PropTypes.string,
     network: PropTypes.string,
     operative: PropTypes.bool,
-    spacesAvailable: PropTypes.number,
     stationId: PropTypes.string,
     type: PropTypes.string,
-    vehiclesAvailable: PropTypes.number,
+    availableVehicles: PropTypes.shape({ total: PropTypes.number }),
+    availableSpaces: PropTypes.shape({ total: PropTypes.number }),
   }).isRequired,
   currentTime: PropTypes.number,
   currentMode: PropTypes.string,
-  relay: PropTypes.any.isRequired,
+  relay: relayShape.isRequired,
 };
 
 VehicleRentalStationNearYou.defaultProps = {
@@ -99,8 +100,12 @@ const containerComponent = createRefetchContainer(
       fragment VehicleRentalStationNearYou_stop on VehicleRentalStation {
         stationId
         name
-        vehiclesAvailable
-        spacesAvailable
+        availableVehicles {
+          total
+        }
+        availableSpaces {
+          total
+        }
         capacity
         network
         operative

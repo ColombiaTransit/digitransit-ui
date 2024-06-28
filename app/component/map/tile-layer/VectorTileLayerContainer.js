@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-
+import { configShape } from '../../../util/shapes';
 import TileLayerContainer from './TileLayerContainer';
 import VehicleRentalStations from './VehicleRentalStations';
 import Stops from './Stops';
 import ParkAndRideForCars from './ParkAndRideForCars';
 import ParkAndRideForBikes from './ParkAndRideForBikes';
 import { mapLayerShape } from '../../../store/MapLayerStore';
+import RentalVehicles from './RentalVehicles';
 
 export default function VectorTileLayerContainer(props, { config }) {
   const layers = [];
@@ -22,7 +23,9 @@ export default function VectorTileLayerContainer(props, { config }) {
   if (props.mapLayers.parkAndRideForBikes) {
     layers.push(ParkAndRideForBikes);
   }
-
+  if (props.mapLayers.scooter) {
+    layers.push(RentalVehicles);
+  }
   return (
     <TileLayerContainer
       key="tileLayer"
@@ -61,5 +64,5 @@ VectorTileLayerContainer.defaultProps = {
 };
 
 VectorTileLayerContainer.contextTypes = {
-  config: PropTypes.object.isRequired,
+  config: configShape.isRequired,
 };

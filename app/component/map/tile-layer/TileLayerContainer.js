@@ -10,6 +10,7 @@ import isEqual from 'lodash/isEqual';
 import Popup from 'react-leaflet/es/Popup';
 import { withLeaflet } from 'react-leaflet/es/context';
 import { matchShape, routerShape } from 'found';
+import { relayShape, configShape, vehicleShape } from '../../../util/shapes';
 import { mapLayerShape } from '../../../store/MapLayerStore';
 import MarkerSelectPopup from './MarkerSelectPopup';
 import LocationPopup from '../popups/LocationPopup';
@@ -25,14 +26,15 @@ import {
   PREFIX_TERMINALS,
   PREFIX_CARPARK,
   PREFIX_BIKEPARK,
+  PREFIX_RENTALVEHICLES,
 } from '../../../util/path';
-import { getIdWithoutFeed } from '../../../util/feedScopedIdUtils';
 import SelectVehicleContainer from './SelectVehicleContainer';
 
 const initialState = {
   selectableTargets: undefined,
   coords: undefined,
   showSpinner: true,
+  zoom: undefined,
 };
 
 // TODO eslint doesn't know that TileLayerContainer is a react component,
@@ -57,11 +59,11 @@ class TileLayerContainer extends GridLayer {
         }),
       }).isRequired,
     }).isRequired,
-    relayEnvironment: PropTypes.object.isRequired,
+    relayEnvironment: relayShape.isRequired,
     hilightedStops: PropTypes.arrayOf(PropTypes.string),
     stopsToShow: PropTypes.arrayOf(PropTypes.string),
     objectsToHide: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.string)),
-    vehicles: PropTypes.object,
+    vehicles: PropTypes.objectOf(vehicleShape),
     lang: PropTypes.string.isRequired,
   };
 
@@ -78,7 +80,7 @@ class TileLayerContainer extends GridLayer {
   static contextTypes = {
     getStore: PropTypes.func.isRequired,
     intl: intlShape.isRequired,
-    config: PropTypes.object.isRequired,
+    config: configShape.isRequired,
     match: matchShape.isRequired,
     router: routerShape.isRequired,
   };
@@ -91,7 +93,7 @@ class TileLayerContainer extends GridLayer {
     onClose: () => this.setState({ ...initialState }),
     autoPan: false,
     onOpen: () => this.sendAnalytics(),
-    relayEnvironment: PropTypes.object.isRequired,
+    relayEnvironment: relayShape.isRequired,
   };
 
   merc = new SphericalMercator({
@@ -208,6 +210,29 @@ class TileLayerContainer extends GridLayer {
         );
         return;
       }
+      if (
+        (selectableTargets.length === 1 &&
+          selectableTargets[0].layer === 'scooter') ||
+        (selectableTargets.length > 1 &&
+          selectableTargets.every(target => target.layer === 'scooter'))
+        // scooters are not shown in the selection popup as there can be too many.
+        // Instead, the user is directed to the scooter cluster view or the first one in a group of singles.
+      ) {
+        const cluster = selectableTargets.find(
+          target => target.feature.properties.cluster,
+        );
+        const networks = cluster ? cluster.feature.properties.networks : '';
+        const id = cluster
+          ? cluster.feature.properties.scooterId
+          : selectableTargets[0].feature.properties.id;
+        // adding networks directs to scooter cluster view
+        this.context.router.push(
+          `/${PREFIX_RENTALVEHICLES}/${encodeURIComponent(id)}/${[
+            ...networks,
+          ]}`,
+        );
+        return;
+      }
       // ... Or to stop page
       if (
         selectableTargets.length === 1 &&
@@ -247,11 +272,10 @@ class TileLayerContainer extends GridLayer {
           parkingId = selectableTargets[0].feature.properties?.id;
         }
         if (parkingId) {
-          // TODO use feedScopedId here
           this.context.router.push(
             `/${
               layer === 'parkAndRide' ? PREFIX_CARPARK : PREFIX_BIKEPARK
-            }/${encodeURIComponent(getIdWithoutFeed(parkingId))}`,
+            }/${encodeURIComponent(parkingId)}`,
           );
           return;
         }
@@ -273,6 +297,7 @@ class TileLayerContainer extends GridLayer {
             isFeatureLayerEnabled(target.feature, target.layer, mapLayers),
         ),
         coords,
+        zoom: tile.coords.z,
       });
     };
 
@@ -398,6 +423,7 @@ class TileLayerContainer extends GridLayer {
               selectRow={this.selectRow}
               options={this.state.selectableTargets}
               colors={this.context.config.colors}
+              zoom={this.state.zoom}
             />
           </Popup>
         );
