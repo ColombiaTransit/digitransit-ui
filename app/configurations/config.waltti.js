@@ -41,7 +41,7 @@ export default {
 
   stopsMinZoom: 14,
 
-  cityBike: {},
+  vehicleRental: {},
 
   search: {
     minimalRegexp: /.+/,
@@ -180,7 +180,8 @@ export default {
   parkingAreaSources: ['liipi'],
 
   parkAndRide: {
-    showParkAndRide: false,
+    showParkAndRide: true,
+    showParkAndRideForBikes: true,
     parkAndRideMinZoom: 13,
     pageContent: {
       default: HSLParkAndRideUtils,
@@ -241,4 +242,6 @@ export default {
       ? fareId.substring(fareId.indexOf(':') + 1)
       : '';
   },
+
+  startSearchFromUserLocation: true,
 };

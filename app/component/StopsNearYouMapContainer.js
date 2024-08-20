@@ -48,7 +48,7 @@ const containerComponent = createPaginationContainer(
         after: { type: "String" }
         maxResults: { type: "Int" }
         maxDistance: { type: "Int" }
-        filterByNetwork: { type: "[String]", defaultValue: null }
+        filterByNetwork: { type: "[String!]", defaultValue: null }
       ) {
         nearest(
           lat: $lat
@@ -71,7 +71,9 @@ const containerComponent = createPaginationContainer(
                   lat
                   lon
                   stationId
-                  network
+                  rentalNetwork {
+                    networkId
+                  }
                 }
                 ... on Stop {
                   gtfsId
@@ -189,7 +191,7 @@ const containerComponent = createPaginationContainer(
         $maxDistance: Int!
         $startTime: Long!
         $omitNonPickups: Boolean!
-        $filterByNetwork: [String]
+        $filterByNetwork: [String!]
       ) {
         viewer {
           ...StopsNearYouMapContainer_stopsNearYou

@@ -47,7 +47,7 @@ const VehicleRentalStationContent = (
   const isFull = vehiclesAvailable >= capacity;
 
   const networkConfig = getRentalNetworkConfig(
-    vehicleRentalStation.network,
+    vehicleRentalStation.rentalNetwork.networkId,
     config,
   );
   const cityBikeNetworkUrl = networkConfig?.url?.[language];
@@ -55,10 +55,10 @@ const VehicleRentalStationContent = (
   if (networkConfig.returnInstructions) {
     returnInstructionsUrl = networkConfig.returnInstructions[language];
   }
-  const { cityBike } = config;
-  const cityBikeBuyUrl = cityBike.buyUrl?.[language];
+  const { vehicleRental } = config;
+  const cityBikeBuyUrl = vehicleRental.buyUrl?.[language];
   const buyInstructions = cityBikeBuyUrl
-    ? cityBike.buyInstructions?.[language]
+    ? vehicleRental.buyInstructions?.[language]
     : undefined;
 
   return (
@@ -68,7 +68,7 @@ const VehicleRentalStationContent = (
         breakpoint={breakpoint}
       />
       <VehicleRentalStation vehicleRentalStation={vehicleRentalStation} />
-      {cityBike.showFullInfo && isFull && (
+      {vehicleRental.showFullInfo && isFull && (
         <div className="citybike-full-station-guide">
           <FormattedMessage id="citybike-return-full" />
           <a
@@ -155,7 +155,9 @@ const containerComponent = createFragmentContainer(connectedComponent, {
         total
       }
       capacity
-      network
+      rentalNetwork {
+        networkId
+      }
       stationId
       operative
     }

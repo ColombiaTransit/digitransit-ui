@@ -165,17 +165,17 @@ export default {
   },
   suggestBikeMaxDistance: 2000000,
 
-  cityBike: {
+  vehicleRental: {
     useAllSeasons: true,
     networks: {
-      ...HSLConfig.cityBike.networks,
-      ...TampereConfig.cityBike.networks,
-      ...TurkuConfig.cityBike.networks,
-      ...KuopioConfig.cityBike.networks,
-      ...LahtiConfig.cityBike.networks,
-      ...LappeenrantaConfig.cityBike.networks,
-      ...KotkaConfig.cityBike.networks,
-      ...KouvolaConfig.cityBike.networks,
+      ...HSLConfig.vehicleRental.networks,
+      ...TampereConfig.vehicleRental.networks,
+      ...TurkuConfig.vehicleRental.networks,
+      ...KuopioConfig.vehicleRental.networks,
+      ...LahtiConfig.vehicleRental.networks,
+      ...LappeenrantaConfig.vehicleRental.networks,
+      ...KotkaConfig.vehicleRental.networks,
+      ...KouvolaConfig.vehicleRental.networks,
     },
   },
 
@@ -258,7 +258,8 @@ export default {
   parkingAreaSources: ['liipi'],
 
   parkAndRide: {
-    showParkAndRide: false,
+    showParkAndRide: true,
+    showParkAndRideForBikes: true,
     parkAndRideMinZoom: 13,
     pageContent: {
       default: HSLParkAndRideUtils,

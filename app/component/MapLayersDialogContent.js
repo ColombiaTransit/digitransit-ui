@@ -37,12 +37,15 @@ const geoJsonConfigShape = PropTypes.shape({
 });
 
 const mapLayersconfigShape = PropTypes.shape({
-  cityBike: PropTypes.shape({
+  vehicleRental: PropTypes.shape({
     networks: PropTypes.object,
   }),
   geoJson: geoJsonConfigShape,
   parkAndRide: PropTypes.shape({
     showParkAndRide: PropTypes.bool,
+  }),
+  parkAndRideForBikes: PropTypes.shape({
+    showParkAndRideForBikes: PropTypes.bool,
   }),
   transportModes: PropTypes.shape({
     bus: transportModeconfigShape,
@@ -117,8 +120,15 @@ class MapLayersDialogContent extends React.Component {
   };
 
   render() {
-    const { citybike, parkAndRide, stop, geoJson, vehicles, scooter } =
-      this.props.mapLayers;
+    const {
+      citybike,
+      parkAndRide,
+      parkAndRideForBikes,
+      stop,
+      geoJson,
+      vehicles,
+      scooter,
+    } = this.props.mapLayers;
     let arr;
     if (this.props.geoJson) {
       arr = Object.entries(this.props.geoJson)?.map(([k, v]) => {
@@ -209,7 +219,7 @@ class MapLayersDialogContent extends React.Component {
             />
           )}
           {showRentalVehiclesOfType(
-            config.cityBike?.networks,
+            config.vehicleRental?.networks,
             config,
             TransportMode.Citybike,
           ) && (
@@ -226,7 +236,7 @@ class MapLayersDialogContent extends React.Component {
             />
           )}
           {showRentalVehiclesOfType(
-            config.cityBike?.networks,
+            config.vehicleRental?.networks,
             config,
             TransportMode.Scooter,
           ) && (
@@ -265,6 +275,24 @@ class MapLayersDialogContent extends React.Component {
               onChange={e => {
                 this.updateSetting({ parkAndRide: e.target.checked });
                 sendLayerChangeAnalytic('ParkAndRide', e.target.checked);
+              }}
+            />
+          )}
+          {config.parkAndRide?.showParkAndRideForBikes && (
+            <Checkbox
+              large
+              checked={parkAndRideForBikes}
+              disabled={
+                !!this.props.mapLayerOptions?.parkAndRideForBikes?.isLocked
+              }
+              defaultMessage="Park &amp; ride bike parking"
+              labelId="map-layer-park-and-ride-bike"
+              onChange={e => {
+                this.updateSetting({ parkAndRideForBikes: e.target.checked });
+                sendLayerChangeAnalytic(
+                  'ParkAndRideForBikes',
+                  e.target.checked,
+                );
               }}
             />
           )}
