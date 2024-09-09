@@ -54,7 +54,7 @@ function WalkLeg(
     <FormattedMessage
       id={
         networkType === RentalNetworkType.Scooter
-          ? 'return-scooter-to'
+          ? 'return-e-scooter-to'
           : 'return-cycle-to'
       }
       values={{ station: leg[toOrFrom] ? leg[toOrFrom].name : '' }}
@@ -66,6 +66,14 @@ function WalkLeg(
   if (returnNotice) {
     appendClass = !isScooter ? 'return-citybike' : '';
   }
+
+  const destinationLabel =
+    leg.to?.name?.toLowerCase() === 'scooter'
+      ? intl.formatMessage({
+          id: 'e-scooter',
+          defaultMessage: 'scooter',
+        })
+      : leg.to?.name;
 
   return (
     <div key={index} className="row itinerary-row">
@@ -84,7 +92,7 @@ function WalkLeg(
             distance,
             duration,
             origin: leg[toOrFrom] ? leg[toOrFrom].name : '',
-            destination: leg.to ? leg.to.name : '',
+            destination: leg.to ? destinationLabel : '',
           }}
         />
       </span>
@@ -165,13 +173,18 @@ function WalkLeg(
               ) : (
                 <div>
                   {returnNotice ? (
-                    <VehicleRentalLeg
-                      isScooter={isScooter}
-                      stationName={leg[toOrFrom].name}
-                      vehicleRentalStation={leg[toOrFrom].vehicleRentalStation}
-                      returnBike
-                      rentalVehicle={leg.from.rentalVehicle}
-                    />
+                    <>
+                      <div className="divider" />
+                      <VehicleRentalLeg
+                        isScooter={isScooter}
+                        stationName={leg[toOrFrom].name}
+                        vehicleRentalStation={
+                          leg[toOrFrom].vehicleRentalStation
+                        }
+                        returnBike
+                        rentalVehicle={leg.from.rentalVehicle}
+                      />
+                    </>
                   ) : (
                     leg[toOrFrom].name
                   )}

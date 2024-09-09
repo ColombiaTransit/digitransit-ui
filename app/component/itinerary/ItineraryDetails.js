@@ -5,12 +5,12 @@ import cx from 'classnames';
 import { matchShape, routerShape } from 'found';
 import { FormattedMessage, intlShape } from 'react-intl';
 import connectToStores from 'fluxible-addons-react/connectToStores';
-import get from 'lodash/get';
 import { configShape, itineraryShape, relayShape } from '../../util/shapes';
 import TicketInformation from './TicketInformation';
 import ItinerarySummary from './ItinerarySummary';
 import Legs from './Legs';
 import BackButton from '../BackButton';
+import NavigatorButton from './NavigatorButton';
 import MobileTicketPurchaseInformation from './MobileTicketPurchaseInformation';
 import {
   compressLegs,
@@ -54,6 +54,7 @@ class ItineraryDetails extends React.Component {
     currentLanguage: PropTypes.string,
     changeHash: PropTypes.func,
     openSettings: PropTypes.func.isRequired,
+    setNavigation: PropTypes.func,
     bikeAndPublicItineraryCount: PropTypes.number,
     relayEnvironment: relayShape,
   };
@@ -65,6 +66,7 @@ class ItineraryDetails extends React.Component {
     bikeAndPublicItineraryCount: 0,
     carEmissions: undefined,
     relayEnvironment: undefined,
+    setNavigation: undefined,
   };
 
   static contextTypes = {
@@ -179,7 +181,9 @@ class ItineraryDetails extends React.Component {
 
     const disclaimers = [];
 
-    if (shouldShowFareInfo(config) && fares.some(fare => fare.isUnknown)) {
+    const externalOperatorJourneys = legsWithScooter;
+
+    if (shouldShowFareInfo(config) && (fares.some(fare => fare.isUnknown) || externalOperatorJourneys) ) {
       const found = {};
       itinerary.legs.forEach(leg => {
         if (config.modeDisclaimers?.[leg.mode] && !found[leg.mode]) {
@@ -217,7 +221,8 @@ class ItineraryDetails extends React.Component {
 	    key="faredisclaimer-separate-ticket-key"
             textId="separate-ticket-required-disclaimer"
             values={{
-              agencyName: get(config, 'ticketInformation.primaryAgencyName'),
+              agencyName: typeof config.primaryAgencyName === 'string' ? config.primaryAgencyName :
+		config.primaryAgencyName?.[currentLanguage]
             }}
           />,
         );
@@ -290,6 +295,14 @@ class ItineraryDetails extends React.Component {
                   legs={itinerary.legs}
                 />
               )),
+
+            this.props.setNavigation && (
+              <div key="navigation">
+                <NavigatorButton
+                  setNavigation={this.props.setNavigation}
+		/>
+              </div>
+            ),
             config.showCO2InItinerarySummary && !legsWithScooter && (
               <EmissionsInfo
 		key="emissionsummary"

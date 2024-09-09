@@ -62,9 +62,8 @@ export default configMerger(walttiConfig, {
 
   useTicketIcons: true,
   showTicketInformation: true,
-  ticketInformation: {
-    primaryAgencyName: 'Tampereen seudun joukkoliikenne',
-  },
+  primaryAgencyName: 'Tampereen seudun joukkoliikenne',
+
   ticketLink: 'https://www.nysse.fi/liput-ja-hinnat.html',
 
   callAgencyInfo: {
@@ -290,4 +289,9 @@ export default configMerger(walttiConfig, {
   },
 
   showTenWeeksOnRouteSchedule: true,
+
+  parkAndRide: {
+    showParkAndRide: true,
+    showParkAndRideForBikes: true,
+  },
 });
