@@ -30,13 +30,25 @@ import { getTotalBikingDistance, compressLegs } from '../../util/legUtils';
 export function getSelectedItineraryIndex(
   { pathname, state } = {},
   edges = [],
-  defaultValue = 0,
 ) {
+  // path defines the selection in detail view
+  const lastURLSegment = pathname?.split('/').pop();
+  if (lastURLSegment !== '') {
+    const index = Number(pathname?.split('/').pop());
+    if (!Number.isNaN(index)) {
+      if (index >= edges.length) {
+        return 0;
+      }
+      return index;
+    }
+  }
+
+  // in summary view, look the location state
   if (state?.selectedItineraryIndex !== undefined) {
     if (state.selectedItineraryIndex < edges.length) {
       return state.selectedItineraryIndex;
     }
-    return defaultValue;
+    return 0;
   }
 
   /*
@@ -44,13 +56,6 @@ export function getSelectedItineraryIndex(
    * page by an external link, we check if an itinerary selection is
    * supplied in URL and make that the selection.
    */
-  const lastURLSegment = Number(pathname?.split('/').pop());
-  if (!Number.isNaN(lastURLSegment)) {
-    if (lastURLSegment >= edges.length) {
-      return defaultValue;
-    }
-    return lastURLSegment;
-  }
 
   return 0;
 }
@@ -358,10 +363,10 @@ export function transitEdges(edges) {
 /**
  * Filters away itineraries that
  * 1. don't use scooters
- * 2. only use scooters
+ * 2. only use scooters (unless allowed by allowDirectScooterJourneys)
  * 3. use scooters that are not vehicles
  */
-export function scooterEdges(edges) {
+export function scooterEdges(edges, allowDirectScooterJourneys) {
   if (!edges) {
     return [];
   }
@@ -385,7 +390,11 @@ export function scooterEdges(edges) {
       }
     });
 
-    if (hasScooterLeg && hasNonScooterLeg && allScooterLegsHaveRentalVehicle) {
+    if (
+      hasScooterLeg &&
+      allScooterLegsHaveRentalVehicle &&
+      (hasNonScooterLeg || allowDirectScooterJourneys)
+    ) {
       filteredEdges.push(edge);
     }
   });
@@ -462,11 +471,27 @@ export function mergeBikeTransitPlans(bikeParkPlan, bikeTransitPlan) {
 /**
  * Combine a scooter edge with the main transit edges.
  */
-export function mergeScooterTransitPlan(scooterPlan, transitPlan) {
+export function mergeScooterTransitPlan(
+  scooterPlan,
+  transitPlan,
+  allowDirectScooterJourneys,
+) {
   const transitPlanEdges = transitPlan.edges || [];
-  const scooterTransitEdges = scooterEdges(scooterPlan.edges);
+  const scooterTransitEdges = scooterEdges(
+    scooterPlan.edges,
+    allowDirectScooterJourneys,
+  );
   const maxTransitEdges =
     scooterTransitEdges.length > 0 ? 4 : transitPlanEdges.length;
+
+  // special case: if transitplan only has one walk itinerary, don't show scooter plan if it arrives later.
+  if (
+    transitPlanEdges.length === 1 &&
+    transitPlanEdges[0].node.legs.every(leg => leg.mode === 'WALK') &&
+    transitPlanEdges[0].node.end < scooterTransitEdges[0]?.node.end
+  ) {
+    return transitPlan;
+  }
 
   return {
     edges: [

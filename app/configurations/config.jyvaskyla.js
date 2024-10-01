@@ -160,12 +160,12 @@ export default configMerger(walttiConfig, {
     3: 'C',
   },
 
-  showTicketInformation: false,
+  showTicketInformation: true,
   useTicketIcons: true,
   ticketLink: 'https://linkki.jyvaskyla.fi/liput-ja-hinnat',
   showTicketPrice: true,
 
-  showTicketLinkOnlyWhenTesting: false,
+  showTicketLinkOnlyWhenTesting: true,
   settingsForFeatureTesting: {
     walkSpeed: 0.69,
     bikeSpeed: 8.33,
@@ -183,7 +183,7 @@ export default configMerger(walttiConfig, {
     for (let i = 0; i < ticket.length; i++) {
       zones += `0${ticket.charCodeAt(i) - 64}`; // eslint-disable
     }
-    return `https://waltti.fi/walttiappfeat/busTicket/?operator=50209&ticketType=single&customerGroup=adult&zones=${zones}`;
+    return `https://waltti.fi/walttiapp/busTicket/?operator=50209&ticketType=single&customerGroup=adult&zones=${zones}`;
   },
 
   fareMapping: function mapFareId(fareId) {
