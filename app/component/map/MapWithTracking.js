@@ -16,7 +16,6 @@ import { isBrowser } from '../../util/browser';
 import PositionStore from '../../store/PositionStore';
 import { mapLayerShape } from '../../store/MapLayerStore';
 import BubbleDialog from '../BubbleDialog';
-// eslint-disable-next-line import/no-named-as-default
 import PreferencesStore from '../../store/PreferencesStore';
 import MapLayersDialogContent from '../MapLayersDialogContent';
 import MenuDrawer from '../MenuDrawer';
@@ -87,6 +86,7 @@ class MapWithTrackingStateHandler extends React.Component {
     breakpoint: PropTypes.string.isRequired,
     lang: PropTypes.string.isRequired,
     topButtons: PropTypes.node,
+    bottomPadding: PropTypes.number,
   };
 
   static defaultProps = {
@@ -108,6 +108,7 @@ class MapWithTrackingStateHandler extends React.Component {
     leafletEvents: {},
     mapLayerOptions: null,
     topButtons: null,
+    bottomPadding: undefined,
   };
 
   constructor(props) {
@@ -130,15 +131,11 @@ class MapWithTrackingStateHandler extends React.Component {
 
   // eslint-disable-next-line camelcase
   UNSAFE_componentWillReceiveProps(newProps) {
-    let newState;
-
-    if (newProps.mapTracking && !this.state.mapTracking) {
-      newState = { ...newState, mapTracking: true };
-    } else if (newProps.mapTracking === false && this.state.mapTracking) {
-      newState = { ...newState, mapTracking: false };
-    }
-    if (newState) {
-      this.setState(newState);
+    if (
+      newProps.mapTracking !== undefined &&
+      newProps.mapTracking !== this.state.mapTracking
+    ) {
+      this.setState({ mapTracking: newProps.mapTracking });
     }
   }
 
@@ -151,13 +148,23 @@ class MapWithTrackingStateHandler extends React.Component {
     }
   };
 
+  setMap = map => {
+    this.map = map;
+  };
+
   enableMapTracking = () => {
     if (!this.props.position.hasLocation) {
       this.context.executeAction(startLocationWatch);
     }
-    this.setState({
-      mapTracking: true,
-    });
+    if (!this.state.mapTracking) {
+      // enabling tracking will trigger same navigation events as user navigation
+      // this hack prevents those events from clearing tracking
+      this.ignoreNavigation = true;
+      setTimeout(() => {
+        this.ignoreNavigation = false;
+      }, 500);
+      this.setState({ mapTracking: true });
+    }
     if (this.props.onMapTracking) {
       this.props.onMapTracking();
     }
@@ -224,6 +231,12 @@ class MapWithTrackingStateHandler extends React.Component {
     };
   };
 
+  // eslint-disable-next-line react/no-unused-class-component-methods
+  setBottomPadding = padding => {
+    this.map?.setBottomPadding(padding);
+    this.setState({ bottomPadding: padding });
+  };
+
   render() {
     const {
       lat,
@@ -266,6 +279,7 @@ class MapWithTrackingStateHandler extends React.Component {
       (!isEqual(this.oldBounds, this.props.bounds) || this.refresh)
     ) {
       this.naviProps.bounds = cloneDeep(this.props.bounds);
+      delete this.naviProps.zoom;
       if (this.refresh) {
         // bounds is defined by [min, max] point pair. Substract min lat a bit
         this.naviProps.bounds[0][0] -= 0.000001 * Math.random();
@@ -303,8 +317,6 @@ class MapWithTrackingStateHandler extends React.Component {
         ? this.context.intl.formatMessage({ id: 'tracking-button-on' })
         : this.context.intl.formatMessage({ id: 'tracking-button-off' });
 
-    const iconColor = this.state.mapTracking ? '#ff0000' : '#78909c';
-
     const mergedMapLayers = this.getMapLayers();
     return (
       <>
@@ -321,7 +333,9 @@ class MapWithTrackingStateHandler extends React.Component {
           }}
           {...this.naviProps}
           {...rest}
-          mapRef={this.setMapElementRef}
+          leafletMapRef={this.setMapElementRef}
+          mapRef={this.setMap}
+          breakpoint={this.props.breakpoint}
           bottomButtons={
             <div className={btnClassName}>
               {config.map.showLayerSelector && (
@@ -344,18 +358,11 @@ class MapWithTrackingStateHandler extends React.Component {
               <ToggleMapTracking
                 key="toggleMapTracking"
                 img={img}
-                iconColor={iconColor}
                 ariaLabel={ariaLabel}
                 handleClick={() => {
                   if (this.state.mapTracking) {
                     this.disableMapTracking();
                   } else {
-                    // enabling tracking will trigger same navigation events as user navigation
-                    // this hack prevents those events from clearing tracking
-                    this.ignoreNavigation = true;
-                    setTimeout(() => {
-                      this.ignoreNavigation = false;
-                    }, 500);
                     this.enableMapTracking();
                   }
                 }}
@@ -363,6 +370,7 @@ class MapWithTrackingStateHandler extends React.Component {
               />
             </div>
           }
+          bottomPadding={this.state.bottomPadding}
           topButtons={topButtons}
           mapLayers={mergedMapLayers}
         >

@@ -8,9 +8,9 @@ const GEOCODING_BASE_URL =
   process.env.GEOCODING_BASE_URL || `${API_URL}/geocoding/v1`;
 const MAP_URL =
   process.env.MAP_URL || 'https://digitransit-dev-cdn-origin.azureedge.net';
-const MAP_VERSION = process.env.MAP_VERSION || 'v2';
+const MAP_VERSION = process.env.MAP_VERSION || 'v3';
 const POI_MAP_PREFIX = `${MAP_URL}/map/v3/finland`;
-const OTP_URL = process.env.OTP_URL || `${API_URL}/routing/v2/routers/finland/`;
+const OTP_URL = process.env.OTP_URL || `${API_URL}/routing/v2/finland/`;
 const STOP_TIMETABLES_URL =
   process.env.STOP_TIMETABLES_URL || 'https://dev.kartat.hsl.fi';
 const APP_PATH = process.env.APP_CONTEXT || '';
@@ -59,9 +59,6 @@ export default {
     },
     REALTIME_RENTAL_STATION_MAP: {
       default: `${POI_MAP_PREFIX}/fi/realtimeRentalStations/`,
-    },
-    RENTAL_VEHICLE_MAP: {
-      default: `${POI_MAP_PREFIX}/fi/rentalVehicles/`,
     },
     REALTIME_RENTAL_VEHICLE_MAP: {
       default: `${POI_MAP_PREFIX}/fi/realtimeRentalVehicles/`,
@@ -173,14 +170,14 @@ export default {
   maxNearbyStopAmount: 5,
   maxNearbyStopRefetches: 5,
   maxNearbyStopDistance: {
-    favorite: 100000,
-    bus: 100000,
-    tram: 100000,
-    subway: 100000,
-    rail: 100000,
-    ferry: 100000,
-    citybike: 100000,
-    airplane: 200000,
+    favorite: 20000,
+    bus: 50000,
+    tram: 20000,
+    subway: 20000,
+    rail: 50000,
+    ferry: 50000,
+    citybike: 20000,
+    airplane: 100000,
   },
 
   defaultSettings: {
@@ -374,6 +371,7 @@ export default {
 
   colors: {
     primary: '#000F94',
+    backgroundInfo: '#e5f2fa',
     iconColors: {
       'mode-airplane': '#0046ad',
       'mode-bus': '#0088ce',
@@ -838,4 +836,5 @@ export default {
       },
     },
   ],
+  navigation: false,
 };

@@ -21,6 +21,15 @@ export function legTimeStr(lt) {
   return `${time[0]}:${time[1]}`;
 }
 
+/**
+ * Get time as 'hh:mm:ss'
+ */
+export function legTimeAcc(lt) {
+  const t = lt.estimated?.time || lt.scheduledTime;
+  const parts = t.split('T')[1].split('+');
+  return parts[0];
+}
+
 function filterLegStops(leg, filter) {
   if (leg.from.stop && leg.to.stop && leg.trip) {
     const stops = [leg.from.stop.gtfsId, leg.to.stop.gtfsId];
@@ -607,9 +616,9 @@ export const showBikeBoardingNote = (leg, config) => {
 };
 
 /**
- * Determines whether to leg afrer walk leg contains rental vehicles
- * @param {object} leg - The leg object.
- * @param {object} nextLeg - The Leg after the current leg.
+ * Determines whether a leg after walk leg contains rental vehicles
+ * @param {object} leg - The leg object
+ * @param {object} nextLeg - The Leg after the current leg
  * @returns {boolean}
  */
 export const isRental = (leg, nextLeg) =>
@@ -621,9 +630,10 @@ export const isRental = (leg, nextLeg) =>
 /**
  * Return translated string that describes leg destination
  *
- * @param {object} intl - rect-intl context
- * @param {object} leg - The leg object.
- * @param {object} secondary - optional walk leg
+ * @param {object} intl - react-intl context
+ * @param {object} leg - leg object
+ * @param {object} secondary - optional second destination
+ * @param {object} nextLeg - optional leg after the current leg
  * @returns {string}
  */
 export const legDestination = (intl, leg, secondary, nextLeg = null) => {

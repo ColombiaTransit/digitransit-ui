@@ -143,12 +143,7 @@ export default config => {
             }
           }
         `}
-        render={({ Component, props }) => {
-          if (Component) {
-            return <Component {...props} />;
-          }
-          return undefined;
-        }}
+        render={getComponentOrNullRenderer}
       />
     ),
   };
@@ -229,7 +224,7 @@ export default config => {
             <Route
               getComponent={() =>
                 import(
-                  /* webpackChunkName: "nearyou" */ './component/StopsNearYouPage'
+                  /* webpackChunkName: "nearyou" */ './component/nearyou/NearYouPage'
                 ).then(getDefault)
               }
               render={({ Component, props, error }) => {
@@ -249,7 +244,7 @@ export default config => {
               path="(.*)?"
               getComponent={() =>
                 import(
-                  /* webpackChunkName: "itinerary" */ './component/StopsNearYouPageMeta'
+                  /* webpackChunkName: "itinerary" */ './component/nearyou/NearYouPageMeta'
                 ).then(getDefault)
               }
             />
@@ -347,12 +342,7 @@ export default config => {
                       /* webpackChunkName: "loading" */ './component/Loading'
                     ).then(getDefault)
               }
-              render={({ Component, props }) => {
-                if (Component) {
-                  return <Component {...props} />;
-                }
-                return undefined;
-              }}
+              render={getComponentOrNullRenderer}
             >
               {{
                 content: [
@@ -395,7 +385,7 @@ export default config => {
         path={config.URL.EMBEDDED_SEARCH_GENERATION}
         getComponent={() =>
           import(
-            /* webpackChunkName: "embedded-search-generator" */ './component/EmbeddedSearchGenerator'
+            /* webpackChunkName: "embedded-search-generator" */ './component/embedded/EmbeddedSearchGenerator'
           ).then(getDefault)
         }
       />
@@ -403,7 +393,7 @@ export default config => {
         path={EMBEDDED_SEARCH_PATH}
         getComponent={() =>
           import(
-            /* webpackChunkName: "embedded-search" */ './component/EmbeddedSearchContainer'
+            /* webpackChunkName: "embedded-search" */ './component/embedded/EmbeddedSearchContainer'
           ).then(getDefault)
         }
         topBarOptions={{ hidden: true }}
