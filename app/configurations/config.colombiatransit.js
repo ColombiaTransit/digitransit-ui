@@ -11,7 +11,7 @@ const API_URL = process.env.API_URL || 'https://apiv2.colombiatransit.co';
 const OTP_URL = process.env.OTP_URL || `${API_URL}/api/otp/v2/`;
 const MAP_URL = process.env.MAP_URL || 'https://tileserver.colombiatransit.co';
 const GEOCODING_BASE_URL = process.env.GEOCODING_BASE_URL || `${API_URL}/api/pelias/v1`;
-const POI_MAP_PREFIX = `${OTP_URL}/routers/default/vectorTiles`;
+const POI_MAP_PREFIX = `${OTP_URL}routers/default/vectorTiles`;
 
 const rootLink = process.env.ROOTLINK || 'https://colombiatransit.co';
 
@@ -31,7 +31,7 @@ export default configMerger(walttiConfig, {
       en: `${MAP_URL}/styles/osm-bright/`,
     },
     STOP_MAP: {
-      default: `${POI_MAP_PREFIX}/stops,stations/`,      
+      default: `${POI_MAP_PREFIX}/stops/`,      
     },
     RENTAL_STATION_MAP: {
       default: `${POI_MAP_PREFIX}/rentalStations/`,
