@@ -11,7 +11,7 @@ const API_URL = process.env.API_URL || 'https://apiv2.colombiatransit.co';
 const OTP_URL = process.env.OTP_URL || `${API_URL}/api/otp/v2/`;
 const MAP_URL = process.env.MAP_URL || 'https://tileserver.colombiatransit.co';
 const GEOCODING_BASE_URL = process.env.GEOCODING_BASE_URL || `${API_URL}/api/pelias/v1`;
-const POI_MAP_PREFIX = `${OTP_URL}vectorTiles`;
+const POI_MAP_PREFIX = `${OTP_URL}/routers/default/vectorTiles`;
 
 const rootLink = process.env.ROOTLINK || 'https://colombiatransit.co';
 
@@ -87,7 +87,6 @@ export default configMerger(walttiConfig, {
         en: 'Buses and nearby stops on map',
       },
     },
-
     rail: {
       availableForSelection: true,
       defaultValue: true,
@@ -95,7 +94,6 @@ export default configMerger(walttiConfig, {
         en: 'Trains and nearby stations on map',
       },
     },
-
     tram: {
       availableForSelection: true,
       defaultValue: true,
@@ -103,7 +101,6 @@ export default configMerger(walttiConfig, {
         en: 'Trams and nearby stops on map',
       },
     },
-
     subway: {
       availableForSelection: true,
       defaultValue: true,
@@ -111,37 +108,14 @@ export default configMerger(walttiConfig, {
         en: 'Metro and nearby stations on map',
       },
     },
-
-    citybike: {
-      availableForSelection: false,
-      defaultValue: false,
-      nearYouLabel: {        
-        en: 'The closest city bike stations',
-      },
-    },
-
-    airplane: {
-      availableForSelection: true,
-      defaultValue: true,
-      nearYouLabel: {        
-        en: 'The closest airports',
-      },
-    },
-
     ferry: {
       availableForSelection: true,
       defaultValue: true,
       nearYouLabel: {       
         en: 'The closest ferry piers',
       },
-    },
-
-    funicular: {
-      availableForSelection: true,
-      defaultValue: true,
-    },
+    }
   },
-
   socialMedia: {
     title: APP_TITLE,
     description: APP_DESCRIPTION,
