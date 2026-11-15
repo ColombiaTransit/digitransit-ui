@@ -639,6 +639,7 @@ export default {
     kela: 'kelareitit',
     pori: 'pori',
     raasepori: '(raasepori|bosse)',
+    colombiatransit: 'colombiatransit',
   },
 
   minutesToDepartureLimit: 9,

@@ -1,0 +1,38 @@
+http:
+
+  # Digitransit-UI (ColombiaTransit theme), Traefik file provider.
+  # Entrypoint web: Cloudflare terminates TLS. Copy next to api-pelias.yml.
+  #
+  #   https://colombiatransit.co, https://www.colombiatransit.co
+  #     -> http://digitransit-ui-colombiatransit:8080 (colombiatransit/docker-compose.yml)
+
+  routers:
+    digitransit-ui:
+      entryPoints:
+        - web
+      rule: "Host(`colombiatransit.co`) || Host(`www.colombiatransit.co`)"
+      service: digitransit-ui
+      middlewares:
+        - digitransit-ui@file
+
+  services:
+    digitransit-ui:
+      loadBalancer:
+        servers:
+          - url: "http://digitransit-ui-colombiatransit:8080"
+        healthCheck:
+          path: /
+          interval: 15s
+          timeout: 5s
+
+  ## MIDDLEWARES ##
+  middlewares:
+    digitransit-ui:
+      chain:
+        middlewares:
+          - default-headers
+          - real-ip
+          - digitransit-ui-compress
+
+    digitransit-ui-compress:
+      compress: {}

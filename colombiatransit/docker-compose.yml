@@ -1,0 +1,35 @@
+# Digitransit-UI for ColombiaTransit on https://colombiatransit.co
+#
+# Portainer: Stacks -> Add stack -> Repository
+#   repository  https://github.com/ColombiaTransit/digitransit-ui
+#   reference   refs/heads/colombiatransit
+#   compose     colombiatransit/docker-compose.yml
+#
+# The image is built by .github/workflows/colombiatransit-image.yml.
+# Routing: colombiatransit/traefik.yml (Traefik file provider), which reaches
+# the container on traefik_default as http://digitransit-ui-colombiatransit:8080.
+
+name: digitransit-ui
+
+services:
+  digitransit-ui:
+    image: ${UI_IMAGE:-ghcr.io/colombiatransit/digitransit-ui:latest}
+    restart: unless-stopped
+    environment:
+      CONFIG: colombiatransit
+      API_URL: ${API_URL:-https://apiv2.colombiatransit.co}
+      OTP_URL: ${OTP_URL:-https://apiv2.colombiatransit.co/api/otp/}
+      GEOCODING_BASE_URL: ${GEOCODING_BASE_URL:-https://apiv2.colombiatransit.co/api/pelias/v1}
+      MAP_URL: ${MAP_URL:-https://tileserver.colombiatransit.co}
+      ROOTLINK: ${ROOTLINK:-https://colombiatransit.co}
+    networks:
+      traefik:
+        aliases: [digitransit-ui-colombiatransit]
+    logging:
+      driver: json-file
+      options: { max-size: "20m", max-file: "3" }
+
+networks:
+  traefik:
+    external: true
+    name: ${TRAEFIK_NETWORK:-traefik_default}

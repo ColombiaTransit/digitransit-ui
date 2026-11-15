@@ -1,0 +1,12 @@
+@use 'sass:color';
+@use '../default/theme';
+
+// ColombiaTransit: primary colour #dc0451 (set as colors.primary in
+// server/configs/config.colombiatransit.js), secondary 20% darker.
+@layer theme {
+  :root {
+    --theme-secondary-color: #{color.adjust(#dc0451, $lightness: -20%)};
+    --theme-primary-dark-color: #{color.adjust(#dc0451, $lightness: -5%)};
+    --color-accent-primary-900: #{color.adjust(#dc0451, $lightness: -10%)};
+  }
+}

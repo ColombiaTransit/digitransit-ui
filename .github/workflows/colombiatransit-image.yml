@@ -1,0 +1,82 @@
+name: ColombiaTransit image
+
+# Builds the Digitransit-UI image for the colombiatransit theme only and
+# publishes it to GitHub Container Registry:
+#   ghcr.io/colombiatransit/digitransit-ui:latest        newest build of this branch
+#   ghcr.io/colombiatransit/digitransit-ui:YYYYMMDD      build of that day
+#   ghcr.io/colombiatransit/digitransit-ui:sha-<commit>
+# Deployed with colombiatransit/docker-compose.yml.
+
+on:
+  push:
+    branches: [colombiatransit]
+  workflow_dispatch: {}
+
+concurrency:
+  group: colombiatransit-image
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  packages: write
+
+env:
+  IMAGE: ghcr.io/colombiatransit/digitransit-ui
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: docker/setup-buildx-action@v3
+
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - id: date
+        run: echo "date=$(date -u +%Y%m%d)" >> "$GITHUB_OUTPUT"
+
+      - id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.IMAGE }}
+          tags: |
+            type=raw,value=latest
+            type=raw,value=${{ steps.date.outputs.date }}
+            type=sha,prefix=sha-
+          labels: |
+            org.opencontainers.image.title=digitransit-ui-colombiatransit
+            org.opencontainers.image.description=Digitransit-UI with the ColombiaTransit theme
+            org.opencontainers.image.source=https://github.com/ColombiaTransit/digitransit-ui
+
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          platforms: linux/amd64
+          push: true
+          build-args: |
+            CONFIG=colombiatransit
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Check the image starts
+        run: |
+          docker run -d --name ui -p 8080:8080 "${IMAGE}:latest"
+          for i in $(seq 1 60); do
+            if curl -fsS -o /dev/null http://localhost:8080/; then
+              echo "UI answers on port 8080"
+              curl -fsS http://localhost:8080/ | grep -o '<title>[^<]*</title>' || true
+              docker rm -f ui >/dev/null
+              exit 0
+            fi
+            sleep 2
+          done
+          docker logs ui | tail -50
+          exit 1
