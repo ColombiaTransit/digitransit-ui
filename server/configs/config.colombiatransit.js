@@ -10,8 +10,7 @@
 
 const CONFIG = 'colombiatransit';
 const APP_TITLE = 'ColombiaTransit';
-const APP_DESCRIPTION =
-  'Planificador de viajes en transporte público para Colombia';
+const APP_DESCRIPTION = 'Public transport journey planner for Colombia';
 const YEAR = 1900 + new Date().getYear();
 
 const API_URL = process.env.API_URL || 'https://apiv2.colombiatransit.co';
@@ -86,8 +85,11 @@ export default {
   },
   useExtendedRouteTypes: true,
 
-  availableLanguages: ['es', 'en'],
-  defaultLanguage: 'es',
+  // English only for now: Digitransit's Spanish translation is incomplete
+  // (app ~640 strings missing, the search/favourite/time components fall back
+  // to Finnish). Add 'es' back once it is translated.
+  availableLanguages: ['en'],
+  defaultLanguage: 'en',
   timeZone: 'America/Bogota',
 
   feedIds: [

@@ -69,7 +69,7 @@ jobs:
       - name: Check the image starts
         run: |
           docker run -d --name ui -p 8080:8080 "${IMAGE}:latest"
-          for i in $(seq 1 60); do
+          for _ in $(seq 1 60); do
             if curl -fsS -o /dev/null http://localhost:8080/; then
               echo "UI answers on port 8080"
               curl -fsS http://localhost:8080/ | grep -o '<title>[^<]*</title>' || true
