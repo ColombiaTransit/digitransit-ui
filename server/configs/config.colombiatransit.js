@@ -34,8 +34,13 @@ export default {
 
   URL: {
     OTP: OTP_URL,
+    // config.default.js has HSL maps per language (sv, en) and configMerger
+    // keeps those keys: set every language to our own map.
     MAP: {
       default: `${MAP_URL}/styles/osm-bright/`,
+      en: `${MAP_URL}/styles/osm-bright/`,
+      es: `${MAP_URL}/styles/osm-bright/`,
+      sv: `${MAP_URL}/styles/osm-bright/`,
     },
     STOP_MAP: {
       default: `${VECTOR_TILES}/stops,stations/`,
