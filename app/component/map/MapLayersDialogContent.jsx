@@ -170,6 +170,20 @@ export default function MapLayersDialogContent({
           />
         )}
 
+        {isTransportModeEnabled(transportModes.gondola) && (
+          <Checkbox
+            large
+            checked={mapLayers.stop.gondola}
+            disabled={!!mapLayerOptions?.stop?.gondola?.isLocked}
+            defaultMessage="Cable cars"
+            labelId="map-layer-stop-gondola"
+            onChange={e => {
+              updateMapLayers({ stop: { gondola: e.target.checked } });
+              sendLayerChangeAnalytic('GondolaStop', e.target.checked);
+            }}
+          />
+        )}
+
         {isTransportModeEnabled(transportModes.airplane) && (
           <Checkbox
             large

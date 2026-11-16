@@ -56,6 +56,7 @@ describe('MapLayerContext', () => {
       subway: false,
       tram: false,
       funicular: false,
+      gondola: false,
       airplane: false,
     });
     expect(mapLayers.terminal).toEqual({
@@ -118,6 +119,7 @@ describe('MapLayerContext', () => {
       subway: false,
       tram: false,
       funicular: false,
+      gondola: false,
       airplane: false,
     });
     expect(overriddenMapLayers.terminal).toEqual({

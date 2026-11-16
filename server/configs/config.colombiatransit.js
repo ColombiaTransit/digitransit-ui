@@ -119,6 +119,8 @@ export default {
     tram: { availableForSelection: true, defaultValue: true },
     subway: { availableForSelection: true, defaultValue: true },
     funicular: { availableForSelection: true, defaultValue: true },
+    // Metrocable (Medellín), TransMiCable (Bogotá), MIOCable (Cali), Monserrate
+    gondola: { availableForSelection: true, defaultValue: true },
     rail: { availableForSelection: true, defaultValue: true }, // Metro de Medellín A and B are route_type 2
     ferry: { availableForSelection: false, defaultValue: false },
     airplane: { availableForSelection: true, defaultValue: true },

@@ -32,6 +32,8 @@ export const TransportMode = Object.freeze({
   Tram: 'TRAM',
   /** Taking the funicular */
   Funicular: 'FUNICULAR',
+  /** Taking a gondola or cable car (GTFS route_type 6) */
+  Gondola: 'GONDOLA',
   /** Riding a scooter */
   Scooter: 'SCOOTER',
   /** Taking the taxi */

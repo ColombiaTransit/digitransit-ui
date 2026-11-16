@@ -35,6 +35,8 @@ import Airplane from './assets/airplane.svg';
 import Subway from './assets/subway.svg';
 import Funicular from './assets/funicular.svg';
 import FunicularStop from './assets/funicular-stop.svg';
+import Gondola from './assets/gondola.svg';
+import GondolaStop from './assets/gondola-stop.svg';
 import BusHsl from './assets/bus-hsl.svg';
 import BusReplacementHsl from './assets/bus-replacement-hsl.svg';
 import SpeedTramHsl from './assets/speedtram-hsl.svg';
@@ -91,6 +93,7 @@ export const defaultColors = {
   ferry: '#007a97',
   'ferry-external': '#666666',
   funicular: '#ff00ff',
+  gondola: '#00a39f',
   citybike: '#f2b62d',
   'citybike-secondary': '#333333',
   bikepark: '#f2b62d',
@@ -137,6 +140,8 @@ const iconMap = {
   subway: Subway,
   funicular: Funicular,
   'funicular-stop': FunicularStop,
+  gondola: Gondola,
+  'gondola-stop': GondolaStop,
   // HSL
   'bus-hsl': BusHsl,
   'bus-local-hsl': BusLocalHsl,

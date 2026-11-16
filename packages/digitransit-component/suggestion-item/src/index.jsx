@@ -145,7 +145,7 @@ function getAriaDescription(ariaContentArray) {
 
 const stopLayers = ['station', 'stop'];
 const parkLayers = ['bikepark', 'carpark'];
-const noTheme = ['subway', 'airplane', 'funicular']; // common icon in all themes
+const noTheme = ['subway', 'airplane', 'funicular', 'gondola']; // common icon in all themes
 
 function getIconProps(mode, isStop, modeSet) {
   // select stop lollipop or mode/station icon

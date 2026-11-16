@@ -363,6 +363,7 @@ export default {
     subway: '#ca4000',
     rail: '#8c4799',
     ferry: '#007a97',
+    gondola: '#00a39f',
     'ferry-external': '#666666',
     citybike: '#f2b62d',
     'citybike-secondary': '#333333',
@@ -442,6 +443,12 @@ export default {
     },
 
     funicular: {
+      availableForSelection: false,
+      defaultValue: false,
+    },
+
+    // ColombiaTransit: gondolas / cable cars (GTFS route_type 6)
+    gondola: {
       availableForSelection: false,
       defaultValue: false,
     },

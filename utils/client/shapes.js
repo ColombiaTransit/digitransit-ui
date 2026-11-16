@@ -377,6 +377,7 @@ const MapLayerOptionStopOrTerminalShape = PropTypes.shape({
   subway: PropTypes.shape(MapLayerOptionShape),
   ferry: PropTypes.shape(MapLayerOptionShape),
   funicular: PropTypes.shape(MapLayerOptionShape),
+  gondola: PropTypes.shape(MapLayerOptionShape),
 });
 
 const mapLayerStopsShape = PropTypes.shape({
@@ -386,6 +387,7 @@ const mapLayerStopsShape = PropTypes.shape({
   subway: PropTypes.bool,
   tram: PropTypes.bool,
   funicular: PropTypes.bool,
+  gondola: PropTypes.bool,
   airplane: PropTypes.bool,
 });
 

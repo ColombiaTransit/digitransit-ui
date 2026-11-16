@@ -27,6 +27,10 @@
     @include getCircleSvg($airplane-color, $fill);
   }
 
+  &.gondola {
+    @include getCircleSvg($gondola-color, $fill);
+  }
+
   &.tram {
     @include getCircleSvg($tram-color, $fill);
   }
@@ -1033,6 +1037,10 @@
 
     &.funicular {
       @include setModeCircles($funicular-color);
+    }
+
+    &.gondola {
+      @include setModeCircles($gondola-color);
     }
 
     &.citybike {

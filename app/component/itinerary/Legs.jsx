@@ -205,7 +205,8 @@ export default function Legs({
         leg.mode === 'RAIL' ||
         leg.mode === 'SUBWAY' ||
         leg.mode === 'FERRY' ||
-        leg.mode === 'FUNICULAR') &&
+        leg.mode === 'FUNICULAR' ||
+        leg.mode === 'GONDOLA') &&
       !leg.interlineWithPreviousLeg
     ) {
       const mode = getTripOrRouteMode(

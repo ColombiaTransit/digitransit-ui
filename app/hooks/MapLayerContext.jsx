@@ -28,6 +28,7 @@ function createInitialMapLayers(config) {
       subway: true,
       tram: true,
       funicular: true,
+      gondola: true,
       airplane: true,
     },
     terminal: {

@@ -92,6 +92,10 @@ export const getMapLayerOptions = (options = {}) => {
         isLocked: false,
         isSelected: false,
       },
+      gondola: {
+        isLocked: false,
+        isSelected: false,
+      },
       airplane: {
         isLocked: false,
         isSelected: false,
@@ -117,6 +121,7 @@ export const getMapLayerOptions = (options = {}) => {
     'subway',
     'ferry',
     'funicular',
+    'gondola',
     'airplane',
   ];
   const { lockedMapLayers, selectedMapLayers } = {
