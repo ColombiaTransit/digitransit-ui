@@ -59,11 +59,34 @@ const fixLocaleParamAndRedirect = (req, res, lang) => {
   res.redirect(fixedUrl);
 };
 
+/**
+ * ColombiaTransit: the language menu links to /<lang>/<current path>. Outside
+ * HSL's redirectReittiopasParams setup nothing handled that path, so choosing
+ * a language did nothing. Store the language in the cookie and go back to the
+ * page without the language segment.
+ */
+export function languageSwitchRedirect(req, config) {
+  const lang = req.path.split(PATH_SEPARATORS).filter(Boolean)[0];
+  if (!lang || !config.availableLanguages?.includes(lang)) {
+    return undefined;
+  }
+  return { lang, url: dropPathLanguageAndFixLocaleParam(req, lang) };
+}
+
 export default function legacyUrlMiddleware(req, res, next) {
   const config = getConfiguration(req);
   const newUrl = validateParams(req, config);
+  const languageSwitch = config.redirectReittiopasParams
+    ? undefined
+    : languageSwitchRedirect(req, config);
   if (newUrl) {
     res.redirect(newUrl);
+  } else if (languageSwitch) {
+    res.cookie('lang', languageSwitch.lang, {
+      maxAge: 365 * 24 * 60 * 60 * 1000, // one year, in milliseconds
+      path: '/',
+    });
+    res.redirect(languageSwitch.url);
   } else if (config.redirectReittiopasParams) {
     const parts = req.path.split('/');
     const lang = parts[1];

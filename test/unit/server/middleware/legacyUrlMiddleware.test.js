@@ -1,6 +1,7 @@
 import {
   validateParams,
   dropPathLanguageAndFixLocaleParam,
+  languageSwitchRedirect,
 } from '../../../../server/middleware/legacyUrlMiddleware';
 
 import config from '../../../../server/configs/config.default';
@@ -121,6 +122,37 @@ describe('legacyUrlMiddleware', () => {
           'en',
         ),
       ).toBe('/english/x?locale=en');
+    });
+  });
+
+  describe('languageSwitchRedirect', () => {
+    const conf = { availableLanguages: ['en', 'es'] };
+
+    it('drops an available language from the path', () => {
+      expect(
+        languageSwitchRedirect(
+          { path: `/es/${PREFIX_ITINERARY_SUMMARY}/a/b`, query: {} },
+          conf,
+        ),
+      ).toEqual({
+        lang: 'es',
+        url: `/${PREFIX_ITINERARY_SUMMARY}/a/b?locale=es`,
+      });
+      expect(languageSwitchRedirect({ path: '/en/', query: {} }, conf)).toEqual(
+        { lang: 'en', url: '/?locale=en' },
+      );
+    });
+
+    it('ignores other paths and languages', () => {
+      expect(
+        languageSwitchRedirect({ path: '/stops/x', query: {} }, conf),
+      ).toBeUndefined();
+      expect(
+        languageSwitchRedirect({ path: '/fi/', query: {} }, conf),
+      ).toBeUndefined();
+      expect(languageSwitchRedirect({ path: '/', query: {} }, conf)).toBe(
+        undefined,
+      );
     });
   });
 
