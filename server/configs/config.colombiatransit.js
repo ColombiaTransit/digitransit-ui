@@ -106,6 +106,7 @@ export default {
     'santa_marta',
     'sincelejo',
     'valledupar',
+    'vuelos', // domestic flights (ColombiaTransit/gtfs-colombia-flights)
   ],
 
   transportModes: {
@@ -115,7 +116,7 @@ export default {
     funicular: { availableForSelection: true, defaultValue: true },
     rail: { availableForSelection: false, defaultValue: false },
     ferry: { availableForSelection: false, defaultValue: false },
-    airplane: { availableForSelection: false, defaultValue: false },
+    airplane: { availableForSelection: true, defaultValue: true },
     citybike: { availableForSelection: false, defaultValue: false },
     scooter: { availableForSelection: false, defaultValue: false },
     taxi: { availableForSelection: false, defaultValue: false },
