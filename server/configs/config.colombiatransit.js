@@ -176,7 +176,7 @@ export default {
     content: [
       {
         name: 'about-this-service',
-        route: '/about-this-service',
+        route: '/about',
       },
     ],
   },
