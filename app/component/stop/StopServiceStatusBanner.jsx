@@ -32,6 +32,12 @@ function getModeStopIcon(mode) {
       return 'ScooterStop';
     case 'speedtram':
       return 'SpeedtramStop';
+    case 'gondola':
+      return 'GondolaStop';
+    case 'funicular':
+      return 'FunicularStop';
+    case 'airplane':
+      return 'AirplaneStop';
     default:
       return 'GenericStop';
   }

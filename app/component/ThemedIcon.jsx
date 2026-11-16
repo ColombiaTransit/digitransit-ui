@@ -38,6 +38,10 @@ const ICON_MAP = {
     hslFiIcon: SpeedtramStop,
     fallbackImg: 'icon_tram-lollipop',
   },
+  // ColombiaTransit: modes without an @hsl-fi/icons stop icon
+  GondolaStop: { fallbackImg: 'icon_gondola-lollipop' },
+  FunicularStop: { fallbackImg: 'icon_funicular-lollipop' },
+  AirplaneStop: { fallbackImg: 'icon_airplane-lollipop' },
   GenericStop: { hslFiIcon: Stop, fallbackImg: 'icon_bus-lollipop' },
 };
 
