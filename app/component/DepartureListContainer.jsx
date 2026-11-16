@@ -70,9 +70,9 @@ const asDepartures = stoptimes =>
         };
       });
 
-const getUpcomingDepartures = (stoptimes, isTerminal, currentTime) =>
+const getUpcomingDepartures = (stoptimes, hideArrivals, currentTime) =>
   asDepartures(stoptimes)
-    .filter(departure => !(isTerminal && departure.isArrival))
+    .filter(departure => !(hideArrivals && departure.isArrival))
     .filter(departure => currentTime < departure.time);
 
 const getHeadsign = (departure, intl) => {
@@ -223,6 +223,9 @@ export default function DepartureListContainer({
 }) {
   const intl = useIntl();
   const config = useConfigContext();
+  // ColombiaTransit: config.stopPageHideArrivals hides arriving vehicles
+  // ("Arrives / Terminus") on stop pages too, not only on terminal pages.
+  const hideArrivals = isTerminal || !!config.stopPageHideArrivals;
   const realTime = useRealTimeActions();
   const pageLoadedAlertRef = useRef(null);
   const isMounted = useRef(false);
@@ -244,7 +247,7 @@ export default function DepartureListContainer({
     }
     if (vehiclesEnabled) {
       const clientConfig = getRealtimeClientConfig(
-        getUpcomingDepartures(stoptimes, isTerminal, currentTime),
+        getUpcomingDepartures(stoptimes, hideArrivals, currentTime),
         config,
       );
       if (clientConfig) {
@@ -271,7 +274,7 @@ export default function DepartureListContainer({
     const { client, topics } = realTime;
     if (client) {
       const clientConfig = getRealtimeClientConfig(
-        getUpcomingDepartures(stoptimes, isTerminal, currentTime),
+        getUpcomingDepartures(stoptimes, hideArrivals, currentTime),
         config,
       );
       if (clientConfig) {
@@ -282,7 +285,7 @@ export default function DepartureListContainer({
         });
       }
     }
-  }, [stoptimes, currentTime, isTerminal, vehiclesEnabled]);
+  }, [stoptimes, currentTime, hideArrivals, vehiclesEnabled]);
 
   const departureObjs = [];
 
@@ -294,7 +297,7 @@ export default function DepartureListContainer({
     .toUnixInteger();
   const departures = getUpcomingDepartures(
     stoptimes,
-    isTerminal,
+    hideArrivals,
     currentTime,
   ).slice(0, limit);
 

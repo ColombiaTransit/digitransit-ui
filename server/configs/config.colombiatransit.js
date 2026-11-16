@@ -129,6 +129,10 @@ export default {
     taxi: { availableForSelection: false, defaultValue: false },
   },
 
+  // Stop pages list departures only: no 'Llegada / Fin del recorrido' rows for
+  // arriving flights, cable cars and buses at their last stop.
+  stopPageHideArrivals: true,
+
   searchParams: {
     'boundary.rect.min_lat': minLat,
     'boundary.rect.max_lat': maxLat,
