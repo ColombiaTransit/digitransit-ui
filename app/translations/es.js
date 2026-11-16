@@ -13,6 +13,8 @@ export default {
     acknowledged: 'Entendido',
     'add-favourite-bikeStation-failed-heading':
       'No se pudo guardar la estación de bicicletas',
+    'add-favourite-personalization-failed-heading':
+      'No se pudo guardar la configuración de personalización',
     'add-favourite-place-failed-heading': 'No se pudo guardar el lugar',
     'add-favourite-route-failed-heading': 'No se pudo guardar la ruta',
     'add-favourite-station-failed-heading': 'No se pudo guardar la estación.',
@@ -65,7 +67,22 @@ export default {
     'back-button-title': 'Volver a la página anterior',
     'back-to-front-page': 'Volver a la página de inicio',
     bicycle: 'Bicicleta',
+    'bicycle-walk-from-transit':
+      'Baje su bicicleta del {transportMode} y camine con ella {distance} ({duration})',
+    'bicycle-walk-from-transit-no-duration':
+      'Baje su bicicleta del {transportMode} y camine con ella',
+    'bicycle-walk-to-transit':
+      'Camine con su bicicleta {distance} ({duration}) y súbala al {transportMode}',
+    'bicycle-walk-to-transit-no-duration':
+      'Camine con su bicicleta hasta el {transportMode}',
+    bicycle_frame_lock: 'Anclaje del marco',
+    bicycle_walk: 'Caminar con la bicicleta',
     'bike-availability': 'Bicicletas disponibles actualmente en la estación',
+    'bike-only': 'Solo en bicicleta',
+    'bike-park': 'Parqueadero de bicicletas',
+    'bike-park-disclaimer':
+      'Puede dejar su bicicleta cerca de la estación o del paradero y seguir su viaje en transporte público',
+    'bike-park-disclaimer-header': 'Deje su bicicleta',
     'bike-station-disabled':
       'La estación de bicicletas está fuera de servicio.',
     'biking-speed': 'Velocidad en bicicleta',
@@ -81,15 +98,49 @@ export default {
     'call-number': 'Llamar {number}',
     cancel: 'Cancelar',
     canceled: 'Cancelado',
+    'capacity-modal.crushed-standing-room-only':
+      'Solo queda poco espacio de pie',
+    'capacity-modal.few-seats-available': 'Algunos puestos disponibles',
+    'capacity-modal.heading': '¿Hay espacio a bordo?',
+    'capacity-modal.legend': 'Explicación de los símbolos',
+    'capacity-modal.many-seats-available': 'Muchos puestos disponibles',
+    'capacity-modal.standing-room-only':
+      'Pocos puestos y poco espacio de pie disponibles',
+    'capacity-modal.subheading':
+      'Algunos vehículos tienen un estimado de ocupación en tiempo real',
     car: 'Carro',
     'car-distance-duration': 'Manejar {duration} ({distance})',
+    'car-distance-no-duration': 'Manejar {distance}',
+    'car-drive-from-transit-no-duration': 'Saque su carro del {transportMode}',
+    'car-drive-to-transit-no-duration':
+      'Lleve su carro hasta el {transportMode}',
     'car-park': 'Parqueadero',
+    'car-park-disclaimer':
+      'Puede dejar su carro cerca de una estación o un paradero y seguir su viaje en transporte público',
+    'car-park-disclaimer-header': 'Deje su carro',
     choose: 'Seleccionar',
     'choose-freely': 'Opcional',
     'choose-stop': 'Seleccione un paradero',
     'choose-stop-or-vehicle': 'Seleccione una ruta o un paradero',
     'choose-vehicle': 'Seleccione una ruta',
     citybike: 'Bicicleta compartida',
+    'citybike-duration-general-header':
+      'Varios tramos del recorrido en bicicleta compartida tienen un cobro adicional.',
+    'citybike-duration-info':
+      'Puede usar una bicicleta compartida hasta {duration} minutos seguidos; después se cobra un valor adicional.',
+    'citybike-duration-info-header':
+      'El tramo en bicicleta compartida dura más de {duration} minutos.',
+    'citybike-duration-info-short':
+      'El tramo dura más de {duration} min. Se cobra un valor adicional.',
+    'citybike-network-headers': 'Bicicletas compartidas',
+    'citybike-purchase-link': 'Comprar',
+    'citybike-return-full': '¿Va a devolver una bicicleta compartida?',
+    'citybike-return-full-link':
+      'Cómo devolver una bicicleta cuando la estación está llena ›',
+    'citybike-start-using': 'Empiece a usar las bicicletas compartidas',
+    'citybike-start-using-info': 'Más información',
+    'citybike-station': 'Estación de bicicletas {stationId}',
+    'citybike-station-no-id': 'Estación de bicicletas',
     'clear-button-label': 'Borrar',
     close: 'Cerrar',
     'close-settings': 'Cerrar la ventana y guardar la configuración',
@@ -160,7 +211,19 @@ export default {
     'disruptions-tab.sr-no-disruptions': 'No hay novedades conocidas',
     'disruptions-update-available': 'Hay actualizaciones',
     'distance-total': 'Distancia total',
+    'e-scooter': 'Patineta eléctrica',
+    'e-scooter-alternative':
+      '¿Qué tal hacer parte del viaje en patineta eléctrica? {paymentInfo}',
+    'e-scooter-or-taxi-alternative':
+      '¿Qué tal hacer parte del viaje en patineta eléctrica, taxi o transporte por aplicación? {paymentInfo}',
+    'e-scooters': 'Patinetas eléctricas',
+    'e-scooters-available':
+      'Hay patinetas eléctricas disponibles en la zona. Desbloquéelas con una aplicación.',
     earlier: 'Salidas anteriores',
+    'embedded-search.choose-language': 'Idioma',
+    'embedded-search.choose-mode': 'Medio de transporte',
+    'embedded-search.choose-width-component': 'Ancho del elemento ',
+    'embedded-search.form-heading': 'Herramientas para insertar',
     engine_ignition_aid: 'Ayuda para encender el motor',
     english: 'Inglés',
     estimate: 'Estimado',
@@ -177,6 +240,7 @@ export default {
     'from-ferry': 'de la lancha',
     'from-ferrypier': 'del muelle',
     'from-rail': 'del tren',
+    'from-scooter-location': 'el lugar de la patineta',
     'from-station': 'de la estación',
     'from-stop': 'del paradero',
     'from-subway': 'del metro',
@@ -199,6 +263,7 @@ export default {
       '¿Aceptó la solicitud de su navegador para acceder a su ubicación?',
     'get-off-the-ride': 'Bájese del vehículo',
     hour: 'Hora',
+    hsl_ticket: 'Pasaje HSL',
     hsl_travel_card: 'Tarjeta HSL',
     'include-estonia': 'Incluir Estonia',
     'index.title': 'Planeador de viajes',
@@ -231,6 +296,8 @@ export default {
     'itinerary-details.route-has-severe-alert': 'La ruta tiene novedades.',
     'itinerary-details.route-has-unknown-alert': 'La ruta tiene novedades.',
     'itinerary-details.route-has-warning-alert': 'La ruta tiene novedades.',
+    'itinerary-details.scooter-leg':
+      'A las {time} vaya en patineta {distance} desde el punto de recogida {origin} hasta {destination}. Tiempo estimado {duration}',
     'itinerary-details.taxi-leg':
       'A las {time} viaje en taxi {distance} desde el punto de recogida {origin} hasta {to} {destination}. Tiempo estimado {duration}',
     'itinerary-details.transit-leg-part-1': 'A las {time} {realtime} tome',
@@ -262,6 +329,10 @@ export default {
       'Viaje que sale el {departureDate} a las {departureTime} y llega el {arrivalDate} a las {arrivalTime}. {firstDeparture} {transfers} Tiempo total {totalTime}.',
     'itinerary-summary-row.first-leg-start-time':
       'Sale a las {firstDepartureTime} {firstDepartureStopType} {firstDepartureStop}{firstDeparturePlatform}',
+    'itinerary-summary-row.first-leg-start-time-citybike':
+      'Salida a las {firstDepartureTime} desde la estación de bicicletas {firstDepartureStop}',
+    'itinerary-summary-row.first-leg-start-time-scooter':
+      'Salida a las {firstDepartureTime} desde el lugar de recogida de la patineta',
     'itinerary-summary-row.first-leg-start-time-sr':
       '{vehicle} sale a las {firstDepartureTime} {firstDepartureStopType} {firstDepartureStop} {firstDeparturePlatform}.',
     'itinerary-summary-row.first-leg-start-time-taxi':
@@ -301,6 +372,7 @@ export default {
     'journey-planner-manual': 'Manual del planeador de viajes',
     'language-selection': 'Idioma: {language}',
     later: 'Salidas posteriores',
+    'leave-your-car-park-and-ride': 'Deje su carro en el parqueadero',
     leaves: 'Sale',
     'leaving-at': 'Sale a las',
     lighting: 'Iluminación',
@@ -310,11 +382,17 @@ export default {
     'location-home': 'Casa',
     'location-work': 'Trabajo',
     login: 'Iniciar sesión',
+    'login-content':
+      'Para guardar y usar lugares, rutas y paraderos debe iniciar sesión con su cuenta.',
+    'login-header': 'Inicie sesión primero',
+    logout: 'Cerrar sesión',
     'main-menu': 'Menú principal',
     'main-menu-label-close': 'Cerrar el menú principal',
     'main-menu-label-open': 'Abrir el menú principal',
+    'map-layer-citybike': 'Estaciones de bicicletas compartidas',
     'map-layer-park-and-ride': 'Parqueaderos',
     'map-layer-park-and-ride-bike': 'Parqueaderos de bicicletas',
+    'map-layer-scooter': 'Patinetas',
     'map-layer-stop-airplane': 'Aeropuertos',
     'map-layer-stop-bus': 'Paraderos de bus',
     'map-layer-stop-ferry': 'Lanchas',
@@ -328,19 +406,102 @@ export default {
     'messagebar-label-close-message-bar': 'Cerrar el aviso',
     'min-transfer-time': 'Tiempo de transbordo',
     'minutes-or-route': 'Min / Ruta',
+    'mobile-ticket-purchase-aria':
+      'Información de compra del pasaje en el celular. Compre {ticketName} por {price}. Compre el pasaje en la aplicación HSL o descárguela',
     'modes.from-place': 'desde el destino',
     'modes.to-airplane': 'el aeropuerto',
     'modes.to-bike': 'la estación de bicicletas',
+    'modes.to-bike-park': 'el parqueadero de bicicletas',
     'modes.to-bus': 'el paradero',
+    'modes.to-car-park': 'el parqueadero',
     'modes.to-ferry': 'el muelle',
     'modes.to-place': 'el destino',
     'modes.to-rail': 'la estación de tren',
+    'modes.to-scooter': 'la patineta',
     'modes.to-stop': 'el paradero',
     'modes.to-subway': 'la estación de metro',
     'modes.to-taxi': ' ',
     'modes.to-tram': 'el paradero de tranvía',
     'more-departures': 'Más salidas',
     'move-on-map': 'Moverse en el mapa',
+    'navi-change-info': 'Le avisaremos de cualquier cambio',
+    'navi-geolocation-approval':
+      'Su permiso para usar la ubicación mientras usa el servicio',
+    'navi-geolocation-details':
+      'Al iniciar la guía, el servicio puede pedirle permiso para usar su ubicación. Puede cambiar el permiso en cualquier momento en la configuración de su dispositivo y navegador.',
+    'navi-geolocation-purpose':
+      'Active la ubicación en su dispositivo para recibir la mejor ayuda durante el viaje.',
+    'navi-more-guidance': '¡Mejor guía para su viaje!',
+    'navi-support': 'Recibirá ayuda durante el camino',
+    'navigation-abort-trip':
+      'Lo sentimos, su viaje no puede seguir como estaba planeado.',
+    'navigation-description': 'Lo llevamos a su destino',
+    'navigation-get-mode': 'Suba al {mode}',
+    'navigation-hurry-transfer': 'El tiempo de transbordo cambió',
+    'navigation-hurry-transfer-solved':
+      'El tiempo de transbordo vuelve a ser suficiente',
+    'navigation-hurry-transfer-solved-details':
+      'El tiempo de transbordo {transfer} es de {time}',
+    'navigation-hurry-transfer-value':
+      'El nuevo tiempo de transbordo {transfer} es de {time}. Cambio respecto a lo planeado: {change} min.',
+    'navigation-interline-resume': 'Su viaje sigue en {duration} minutos',
+    'navigation-interline-wait':
+      'El número de la ruta {line} y el destino {destination} cambian en el paradero',
+    'navigation-interline-wait-same-route':
+      'El destino {destination} cambia en el paradero',
+    'navigation-intro-begin': 'Empezar el viaje',
+    'navigation-intro-help-body': 'Viaje paso a paso',
+    'navigation-intro-notifications-body': 'No pierda el rumbo de su viaje',
+    'navigation-journey-start': 'Su viaje empieza a las',
+    'navigation-journey-start-early-prompt': '¿No quiere esperar?',
+    'navigation-mode-canceled': '{name} está cancelado',
+    'navigation-mode-early': '{name} va adelantado',
+    'navigation-mode-late': '{name} va retrasado',
+    'navigation-outro-dismiss': 'Terminar la guía',
+    'navigation-outro-header': '¡Llegó!',
+    'navigation-pier-change': 'Cambio de muelle',
+    'navigation-pier-change-details': '{name} sale del muelle {number}',
+    'navigation-pier-restored': 'Sale del muelle original',
+    'navigation-platform-change': 'Cambio de plataforma',
+    'navigation-platform-change-details':
+      '{name} sale de la plataforma {number}',
+    'navigation-platform-restored': 'Sale de la plataforma original',
+    'navigation-quit': 'Volver',
+    'navigation-remember-ticket': '¿Recordó comprar el pasaje?',
+    'navigation-ticket': 'Pasaje',
+    'navigation-track-change': 'Cambio de vía',
+    'navigation-track-change-details': '{name} sale de la vía {number}',
+    'navigation-track-restored': 'Sale de la vía original',
+    'navigation-transfer-problem': 'El transbordo ya no es posible',
+    'navigation-transfer-problem-details':
+      'El tiempo de transbordo {transfer} es demasiado corto.',
+    'navileg-at-ferrypier': 'muelle',
+    'navileg-at-station': 'estación',
+    'navileg-at-stop': 'paradero',
+    'navileg-bicycle': 'Pedalee',
+    'navileg-car': 'Maneje',
+    'navileg-departing-at': 'en {duration} a las {legTime}',
+    'navileg-hop-on': 'y suba',
+    'navileg-in-transit': 'Viaje en {mode}',
+    'navileg-in-transit-interline':
+      'El número de la ruta y el destino cambian en {stop} {stopOrStation} en {duration} a las {legTime}. Espere a bordo.',
+    'navileg-in-transit-interline-same-route':
+      'El destino cambia en {stop} {stopOrStation} en {duration} a las {legTime}. Espere a bordo.',
+    'navileg-intermediate-stops': '{stopCount} paraderos intermedios',
+    'navileg-leave-at':
+      'Bájese en {stop} {stopOrStation} en {duration} a las {legTime}',
+    'navileg-mode-citybike':
+      '{available} bicicletas compartidas disponibles en la estación',
+    'navileg-mode-realtime': '{mode} {route} va a tiempo',
+    'navileg-mode-schedule': 'No hay información actualizada del servicio',
+    'navileg-one-intermediate-stop': '{stopCount} paradero intermedio',
+    'navileg-rent-cycle': 'Tome una bicicleta compartida',
+    'navileg-rent-scooter': 'Tome una patineta eléctrica',
+    'navileg-scooter': 'Vaya en patineta',
+    'navileg-start-realtime': 'Sale a las {time} de {stopName} {stopOrStation}',
+    'navileg-start-schedule':
+      '{mode} {route} con salida programada a las {time}',
+    'navileg-walk': 'Camine hasta',
     'near-you-search': 'Buscar paraderos y rutas',
     nearest: '{ mode } cerca de usted',
     'nearest-favourites': 'Favoritos más cercanos',
@@ -353,6 +514,7 @@ export default {
     'nearest-stops-bikepark': 'parqueaderos de bicicletas',
     'nearest-stops-bus': 'paraderos de bus',
     'nearest-stops-carpark': 'parqueaderos',
+    'nearest-stops-citybike': 'estaciones de bicicletas',
     'nearest-stops-favorite': 'favoritos cerca de mí',
     'nearest-stops-ferry': 'muelles',
     'nearest-stops-rail': 'estaciones de tren',
@@ -415,9 +577,53 @@ export default {
     paid: 'Pago',
     'park-and-ride': 'Park and Ride',
     'park-and-ride-availability': 'Espacios disponibles',
+    'park-disclaimer-link': 'Más información sobre los parqueaderos',
     'pay-attention': 'Nota',
+    'payment-info-e-scooter':
+      'Tenga en cuenta que para usar y pagar las patinetas necesita la aplicación del operador.',
+    'payment-info-e-scooter-or-taxi':
+      'Tenga en cuenta que las patinetas, los taxis y el transporte por aplicación se usan y se pagan en las aplicaciones de cada proveedor.',
+    'payment-info-taxi':
+      'Tenga en cuenta que los taxis y el transporte por aplicación se usan y se pagan en las aplicaciones de cada proveedor.',
+    payment_at_gate: 'Pago en la entrada ',
     'personal-itineraries': 'Viajes personales',
+    personalization: 'Personalización',
+    'personalization-activated': 'La personalización está activada',
+    'personalization-aria-dislike': 'No me gusta esta opción de viaje',
+    'personalization-aria-like': 'Me gusta esta opción de viaje',
+    'personalization-ask': '¿Le gusta esta sugerencia de viaje?',
+    'personalization-beta':
+      'La personalización está en fase de prueba. Nos gustaría conocer su experiencia. La encuesta se abre en una pestaña nueva.',
+    'personalization-continue-choices':
+      'Elija si usamos su historial de uso para la personalización o si empieza de nuevo borrando su historial.',
+    'personalization-continue-query':
+      '¿Cómo quiere seguir con la personalización?',
+    'personalization-disliked':
+      'En el futuro recibirá menos recomendaciones como esta.',
     'personalization-feedback': 'Enviar comentarios',
+    'personalization-history-keep': 'Aprovechar el historial de uso',
+    'personalization-history-remove':
+      'Borrar el historial de personalización y empezar de nuevo',
+    'personalization-info':
+      'Encuentre sus rutas favoritas y viaje según sus costumbres',
+    'personalization-liked': 'En el futuro recibirá recomendaciones parecidas.',
+    'personalization-login-description':
+      'Puede activar las recomendaciones de viaje personalizadas cuando inicie sesión.',
+    'personalization-login-for-voting': 'Inicie sesión y dé su opinión',
+    'personalization-login-title': 'Inicie sesión para recibir recomendaciones',
+    'personalization-modal-feedback': 'Aprendemos de su opinión',
+    'personalization-modal-feedback-details':
+      'Usamos su opinión en las recomendaciones de viaje. Díganos qué piensa de las recomendaciones y tendremos en cuenta sus preferencias.',
+    'personalization-modal-header':
+      'Cómo funcionan las recomendaciones de viaje',
+    'personalization-modal-highlight': 'Destacamos sus favoritos',
+    'personalization-modal-highlight-details':
+      'En la personalización damos prioridad a sus rutas favoritas. Agregue como favoritas las rutas que usa.',
+    'personalization-modal-link': 'Agregar o editar sus favoritos',
+    'personalization-new-feature':
+      'Descubra las nuevas recomendaciones de viaje personalizadas en la configuración',
+    'personalization-new-header': 'Recomendaciones de viaje activadas',
+    'personalization-open-info': 'Lea cómo funcionan las recomendaciones',
     'phone-number': 'Número de teléfono',
     'pick-mode': 'Medios de transporte',
     'pick-street-mode': 'Mis medios de transporte',
@@ -439,6 +645,7 @@ export default {
     releases: 'Versiones',
     'remove-favourite': 'Quitar de favoritos',
     'rent-cycle-at': 'Tome una bicicleta compartida:',
+    'rent-e-scooter-at': 'Desbloquee la patineta eléctrica con una aplicación',
     'replacement-bus': 'Bus de reemplazo',
     'restore-default-settings': 'Restablecer',
     'restore-default-settings-aria-label':
@@ -448,6 +655,7 @@ export default {
     'restore-default-settings-success':
       'Configuración predeterminada restablecida',
     'return-cycle-to': 'Devuelva la bicicleta:',
+    'return-e-scooter-to': 'Deje la patineta en un lugar seguro',
     'right-now': 'Ahora mismo',
     route: 'Ruta',
     'route-add-viapoint': 'Punto intermedio',
@@ -505,6 +713,12 @@ export default {
       'No hay servicios disponibles a la hora seleccionada.',
     'router-unable': 'No se pueden mostrar opciones de viaje',
     routes: 'Rutas',
+    scooter: 'Patineta',
+    'scooter-availability':
+      'Patinetas disponibles en la estación en este momento',
+    'scooter-distance-duration': 'En patineta {duration} ({distance})',
+    'scooterwalk-distance-duration':
+      'Camine con la patineta {duration} ({distance}).',
     'search-current-suggestion': 'Selección actual: {selection}',
     'search-fields.sr-instructions':
       'La búsqueda se hace automáticamente cuando ingresa el origen y el destino. Al cambiar los parámetros se hace una nueva búsqueda. Use la tecla Tab para ir a los campos de búsqueda',
@@ -519,6 +733,12 @@ export default {
     'select-route':
       'Seleccionar la ruta de {mode} {shortName} hacia {headsign}',
     'selected-routes': 'Rutas seleccionadas',
+    'separate-ticket-required':
+      'Para esta parte del viaje se necesita un pasaje aparte.',
+    'separate-ticket-required-disclaimer':
+      'Este viaje incluye uno o más tramos para los que {agencyName} no vende pasajes.',
+    'separate-ticket-required-for-call-agency-disclaimer':
+      'El viaje incluye un servicio de transporte por reserva. Consulte las formas y condiciones de pago en ',
     'services-and-features': 'Servicios e instalaciones',
     'set-stop-as-routes': 'Usar el paradero como',
     'set-time-earlier-button-label': 'Viajar más temprano',
@@ -527,6 +747,11 @@ export default {
     'settings-changed-by-you': 'Usted cambió la configuración',
     'settings-dropdown-close-label': 'Cerrar opciones',
     'settings-dropdown-open-label': 'Abrir opciones',
+    'settings-e-scooter':
+      'Puede elegir las patinetas eléctricas que quiera e incluirlas en las sugerencias de viaje. {paymentInfo}',
+    'settings-e-scooter-on':
+      'Deje las patinetas eléctricas como opción fija en su configuración',
+    'settings-e-scooter-routes': '¡Incluya patinetas eléctricas en sus viajes!',
     'settings-label-change': 'Cambiar configuración',
     'settings-missing-itineraries-body':
       'Algunas opciones de la configuración excluyen ciertas alternativas de viaje.',
@@ -606,6 +831,10 @@ export default {
       'Pestañas de paraderos cercanos, deslice para cambiar.',
     'swipe-summary-page-tab':
       'Pestañas de opciones de viaje, deslice para cambiar',
+    taxi: 'Taxi',
+    'taxi-alternative': '¿Qué tal hacer parte del viaje en taxi? {paymentInfo}',
+    'taxi-distance-duration': 'Viaje {duration} ({distance})',
+    'taxi-external': 'Taxi',
     'taxis-and-ride-hailing': 'Taxis y transporte por aplicación',
     terminal: 'Terminal',
     'terminal-page.description': 'Terminal {name}',
@@ -613,9 +842,11 @@ export default {
     'terminal-page.title-short': 'Terminal',
     terminus: 'Fin del recorrido',
     'this-week': 'Esta semana',
+    'ticket-information': 'Información del pasaje',
     timetable: 'Horario',
     'to-bicycle': 'a la bicicleta',
     'to-bus': 'al bus',
+    'to-e-scooter': 'a la patineta',
     'to-ferry': 'a la lancha',
     'to-frontpage': 'Ir a la página de inicio',
     'to-rail': 'al tren',
@@ -626,6 +857,9 @@ export default {
     tomorrow: 'Mañana',
     track: 'Vía',
     'track-num': 'Vía {platformCode}',
+    'tracking-button-off': 'seguimiento apagado',
+    'tracking-button-offline': 'falló el seguimiento',
+    'tracking-button-on': 'seguimiento activado',
     'traffic-now': 'Estado del servicio',
     'traffic-now-long': 'Estado del servicio',
     'traffic-now_bread': 'Viajar',
@@ -678,6 +912,7 @@ export default {
     'via-leg-stop-duration': 'En el punto intermedio {stayDuration}',
     'via-point': 'Punto intermedio',
     'view-route': 'Ver ruta',
+    vr_ticket: 'Pasaje VR',
     wait: 'Esperar',
     'wait-amount-of-time': 'Esperar {duration}',
     'wait-in-vehicle': 'Espere a bordo',
@@ -696,6 +931,36 @@ export default {
       'Solo con reserva: {routeName}, que debe reservarse con anticipación.',
     'warning-call-agency-no-route':
       'Solo con reserva. Debe reservarse con anticipación.',
+    weather: 'Clima',
+    'weather-data-source': 'Fuente: Instituto Meteorológico de Finlandia',
+    'weather-detail-title': 'Pronóstico del clima en el origen a las ',
+    'weather-icon-1': 'Despejado',
+    'weather-icon-2': 'Parcialmente nublado',
+    'weather-icon-21': 'Lluvias ligeras',
+    'weather-icon-22': 'Lluvias',
+    'weather-icon-23': 'Lluvias fuertes',
+    'weather-icon-3': 'Nublado',
+    'weather-icon-31': 'Lluvia ligera',
+    'weather-icon-32': 'Lluvia',
+    'weather-icon-33': 'Lluvia fuerte',
+    'weather-icon-41': 'Chubascos de nieve ligeros',
+    'weather-icon-42': 'Chubascos de nieve',
+    'weather-icon-43': 'Chubascos de nieve fuertes',
+    'weather-icon-51': 'Nevada ligera',
+    'weather-icon-52': 'Nevada',
+    'weather-icon-53': 'Nevada fuerte',
+    'weather-icon-61': 'Lluvias con tormenta',
+    'weather-icon-62': 'Lluvias fuertes con tormenta',
+    'weather-icon-63': 'Tormenta eléctrica',
+    'weather-icon-64': 'Tormenta eléctrica fuerte',
+    'weather-icon-71': 'Chubascos de aguanieve ligeros',
+    'weather-icon-72': 'Chubascos de aguanieve',
+    'weather-icon-73': 'Chubascos de aguanieve fuertes',
+    'weather-icon-81': 'Aguanieve ligera',
+    'weather-icon-82': 'Aguanieve',
+    'weather-icon-83': 'Aguanieve fuerte',
+    'weather-icon-91': 'Neblina',
+    'weather-icon-92': 'Niebla',
     'week-number': 'Semana {number}',
     where: '¿A dónde va?',
     zone: 'Zona',
