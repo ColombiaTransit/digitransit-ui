@@ -41,6 +41,28 @@ const translations = {
       tomorrow: 'Tomorrow',
     },
   },
+  es: {
+    translation: {
+      'accessible-close': 'Cerrar el selector',
+      'accessible-closed': 'Selector de hora cerrado',
+      'accessible-open': 'Abrir el selector',
+      'accessible-opened': 'Selector de hora abierto',
+      'accessible-title': 'Selector de fecha y hora',
+      'accessible-update-instructions':
+        'Al cambiar la hora se hace una nueva búsqueda.',
+      arrival: 'Llegada',
+      cancel: 'Cancelar',
+      'choose-time': 'Elegir la hora',
+      date: 'Fecha',
+      departure: 'Salida',
+      'departure-now': 'Salir ahora',
+      'invalid-input': 'La hora ingresada no es válida',
+      ready: 'Listo',
+      time: 'Hora',
+      today: 'Hoy',
+      tomorrow: 'Mañana',
+    },
+  },
   fi: {
     translation: {
       'accessible-close': 'Sulje valitsin',

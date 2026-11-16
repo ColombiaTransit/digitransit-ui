@@ -22,6 +22,18 @@ const translations = {
       up: 'Move favourite up',
     },
   },
+  es: {
+    translation: {
+      cancel: 'Cancelar',
+      delete: 'Eliminar',
+      'delete-place-header': '¿Quiere eliminar este lugar?',
+      'delete-place-name': 'Eliminar lugar: {{favourite.name}}',
+      down: 'Bajar favorito',
+      'edit-place-name': 'Editar lugar: {{favourite.name}}',
+      'edit-places': 'Editar lugares',
+      up: 'Subir favorito',
+    },
+  },
   fi: {
     translation: {
       cancel: 'Peruuta',

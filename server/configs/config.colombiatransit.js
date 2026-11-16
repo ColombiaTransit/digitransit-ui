@@ -90,10 +90,10 @@ export default {
   },
   useExtendedRouteTypes: true,
 
-  // English only for now: Digitransit's Spanish translation is incomplete
-  // (app ~640 strings missing, the search/favourite/time components fall back
-  // to Finnish). Add 'es' back once it is translated.
-  availableLanguages: ['en'],
+  // English by default while the Spanish (Colombian, usted) translation is in
+  // progress; 'es' can be chosen in the menu to review it. Untranslated texts
+  // show in English. Switch defaultLanguage to 'es' once it is complete.
+  availableLanguages: ['en', 'es'],
   defaultLanguage: 'en',
   timeZone: 'America/Bogota',
 

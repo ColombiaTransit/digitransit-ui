@@ -26,6 +26,20 @@ const translations = {
       work: 'Work',
     },
   },
+  es: {
+    translation: {
+      'add-destination': 'Usar como destino',
+      'add-favourite': 'Agregar favorito',
+      'add-home': 'Agregar casa',
+      'add-place': 'Agregar lugar',
+      'add-work': 'Agregar trabajo',
+      edit: 'Editar',
+      'favourites-list': 'Lista de favoritos',
+      home: 'Casa',
+      'open-favourites': 'Abrir favoritos',
+      work: 'Trabajo',
+    },
+  },
   fi: {
     translation: {
       'add-destination': 'Aseta määränpääksi',

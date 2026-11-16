@@ -28,6 +28,24 @@ const translations = {
       work: 'work',
     },
   },
+  es: {
+    translation: {
+      cancel: 'Cancelar',
+      'cannot-save-place': 'No se puede guardar un lugar sin dirección o ícono',
+      'choose-icon': 'Elija el ícono del lugar',
+      'edit-place': 'Editar lugar',
+      home: 'casa',
+      'input-placeholder': 'Póngale un nombre al lugar (opcional)',
+      place: 'un lugar',
+      'required-text': 'campo obligatorio',
+      save: 'Guardar',
+      'save-place': 'Guardar lugar',
+      school: 'colegio',
+      shopping: 'compras',
+      sport: 'deporte',
+      work: 'trabajo',
+    },
+  },
   fi: {
     translation: {
       cancel: 'Peruuta',

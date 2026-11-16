@@ -33,6 +33,23 @@ const translations = {
       'viapoint-slack-amount': 'Stop duration',
     },
   },
+  es: {
+    translation: {
+      'add-via-button-label': 'Agregar punto intermedio',
+      'add-via-duration-button-label':
+        'Definir el tiempo de parada en el punto intermedio {{index}}',
+      'add-via-duration-button-label-close':
+        'Cerrar el selector de tiempo de parada del punto intermedio {{index}}',
+      'add-via-duration-button-label-open':
+        'Abrir el selector de tiempo de parada del punto intermedio {{index}}',
+      'minute-short': 'min',
+      'remove-via-button-label': 'Quitar el punto intermedio {{index}}',
+      'swap-order-button-label': 'Invertir origen y destino',
+      'via-point': 'Punto intermedio',
+      'via-point-index': 'Punto intermedio {{index}}',
+      'viapoint-slack-amount': 'Tiempo de parada',
+    },
+  },
   fi: {
     translation: {
       'add-via-button-label': 'Lisää välipiste',

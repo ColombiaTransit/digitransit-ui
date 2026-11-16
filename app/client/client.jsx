@@ -95,6 +95,9 @@ async function init() {
 
   const { language } = config;
   const translations = await import(`../translations/${language}`);
+  // ColombiaTransit: English underneath, so a text that is not translated yet
+  // shows in English instead of as its message id.
+  const english = language === 'en' ? null : await import('../translations/en');
   i18n.changeLanguage(language);
 
   const network = new RelayNetworkLayer([
@@ -185,7 +188,10 @@ async function init() {
     <AppProviders
       config={config}
       language={language}
-      messages={translations.default[language]}
+      messages={{
+        ...(english ? english.default.en : {}),
+        ...translations.default[language],
+      }}
       environment={environment}
     >
       <ErrorBoundary>
