@@ -19,6 +19,7 @@ import {
   TAB_FAVOURITES,
   EMBEDDED_SEARCH_PATH,
   TRAFFICNOW,
+  PREFIX_ABOUT,
 } from '../../utils/shared/path';
 import {
   getDefault,
@@ -346,7 +347,7 @@ export default config => {
         }}
       </Route>
       <Route
-        path={`/${TRAFFICNOW}/hairio/:alertId`}
+        path={`/${TRAFFICNOW}/alert/:alertId`}
         getComponent={() =>
           import(
             /* webpackChunkName: "trafficnow" */ '../component/trafficnow/TrafficNow'
@@ -357,7 +358,7 @@ export default config => {
         }
       />
       <Route
-        path={`/${TRAFFICNOW}/peruutukset/:mode`}
+        path={`/${TRAFFICNOW}/cancellations/:mode`}
         getComponent={() =>
           import(
             /* webpackChunkName: "trafficnow" */ '../component/trafficnow/TrafficNow'
@@ -380,7 +381,7 @@ export default config => {
       />
       <Redirect from={`/${TRAFFICNOW}/*`} to={`/${TRAFFICNOW}`} />
       <Route
-        path="/tietoja-palvelusta"
+        path={`/${PREFIX_ABOUT}`}
         getComponent={() =>
           import(/* webpackChunkName: "about" */ '../component/AboutPage').then(
             getDefault,

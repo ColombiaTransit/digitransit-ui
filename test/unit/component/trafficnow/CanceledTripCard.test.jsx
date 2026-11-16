@@ -128,7 +128,7 @@ describe('<CanceledTripCard />', () => {
       const container = renderCanceledTripCard();
 
       expect(routeBadgeNames(container)).toEqual(['21B']);
-      expect(routeBadgeHrefs(container)).toEqual(['/linjat/HSL%3A21B']);
+      expect(routeBadgeHrefs(container)).toEqual(['/routes/HSL%3A21B']);
     });
 
     it('limits the amount of route badges', () => {
@@ -331,7 +331,7 @@ describe('<CanceledTripCard />', () => {
 
       expect(
         router.push.mock.calls.some(
-          call => call[0] === '/liikenne/peruutukset/bus',
+          call => call[0] === '/traffic/cancellations/bus',
         ),
       ).toBe(true);
     });

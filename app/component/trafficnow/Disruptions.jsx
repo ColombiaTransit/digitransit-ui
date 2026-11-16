@@ -77,7 +77,7 @@ export default function Disruptions({ dateTime }) {
   } = config;
 
   const disruptionCardOnClick = id => {
-    router.push(`/${TRAFFICNOW}/hairio/${id}`);
+    router.push(`/${TRAFFICNOW}/alert/${id}`);
   };
 
   const { alerts } = useLazyLoadQuery(

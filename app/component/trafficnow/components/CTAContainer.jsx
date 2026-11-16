@@ -4,6 +4,7 @@ import { Icon, ArrowLeft } from '@hsl-fi/icons';
 import { useIntl } from 'react-intl';
 import PropTypes from 'prop-types';
 import cx from 'classnames';
+import { TRAFFICNOW } from '../../../../utils/shared/path';
 
 export default function CTAContainer({ isMobile = false }) {
   const { formatMessage } = useIntl();
@@ -13,7 +14,7 @@ export default function CTAContainer({ isMobile = false }) {
         'detail-view__cta-container--mobile': isMobile,
       })}
     >
-      <Link to="/liikenne">
+      <Link to={`/${TRAFFICNOW}`}>
         <Icon icon={ArrowLeft} color="accent" size="s" />
         <Text variant="cta-small" color="default">
           {formatMessage({ id: 'traffic-now_go-back' })}

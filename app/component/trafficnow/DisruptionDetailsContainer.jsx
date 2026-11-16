@@ -9,6 +9,7 @@ import Card from '../Card';
 import DisruptionBadge from './DisruptionBadge';
 import DisruptionStatus from './components/DisruptionStatus';
 import RouteBadges from './RouteBadges';
+import { TRAFFICNOW } from '../../../utils/shared/path';
 import AlertsQuery from './queries/AlertsQuery';
 import { AlertSeverityLevelType } from '../../../utils/shared/constants';
 import CTAContainer from './components/CTAContainer';
@@ -28,7 +29,7 @@ export default function DisruptionDetailsContainer({
 
   useEffect(() => {
     if (!alert) {
-      router.replace('/liikenne');
+      router.replace(`/${TRAFFICNOW}`);
     }
   }, [alert, router]);
 

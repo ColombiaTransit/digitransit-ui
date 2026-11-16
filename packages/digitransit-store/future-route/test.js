@@ -26,7 +26,7 @@ describe('Testing @digitransit-store/digitransit-store-future-route module', () 
     it('Url should be match', () => {
       const url = createUrl(route);
       expect(url).toBe(
-        '/reitti/Pasila%2C%20Helsinki%3A%3A60.198828%2C24.933514/Myyrm%C3%A4ki%2C%20Vantaa%3A%3A60.261238%2C24.854782?time=1600757120',
+        '/itinerary/Pasila%2C%20Helsinki%3A%3A60.198828%2C24.933514/Myyrm%C3%A4ki%2C%20Vantaa%3A%3A60.261238%2C24.854782?time=1600757120',
       );
     });
   });

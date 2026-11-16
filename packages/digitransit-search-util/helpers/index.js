@@ -47,8 +47,8 @@ export const isStop = ({ layer, type }) =>
   type === 'stop' ||
   type === 'favouriteStop';
 
-const DEFAULT_ROUTES_PREFIX = 'linjat';
-const DEFAULT_STOPS_PREFIX = 'pysakit';
+const DEFAULT_ROUTES_PREFIX = 'routes';
+const DEFAULT_STOPS_PREFIX = 'stops';
 
 export const mapRoute = (item, pathOpts) => {
   if (item === null || item === undefined) {

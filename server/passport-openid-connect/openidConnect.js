@@ -94,12 +94,12 @@ export default function setUpOIDC(app, port, indexPath, hostnames) {
       '/fi/',
       '/en/',
       '/sv/',
-      '/reitti/',
-      '/pysakit/',
-      '/linjat/',
-      '/terminaalit/',
-      '/pyoraasemat/',
-      '/lahellasi/',
+      '/itinerary/',
+      '/stops/',
+      '/routes/',
+      '/stations/',
+      '/bike-stations/',
+      '/nearby/',
     ];
     // Only allow sso login when user navigates to certain paths
     // Query parameter is string type

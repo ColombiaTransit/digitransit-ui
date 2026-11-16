@@ -38,7 +38,7 @@ describe('StopMarker', () => {
 
   describe('getStopMarkerPath', () => {
     it('should encode the stop id in the stop page path', () => {
-      expect(getStopMarkerPath('HSL:1541157')).toBe('/pysakit/HSL%3A1541157');
+      expect(getStopMarkerPath('HSL:1541157')).toBe('/stops/HSL%3A1541157');
     });
   });
 

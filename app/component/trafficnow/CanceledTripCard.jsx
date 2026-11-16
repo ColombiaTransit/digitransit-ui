@@ -42,7 +42,7 @@ export default function CanceledTripCard({ mode, routes, isMobile = false }) {
   return (
     <Card
       className="disruption-card clickable"
-      onClick={handleRouteBadgeClick(`/${TRAFFICNOW}/peruutukset/${mode}`)}
+      onClick={handleRouteBadgeClick(`/${TRAFFICNOW}/cancellations/${mode}`)}
     >
       <header>
         <span className="disruption-card__header-left">

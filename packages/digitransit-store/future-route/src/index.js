@@ -1,6 +1,6 @@
 import sortBy from 'lodash/sortBy';
 
-const DEFAULT_ITINERARY_PREFIX = 'reitti';
+const DEFAULT_ITINERARY_PREFIX = 'itinerary';
 
 /**
  * Builds an itinerary summary URL for a future route entry.

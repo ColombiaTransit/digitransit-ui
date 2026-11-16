@@ -4,21 +4,25 @@ import trimStart from 'lodash/trimStart.js';
 import toPairs from 'lodash/toPairs.js';
 import { otpToLocation, locationToOTP, locationToUri } from './otpStrings.js';
 
-export const TAB_NEARBY = 'lahellasi';
-export const TAB_FAVOURITES = 'suosikit';
-export const PREFIX_ROUTES = 'linjat';
+// ColombiaTransit: English URL paths for every UI language (HSL uses Finnish ones).
+// Keep in sync with the defaults in packages/digitransit-component/autosuggest,
+// packages/digitransit-search-util/helpers and packages/digitransit-store/future-route.
+export const TAB_NEARBY = 'nearby';
+export const TAB_FAVOURITES = 'favourites';
+export const PREFIX_ROUTES = 'routes';
 export const PREFIX_NEARYOU = TAB_NEARBY;
-export const PREFIX_STOPS = 'pysakit';
-export const PREFIX_BIKESTATIONS = 'pyoraasemat';
-export const PREFIX_BIKEPARK = 'pyoraparkit';
-export const PREFIX_CARPARK = 'autoparkit';
-export const PREFIX_TERMINALS = 'terminaalit';
-export const PREFIX_ITINERARY_SUMMARY = 'reitti';
-export const PREFIX_DISRUPTION = 'hairiot';
-export const PREFIX_TIMETABLE = 'aikataulu';
-export const EMBEDDED_SEARCH_PATH = '/haku';
-export const PREFIX_RENTALVEHICLES = 'skuutit';
-export const TRAFFICNOW = 'liikenne';
+export const PREFIX_STOPS = 'stops';
+export const PREFIX_BIKESTATIONS = 'bike-stations';
+export const PREFIX_BIKEPARK = 'bike-parks';
+export const PREFIX_CARPARK = 'car-parks';
+export const PREFIX_TERMINALS = 'stations';
+export const PREFIX_ITINERARY_SUMMARY = 'itinerary';
+export const PREFIX_DISRUPTION = 'alerts';
+export const PREFIX_TIMETABLE = 'timetable';
+export const EMBEDDED_SEARCH_PATH = '/search';
+export const PREFIX_RENTALVEHICLES = 'scooters';
+export const TRAFFICNOW = 'traffic';
+export const PREFIX_ABOUT = 'about';
 
 /**
  * Join argument with slash separator.

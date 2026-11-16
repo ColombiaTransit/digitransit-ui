@@ -28,7 +28,7 @@ import { searchReducer } from './utils/searchReducer';
 // recreated and refetch on every render, and the `RESET_SOURCES` effect to
 // fire in a loop.
 const DEFAULT_SOURCES = [];
-const DEFAULT_PATH_OPTS = { routesPrefix: 'linjat', stopsPrefix: 'pysakit' };
+const DEFAULT_PATH_OPTS = { routesPrefix: 'routes', stopsPrefix: 'stops' };
 const DEFAULT_REF_POINT = {};
 
 const getAriaProps = ({
@@ -254,7 +254,7 @@ const getNewTargets = ({
  * @property {Object} [refPoint]
  * @param {DTAutosuggestProps} props
  * @param {string[]} [props.sources=[]]
- * @param {Object} [props.pathOpts={routesPrefix: 'linjat', stopsPrefix: 'pysakit'}]
+ * @param {Object} [props.pathOpts={routesPrefix: 'routes', stopsPrefix: 'stops'}]
  * @param {Object} [props.refPoint={}]
  * @returns {JSX.Element}
  */

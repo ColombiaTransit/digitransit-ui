@@ -173,17 +173,17 @@ describe('analytics utils', () => {
       expect(res.includes('96b0b2f3-bc5a-4b40-b910-cc65bb5b6cd9')).toBe(false);
     });
 
-    it('should include reitti path check in itinerary survey', () => {
+    it('should include itinerary path check in itinerary survey', () => {
       document.cookie = 'lang=fi';
       const res = getAnalyticsInitCode({ GTMid: 1, crazyEgg: true }, req);
       document.cookie = 'lang=; expires=Thu, 01 Jan 1970 00:00:00 GMT';
-      expect(res.includes('reitti')).toBe(true);
+      expect(res.includes('itinerary')).toBe(true);
     });
-    it('should include linjat path check in route page survey', () => {
+    it('should include routes path check in route page survey', () => {
       document.cookie = 'lang=fi';
       const res = getAnalyticsInitCode({ GTMid: 1, crazyEgg: true }, req);
       document.cookie = 'lang=; expires=Thu, 01 Jan 1970 00:00:00 GMT';
-      expect(res.includes('linjat')).toBe(true);
+      expect(res.includes('routes')).toBe(true);
     });
   });
 

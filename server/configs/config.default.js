@@ -523,7 +523,7 @@ export default {
       },
       {
         name: 'about-this-service',
-        route: '/tietoja-palvelusta',
+        route: '/about', // ColombiaTransit: English URL paths (utils/shared/path.js)
       },
     ],
   },
