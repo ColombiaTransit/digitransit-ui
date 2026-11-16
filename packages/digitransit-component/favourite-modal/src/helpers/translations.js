@@ -40,7 +40,7 @@ const translations = {
       'required-text': 'campo obligatorio',
       save: 'Guardar',
       'save-place': 'Guardar lugar',
-      school: 'colegio',
+      school: 'estudio',
       shopping: 'compras',
       sport: 'deporte',
       work: 'trabajo',
