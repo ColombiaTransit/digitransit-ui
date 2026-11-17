@@ -108,6 +108,7 @@ export default {
     'pasto',
     'pereira',
     'popayan',
+    'rb', // intercity buses (redBus)
     'santa_marta',
     'sincelejo',
     'valledupar',
