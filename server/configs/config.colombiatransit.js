@@ -125,9 +125,24 @@ export default {
     rail: { availableForSelection: true, defaultValue: true }, // Metro de Medellín A and B are route_type 2
     ferry: { availableForSelection: false, defaultValue: false },
     airplane: { availableForSelection: true, defaultValue: true },
-    citybike: { availableForSelection: false, defaultValue: false },
+    citybike: { availableForSelection: true, defaultValue: false },
     scooter: { availableForSelection: false, defaultValue: false },
     taxi: { availableForSelection: false, defaultValue: false },
+  },
+
+  // Bike sharing (GBFS via OTP's vehicle-rental updater). The key must be the
+  // OTP network name. Digitransit treats networks without a season as closed.
+  vehicleRental: {
+    networks: {
+      'tembici-bogota': {
+        enabled: true,
+        type: 'citybike',
+        season: { alwaysOn: true },
+        icon: 'citybike',
+        name: { es: 'Bicis Tembici Bogotá', en: 'Tembici bikes Bogotá' },
+        showRentalStations: true,
+      },
+    },
   },
 
   // Stop pages list departures only: no 'Llegada / Fin del recorrido' rows for
