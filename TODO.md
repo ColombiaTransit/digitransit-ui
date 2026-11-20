@@ -25,3 +25,28 @@ This file tracks ColombiaTransit-specific follow-up work for the Digitransit UI 
 The existing About page is driven by `config.aboutThisService[config.language]`. Static sections can remain configuration-driven; build dynamic reporting as a separate React component. The GTFS publishing workflows should generate the summary JSON so changes become visible without rebuilding the UI. A full CMS is not required for the first version.
 
 **Not in scope yet:** implementation, deployment, or a complete CMS.
+
+## Analytics — optional Matomo Tag Manager integration
+
+**Status:** Planned  
+**Priority:** Backlog  
+**Reference implementation:** [stadtnavi/digitransit-ui](https://github.com/stadtnavi/digitransit-ui) (`app/util/analyticsUtils.js`)  
+**Relevant code:** `utils/shared/analyticsUtils.js`, `server/configs/config.default.js`, `server/middleware/shell.js`, existing analytics events and tests.
+
+### Requirements
+
+- [ ] Add Matomo / Matomo Tag Manager as a configurable alternative to Google Tag Manager, preserving existing GTM support for other deployments.
+- [ ] Configure via environment/config values (Matomo Tag Manager container URL, or Matomo tracker URL and site ID for direct tracking).
+- [ ] Reuse the existing `window.dataLayer` event model wherever possible; explicitly bridge/map events into Matomo Tag Manager (which uses `_mtm`) rather than assuming that emitting `sendMatomoEvent` automatically records anything.
+- [ ] Define tags/triggers for existing Digitransit events: route/stop views, itinerary interactions, transport-mode preferences, favourites, rental/taxi link clicks, and other useful non-personal usage events.
+- [ ] Track the first page load and subsequent single-page-app navigations as pageviews, without duplicate pageview counting.
+- [ ] Respect the existing cookie-consent mechanism; do not load analytics or send events before required consent. Test consent changes and withdrawals.
+- [ ] Prevent collection of sensitive data: strip/redact precise origin/destination coordinates and query strings from tracked URLs, and exclude account/user identifiers (including HSL-specific login analytics fields).
+- [ ] Document deployment variables, consent behaviour, events, Matomo container setup, and an example privacy-friendly dashboard.
+- [ ] Add/update unit and integration tests for Matomo-only, GTM-only, disabled analytics, consent and SPA navigation.
+
+### Implementation notes
+
+The HSL UI already emits many custom analytics events via `addAnalyticsEvent` and `window.dataLayer`, often with `event: 'sendMatomoEvent'`. The Stadtnavi fork contains a Matomo bootstrap example, but its older implementation should **not** be copied wholesale. Preserve the current HSL consent logic and adapt the integration to the current codebase.
+
+**Not in scope yet:** implementation, deployment or configuration of a live Matomo server.
