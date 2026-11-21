@@ -142,6 +142,23 @@ export default {
         name: { es: 'Bicis Tembici Bogotá', en: 'Tembici bikes Bogotá' },
         showRentalStations: true,
       },
+      encicla: {
+        enabled: true,
+        type: 'citybike',
+        season: { alwaysOn: true },
+        icon: 'citybike',
+        name: { es: 'EnCicla Valle de Aburrá', en: 'EnCicla Medellín area' },
+        showRentalStations: true,
+      },
+      // Only shown once the network is enabled in gbfs-colombia and OTP.
+      'bicirio-rionegro': {
+        enabled: true,
+        type: 'citybike',
+        season: { alwaysOn: true },
+        icon: 'citybike',
+        name: { es: 'BiciRio Rionegro', en: 'BiciRio Rionegro' },
+        showRentalStations: true,
+      },
     },
   },
 
