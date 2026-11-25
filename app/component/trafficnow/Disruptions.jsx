@@ -19,7 +19,7 @@ import {
 } from './filters/filterUtils';
 import AlertsQuery from './queries/AlertsQuery';
 import CanceledTripsOverviewQuery from './queries/CanceledTripsOverviewQuery';
-import { buildDisruptionCards } from './utils';
+import { buildDisruptionCards, withRouteNames } from './utils';
 import { TRAFFICNOW } from '../../../utils/shared/path';
 import { splitGtfsId } from '../../../utils/shared/gtfs';
 
@@ -44,11 +44,13 @@ export function getCanceledModes(
     .map(([key, value]) => ({
       key,
       ...value,
-      routes: value.routes.filter(
-        ({ route }) =>
-          feedIds.includes(splitGtfsId(route.gtfsId).feedId) &&
-          (!selectedFeeds.length ||
-            selectedFeeds.includes(splitGtfsId(route.gtfsId).feedId)),
+      routes: withRouteNames(
+        value.routes.filter(
+          ({ route }) =>
+            feedIds.includes(splitGtfsId(route.gtfsId).feedId) &&
+            (!selectedFeeds.length ||
+              selectedFeeds.includes(splitGtfsId(route.gtfsId).feedId)),
+        ),
       ),
     }))
     .filter(({ routes }) => routes.length);
@@ -95,6 +97,7 @@ export default function Disruptions({ dateTime }) {
           TransportMode.Rail,
           TransportMode.Subway,
           TransportMode.Ferry,
+          TransportMode.Airplane,
         ]
       : selectedFilters.vehicleModes.map(mode => mode.toUpperCase());
 
@@ -112,6 +115,7 @@ export default function Disruptions({ dateTime }) {
       fetchRail: modesToFetch.includes(TransportMode.Rail),
       fetchSubway: modesToFetch.includes(TransportMode.Subway),
       fetchFerry: modesToFetch.includes(TransportMode.Ferry),
+      fetchAirplane: modesToFetch.includes(TransportMode.Airplane),
     }),
     [dateTime, selectedFilters.vehicleModes.join(',')],
   );

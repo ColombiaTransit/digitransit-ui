@@ -84,6 +84,10 @@ export default function CanceledDepartures({
                           {DateTime.fromISO(serviceDate)
                             .plus(trip.stoptimes[0].scheduledDeparture * 1000)
                             .toFormat(' HH:mm ')}
+                          {/* flight number, for routes without a short name */}
+                          {!trip.route?.shortName && trip.tripShortName
+                            ? `${trip.tripShortName} `
+                            : null}
                         </Text>
                       </span>
                     ))}

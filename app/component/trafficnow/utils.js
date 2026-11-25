@@ -176,6 +176,17 @@ const buildDisruptionCards = (disruptions, selectedFilters, config) =>
     }));
   });
 
+/** Routes without a short name (e.g. flights) are shown by their long name. */
+const withRouteNames = routeSummaries =>
+  routeSummaries.map(summary =>
+    summary.route.shortName
+      ? summary
+      : {
+          ...summary,
+          route: { ...summary.route, shortName: summary.route.longName },
+        },
+  );
+
 // Sort routes by shortName, favourites, search entity
 const sortRoutes = (routes, favRoutes, highlightedGtfsId) =>
   routes
@@ -198,4 +209,5 @@ export {
   getAlertModes,
   buildDisruptionCards,
   sortRoutes,
+  withRouteNames,
 };

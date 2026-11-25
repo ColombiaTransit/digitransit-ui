@@ -17,6 +17,7 @@ export default graphql`
           id
           gtfsId
           shortName
+          longName
           mode
         }
         patterns {

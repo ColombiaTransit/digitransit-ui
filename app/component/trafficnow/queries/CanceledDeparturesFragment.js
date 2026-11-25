@@ -15,6 +15,7 @@ export default graphql`
       serviceDate
       trip {
         gtfsId
+        tripShortName
         stoptimes {
           scheduledDeparture
         }

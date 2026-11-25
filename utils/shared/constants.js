@@ -181,6 +181,7 @@ export const LocationTypes = Object.freeze({
 });
 
 export const TrafficNowTransportModes = Object.freeze([
+  TransportMode.Airplane,
   TransportMode.Bus,
   TransportMode.Ferry,
   TransportMode.Rail,

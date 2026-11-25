@@ -9,6 +9,7 @@ export default graphql`
     $fetchRail: Boolean!
     $fetchSubway: Boolean!
     $fetchFerry: Boolean!
+    $fetchAirplane: Boolean!
   ) {
     bus: canceledTripsSummary(
       filters: {
@@ -21,6 +22,7 @@ export default graphql`
           id
           gtfsId
           shortName
+          longName
           mode
         }
         patterns {
@@ -44,6 +46,7 @@ export default graphql`
           id
           gtfsId
           shortName
+          longName
           mode
         }
         patterns {
@@ -67,6 +70,7 @@ export default graphql`
           id
           gtfsId
           shortName
+          longName
           mode
         }
         patterns {
@@ -90,6 +94,7 @@ export default graphql`
           id
           gtfsId
           shortName
+          longName
           mode
         }
         patterns {
@@ -113,6 +118,31 @@ export default graphql`
           id
           gtfsId
           shortName
+          longName
+          mode
+        }
+        patterns {
+          cancellationCount
+          pattern {
+            ...CanceledDeparturesFragment
+              @arguments(runningTimeRanges: $runningTimeRanges)
+          }
+        }
+      }
+    }
+
+    airplane: canceledTripsSummary(
+      filters: {
+        include: { modes: [AIRPLANE], runningTimeRanges: $runningTimeRanges }
+      }
+    ) @include(if: $fetchAirplane) {
+      routes {
+        cancellationCount
+        route {
+          id
+          gtfsId
+          shortName
+          longName
           mode
         }
         patterns {

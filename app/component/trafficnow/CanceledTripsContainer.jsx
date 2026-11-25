@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { useLazyLoadQuery } from 'react-relay/hooks';
 import CanceledTrips from './CanceledTrips';
 import CanceledTripsForModeQuery from './queries/CanceledTripsForModeQuery';
-import { sortRoutes } from './utils';
+import { sortRoutes, withRouteNames } from './utils';
 import { useFilterContext } from './filters/FiltersContext';
 import { useFavourites } from '../../hooks/FavouriteContext';
 import { splitGtfsId } from '../../../utils/shared/gtfs';
@@ -29,7 +29,7 @@ export default function CanceledTripsContainer({ mode, isMobile, dateTime }) {
 
   return (
     <CanceledTrips
-      canceledRoutes={sortRoutes(filteredRoutes, favRoutes)}
+      canceledRoutes={sortRoutes(withRouteNames(filteredRoutes), favRoutes)}
       mode={mode}
       isMobile={isMobile}
     />
