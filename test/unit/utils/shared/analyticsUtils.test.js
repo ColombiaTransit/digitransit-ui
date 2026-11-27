@@ -1,8 +1,11 @@
+/* eslint-disable no-underscore-dangle -- Matomo globals */
 import Cookies from 'universal-cookie';
 
 import {
   addAnalyticsEvent,
   buildCrazyEggSurveyScript,
+  getMatomoScript,
+  sanitizeAnalyticsPath,
   getAnalyticsInitCode,
   initAnalyticsClientSide,
   handleUserAnalytics,
@@ -10,6 +13,9 @@ import {
 
 afterEach(() => {
   window.dataLayer = undefined;
+  window._paq = undefined;
+  window._mtm = undefined;
+  window.matomoTracking = undefined;
 });
 
 const req = { hostname: 'foo', headers: { cookie: {} } };
@@ -36,6 +42,109 @@ describe('analytics utils', () => {
       expect(entry.event).toBe('testEvent');
     });
   });
+  describe('Matomo', () => {
+    const tracker = {
+      MATOMO_URL: 'https://stats.example.org',
+      MATOMO_SITE_ID: '3',
+    };
+    const tagManager = {
+      MATOMO_URL: 'https://stats.example.org/js/container_abc.js',
+    };
+
+    it('loads the tracker instead of Google Tag Manager', () => {
+      const res = getAnalyticsInitCode({ ...tracker, GTMid: 'GTM-1' }, req);
+      expect(res).toContain('https://stats.example.org/matomo.js');
+      expect(res).toContain('[\'setSiteId\',"3"]');
+      expect(res).not.toContain('googletagmanager');
+      expect(res).not.toContain('trackPageView');
+    });
+    it('loads a Tag Manager container without a site id', () => {
+      const res = getAnalyticsInitCode(tagManager, req);
+      expect(res).toContain('container_abc.js');
+      expect(res).toContain('mtm.Start');
+    });
+    it('disables cookies unless matomoDisableCookies is false', () => {
+      expect(getMatomoScript(tracker)).toContain('disableCookies');
+      expect(
+        getMatomoScript({ ...tracker, matomoDisableCookies: false }),
+      ).not.toContain('disableCookies');
+    });
+    it('loads nothing without consent when useCookiesPrompt is set', () => {
+      const res = getAnalyticsInitCode(
+        { ...tracker, useCookiesPrompt: true },
+        { ...req, headers: { cookie: 'cookieConsent=false' } },
+      );
+      expect(res).toBe('');
+    });
+    it('escapes the configured values', () => {
+      const res = getMatomoScript({ MATOMO_URL: 'https://x/</script>' });
+      expect(res).not.toContain('</script>"');
+    });
+    it('sends pageviews with a sanitized url to the tracker', () => {
+      window._paq = [];
+      window.matomoTracking = 'tracker';
+      addAnalyticsEvent({
+        event: 'Pageview',
+        url: '/itinerary/Calle%2026%3A%3A4.65%2C-74.1/El%20Dorado%3A%3A4.70%2C-74.14',
+      });
+      expect(window._paq).toEqual([
+        ['setCustomUrl', `${window.location.origin}/itinerary/place/place`],
+        ['trackPageView'],
+      ]);
+    });
+    it('sends events with category, action and name only', () => {
+      window._paq = [];
+      window._mtm = [];
+      window.matomoTracking = 'tracker';
+      addAnalyticsEvent({
+        category: 'EmbeddedSearch',
+        action: 'setOrigin',
+        name: 'x',
+        origin: 'Calle 26',
+      });
+      expect(window._paq).toEqual([
+        ['trackEvent', 'EmbeddedSearch', 'setOrigin', 'x'],
+      ]);
+      expect(window._mtm).toEqual([
+        {
+          event: 'sendMatomoEvent',
+          category: 'EmbeddedSearch',
+          action: 'setOrigin',
+          name: 'x',
+        },
+      ]);
+    });
+    it('does not forward other events, such as login analytics', () => {
+      window._paq = [];
+      window.matomoTracking = 'tracker';
+      addAnalyticsEvent({ event: 'login', userId: 'secret' });
+      expect(window._paq).toEqual([]);
+    });
+    it('does nothing when Matomo is not loaded', () => {
+      expect(() =>
+        addAnalyticsEvent({ category: 'a', action: 'b' }),
+      ).not.toThrow();
+    });
+  });
+
+  describe('sanitizeAnalyticsPath', () => {
+    it('removes query string and hash', () => {
+      expect(sanitizeAnalyticsPath('/stops/bogota:1?time=1#x')).toBe(
+        '/stops/bogota:1',
+      );
+    });
+    it('keeps route and stop ids', () => {
+      expect(sanitizeAnalyticsPath('/routes/bogota:B12/stops')).toBe(
+        '/routes/bogota:B12/stops',
+      );
+    });
+    it('replaces places and coordinates', () => {
+      expect(
+        sanitizeAnalyticsPath('/itinerary/Home::6.2,-75.5/-/6.25,-75.56/0'),
+      ).toBe('/itinerary/place/-/place/0');
+    });
+  });
+
   describe('getAnalyticsInitCode', () => {
     it('should return a nonempty string when GTMid is given', () => {
       const res = getAnalyticsInitCode({ GTMid: 1 }, req);
