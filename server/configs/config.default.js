@@ -131,6 +131,12 @@ export default {
 
   // Google Tag Manager id
   GTMid: process.env.GTM_ID || null,
+  // Matomo: tracker base URL with MATOMO_SITE_ID, or the Tag Manager container
+  // .js without it. When set, Matomo is used instead of Google Tag Manager.
+  MATOMO_URL: process.env.MATOMO_URL || null,
+  MATOMO_SITE_ID: process.env.MATOMO_SITE_ID || null,
+  // Track without cookies (no consent banner needed for the tracker itself)
+  matomoDisableCookies: process.env.MATOMO_DISABLE_COOKIES !== 'false',
   /*
    * Define the icon and icon color used for each citybike station. Two icons are available,
    * 'citybike-stop-digitransit' and 'citybike-stop-digitransit-secondary'. For the first icon
